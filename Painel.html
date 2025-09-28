@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Painel do Líder Supremo - Cyber-Nexis</title>
+  <style>
+    body {
+      background-color: #000;
+      color: #0f0;
+      font-family: 'Courier New', monospace;
+      padding: 20px;
+    }
+    #senha-container {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-color: #000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+    #senha-container input, button {
+      margin: 5px;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: none;
+    }
+    #painel { display: none; }
+    .bloco {
+      border: 1px solid #0f0;
+      padding: 15px;
+      margin: 10px 0;
+      border-radius: 10px;
+    }
+    .admin-controls button {
+      margin: 5px 0;
+      background: #0f0;
+      color: #000;
+      padding: 8px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .ia-box input, .ia-box button {
+      width: 100%;
+      margin: 5px 0;
+      padding: 8px;
+    }
+    #respostaIA {
+      margin-top: 10px;
+      color: #0ff;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="senha-container">
+    <h2>🔐 Painel Secreto do Líder Supremo</h2>
+    <input type="password" id="senha-input" placeholder="Digite a senha" />
+    <button onclick="verificarSenha()">Entrar</button>
+    <p id="erro" style="color:red;"></p>
+  </div>
+
+  <div id="painel">
+    <h1>🧠 Bem-vindo, Líder Supremo</h1>
+
+    <div class="bloco" id="agente-status">
+      <h2>🛰️ Agentes em tempo real</h2>
+      <ul id="agentes-lista">
+        <li>[AG-01] Monitorando rede 127.0.0.1...</li>
+        <li>[AG-02] Aguardando comandos...</li>
+        <li>[AG-03] Interceptando dados criptografados...</li>
+      </ul>
+    </div>
+
+    <div class="bloco admin-controls">
+      <h2>📁 Painel Administrativo</h2>
+      <button onclick="criarArquivo()">Criar Arquivo</button>
+      <button onclick="editarArquivo()">Editar Arquivo</button>
+      <button onclick="excluirArquivo()">Excluir Arquivo</button>
+    </div>
+
+    <div class="bloco ia-box">
+      <h2>🤖 IA de Suporte - GPT</h2>
+      <input type="text" id="pergunta" placeholder="Digite sua pergunta para a IA...">
+      <button onclick="consultarIA()">Consultar IA</button>
+      <div id="respostaIA">Aguardando pergunta...</div>
+    </div>
+  </div>
+
+  <script>
+    const SENHA_CORRETA = "acesso123"; // senha fácil como solicitado
+
+    // Simula login anterior para testes (deve vir do sistema de login real)
+    // localStorage.setItem("usuarioAtual", "Líder Supremo");
+
+    function verificarSenha() {
+      const senha = document.getElementById('senha-input').value;
+      const erro = document.getElementById('erro');
+      const usuario = localStorage.getItem("usuarioAtual");
+
+      if (usuario !== "Líder Supremo") {
+        erro.innerText = "❌ Acesso negado. Nível de autorização insuficiente.";
+        return;
+      }
+
+      if (senha === SENHA_CORRETA) {
+        document.getElementById('senha-container').style.display = 'none';
+        document.getElementById('painel').style.display = 'block';
+        iniciarAtualizacaoAgentes();
+      } else {
+        erro.innerText = "Senha incorreta. Acesso rejeitado!";
+      }
+    }
+
+    function iniciarAtualizacaoAgentes() {
+      const lista = document.getElementById('agentes-lista');
+      setInterval(() => {
+        const status = [
+          "[AG-01] Analisando tráfego de darknet...",
+          "[AG-02] Coletando metadados públicos...",
+          "[AG-03] Aguardando novos alvos...",
+          "[AG-01] Rastreando IP suspeito...",
+          "[AG-02] Infiltrado em servidor externo...",
+        ];
+        const randomStatus = status[Math.floor(Math.random() * status.length)];
+        const novo = document.createElement('li');
+        novo.textContent = randomStatus;
+        lista.appendChild(novo);
+        if (lista.children.length > 6) lista.removeChild(lista.children[0]);
+      }, 5000); // Atualiza a cada 5 segundos
+    }
+
+    function criarArquivo() {
+      alert("📁 Criar Arquivo: Em breve, você poderá criar arquivos reais aqui.");
+    }
+    function editarArquivo() {
+      alert("✏️ Editar Arquivo: Em breve será possível editar conteúdo dos arquivos.");
+    }
+    function excluirArquivo() {
+      alert("🗑️ Excluir Arquivo: Esta função excluirá arquivos do banco quando conectada.");
+    }
+
+    async function consultarIA() {
+      const pergunta = document.getElementById("pergunta").value;
+      const respostaDiv = document.getElementById("respostaIA");
+      respostaDiv.innerText = "⏳ Processando pergunta...";
+
+      try {
+        // Simulação (substituir por fetch real)
+        const respostaFake = await gerarRespostaSimulada(pergunta);
+        respostaDiv.innerText = respostaFake;
+      } catch (error) {
+        respostaDiv.innerText = "❌ Erro ao consultar IA.";
+      }
+    }
+
+    // Simulação da IA (substituir por fetch POST real para /api/gpt com { pergunta })
+    async function gerarRespostaSimulada(pergunta) {
+      const respostas = {
+        "ameaça": "Nenhuma ameaça detectada nas últimas 24 horas.",
+        "missão": "Sua missão é revisar os dados dos novos recrutas.",
+        "recrutamento": "3 candidatos em fase final de avaliação.",
+        "segurança": "Todos os firewalls estão ativos e operacionais.",
+        "criptografia": "Usando AES-256 com chave dinâmica rotativa."
+      };
+
+      for (let chave in respostas) {
+        if (pergunta.toLowerCase().includes(chave)) {
+          return respostas[chave];
+        }
+      }
+      return "IA: Não consegui entender sua solicitação. Reformule a pergunta.";
+    }
+  </script>
+</body>
+</html>

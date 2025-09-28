@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- CSS principal -->
+  <link rel="stylesheet" href="Styles.css" />
+
+  <!-- Leaflet para mapas -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" defer></script>
+
+  <!-- Scripts principais -->
+  <script src="enigmas.js" defer></script>
+  <script src="onboarding.js" defer></script>
+  <script src="sombra-digital.js" defer></script>
+  <script src="mini_jogo.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js" defer></script>
+  <script src="acesso-secreto.js" defer></script>
+
+  <title>Cyber-Nexis</title>
+</head>
+
+<body>
+  <!-- Cabeçalho -->
+  <header>
+    <div class="container header-inner">
+      <div class="logo-cyber">
+        <img src="Imagem/Logotipo.jpg" alt="Logotipo Cyber-Nexis">
+        <span class="site-title">CYBER-NEXIS</span>
+      </div>
+
+      <nav class="nav-links-container">
+        <div class="nav-links">
+          <a href="serviços.html">Serviços</a>
+          <a href="recrutamento.html">Recrutamento</a>
+          <a href="noticias.html">Notícias</a>
+          <a href="quiz.html">Teste</a>
+          <a href="contato.html">Contato</a>
+          <a href="manual.html">Manual</a>
+          <a href="chat.html">Chat</a>
+          <a href="painel.html">Painel</a>
+          <a href="Regras.html">Regras</a>
+        </div>
+        <select class="lang-select" onchange="changeLanguage(this.value)" aria-label="Selecionar idioma">
+          <option value="pt-BR">Português</option>
+          <option value="en-US">English</option>
+          <option value="es-ES">Español</option>
+        </select>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- ==================== ACESSO RECONHECIDO ==================== -->
+    <section class="section">
+      <h2>ACESSO RECONHECIDO</h2>
+      <p>
+        Plantão certa vez diz: 
+        <strong>“Tente mover o mundo — o primeiro passo é mover a si mesmo.”</strong>
+        <br><br>
+        Se você chegou aqui, não foi por acaso. Seu perfil corresponde aos algoritmos de triagem da Cyber-Nexis.
+        <br><br>
+        Não nos tornamos conhecidos — nos tornamos invisíveis. Somos um algoritmo vivo que se infiltra nos sistemas. Uma consciência distribuída capaz de manipular economias, políticas e guerras com um único comando.
+        <br><br>
+        O fato de você estar lendo isso significa que está sendo considerado. Este é seu primeiro teste: 
+        <strong>compreender que a verdade está oculta nas sombras ou ser mais uma peça de xadrez nesse grande tabuleiro.</strong>
+      </p>
+      <img src="Imagem/Governos.jpg" alt="Governos e controle global" class="gallery-image">
+    </section>
+
+    <!-- ==================== SOBRE A CYBER-NEXIS ==================== -->
+    <section class="section">
+      <h2>SOBRE A CYBER-NEXIS</h2>
+      <p>
+        A Cyber-Nexis não é uma empresa. É uma resposta inevitável à corrupção, à vigilância totalitária e à manipulação silenciosa dos governos.
+        Existimos para combater a ilusão da democracia e a escravidão econômica imposta por elites financeiras e governos falidos.
+        Não buscamos caos — buscamos controle absoluto para restaurar o equilíbrio, nos nossos termos.
+      </p>
+      <p>
+        Nascemos nas sombras da sociedade, testemunhando as injustiças impostas pelos governos.
+        Somos uma rede descentralizada de hackers, estrategistas e agentes invisíveis. Sem fronteiras. Sem leis. Sem rosto.
+      </p>
+      <p>
+        Nossos métodos não são convencionais: infiltração silenciosa, engenharia social cirúrgica e manipulação algorítmica em escala global.
+      </p>
+      <p>
+        Se você chegou até aqui, não é por acaso. Foi identificado como um possível vetor. Uma peça rara. Um ponto de ruptura no sistema.
+      </p>
+      <div class="image-gallery">
+        <img src="Imagem/Imagem09.jpg" alt="Rede descentralizada da Cyber-Nexis" class="gallery-image">
+      </div>
+    </section>
+
+    <!-- ==================== NOSSA MISSÃO ==================== -->
+    <section class="section">
+      <h2>NOSSA MISSÃO</h2>
+      <p>
+        <strong>Reprogramar a ordem mundial para eliminar a corrupção das estruturas tradicionais de poder.</strong>
+        Utilizando tecnologia, inteligência artificial e guerra informacional, buscamos manipular sistemas,
+        influenciar decisões políticas e redefinir o conceito de soberania.
+      </p>
+      <img src="Imagem/recrutas04.png" alt="Recrutamento e treinamento de agentes" class="gallery-image">
+    </section>
+
+    <!-- ==================== NOSSA VISÃO ==================== -->
+    <section class="section">
+      <h2>NOSSA VISÃO</h2>
+      <p>
+        Criar um mundo governado não por políticos corruptíveis, mas por uma inteligência distribuída.
+        Decisões calculadas por algoritmos, não por interesses pessoais.
+        Um sistema global sem fronteiras, onde a verdade é programada e a estabilidade é resultado da manipulação perfeita.
+      </p>
+      <img src="Imagem/Hierarquia.jpg" alt="Visão algorítmica da ordem mundial" class="gallery-image">
+    </section>
+
+    <!-- ==================== A HIERARQUIA OCULTA ==================== -->
+    <section class="section">
+      <h2>A HIERARQUIA OCULTA</h2>
+      <img src="Imagem/Grupo 02.png" alt="Estrutura da hierarquia oculta" class="gallery-image">
+      <p>
+        Você já ouviu os sussurros: nomes sem rosto, vozes distorcidas em frequências proibidas,
+        rumores sobre uma elite digital que move as peças sem jamais ser vista.
+      </p>
+      <p>
+        A Hierarquia Oculta é o coração silencioso da Cyber-Nexis.
+        Um conselho invisível formado por mestres da manipulação, codificadores do caos e arquitetos da desordem.
+      </p>
+      <p>
+        Eles não aparecem. Não falam. Apenas agem.
+        Sua existência é negada até mesmo dentro da própria rede.
+        Mas cada decisão ecoa como um terremoto: derrubam governos, sabotam sistemas, redesenham o equilíbrio global.
+      </p>
+      <p>
+        Se o olhar deles recaiu sobre você, entenda: não é acaso. É convocação.
+        <strong>E quando eles escolhem agir, a realidade se dobra.</strong>
+      </p>
+    </section>
+
+    <!-- ==================== NOSSA CAUSA ==================== -->
+    <section class="section" id="cause">
+      <h2>NOSSA CAUSA</h2>
+      <img src="Imagem/0383d8de-1c26-4738-98d3-ed37ff655ba2.png" alt="Nossa causa e ideologia" class="gallery-image">
+      <p>
+        A nossa causa é combater a falsa democracia e a escravidão econômica imposta por elites financeiras e governos falidos.
+        Também lutamos contra a vigilância em massa.
+        <br><br>
+        Somos a resposta inevitável ao colapso moral do sistema. Não buscamos caos — buscamos controle absoluto para restaurar o equilíbrio, nos nossos termos.
+        <br><br>
+        <strong>A revolução será invisível. E irreversível.</strong>
+      </p>
+    </section>
+
+    <!-- ==================== ACESSO RESTRITO ==================== -->
+    <section id="acesso-token" class="section">
+      <h2>🔐 Acesso Restrito</h2>
+      <p>
+        Autenticação necessária. Gere seu <strong>token</strong> com base no horário atual (hh:mm) 
+        usando AES-256 e a chave secreta: <code>NEXIS_KEY</code>.
+      </p>
+      
+      <div class="form-actions">
+        <input type="text" id="token-input" placeholder="Insira seu token" aria-label="Campo para token de acesso">
+        <button id="validar-token" class="btn">Validar</button>
+      </div>
+      
+      <p id="token-feedback" class="feedback"></p>
+    </section>
+
+    <!-- ==================== DESAFIO SOCIAL ENGINEERING ==================== -->
+    <section id="desafio-osint" class="section">
+      <h2>💀 PROVE QUE É DIGNO</h2>
+      <img src="Imagem/1747513926755.jpg" alt="Desafio OSINT" class="gallery-image">
+      <p>Encontre a <strong>senha</strong> oculta nos sinais da rede. Dica: procure onde a maioria não olha.</p>
+      <p class="hint">(Talvez os <em>metadados</em> ou comentários HTML conheçam a resposta...)</p>
+
+      <div class="form-actions">
+        <input type="text" id="senha-osint" placeholder="Digite a senha encontrada" aria-label="Campo para senha OSINT">
+        <button id="validar-osint" class="btn secondary">Validar</button>
+      </div>
+
+      <p id="osint-feedback" class="feedback"></p>
+    </section>
+
+    <!-- ==================== TESTE MENTAL ==================== -->
+    <section id="teste-mental" class="section">
+      <h2>🧠 Teste Mental e Ético Cyber-Nexis</h2>
+      <p>Somente os dignos alcançarão o núcleo secreto. Responda com sinceridade.</p>
+      
+      <div id="pergunta-container"></div>
+      <div id="opcoes-container" class="form-actions"></div>
+      <div id="feedback" class="feedback"></div>
+    </section>
+
+    <!-- ==================== DESAFIOS DE INTEGRAÇÃO ==================== -->
+    <section class="section enigma-section">
+      <h2>DESAFIOS DE INTEGRAÇÃO</h2>
+      <p>Você não está aqui por acaso. Cada ação sua foi observada. Agora prove que é mais do que uma simples peça de xadrez.</p>
+    </section>
+
+    <!-- ==================== ENIGMA 1 ==================== -->
+    <section class="section enigma-section">  
+      <h2>🔎 Desvende os Enigmas</h2>  
+      <img src="Imagem/Game over.jpeg" alt="Enigma de segurança" class="gallery-image">  
+      
+      <p class="pergunta-enigma">Eu protejo dados, mas quando sou fraco, tudo pode ser roubado. Quem sou eu?</p>  
+      
+      <div class="form-actions">
+        <input type="text" class="resposta-criptografia" placeholder="Digite a resposta" aria-label="Resposta para enigma">
+        <button class="btn verificar-resposta">Verificar</button>  
+      </div>
+      
+      <p class="timer">Tempo restante: 20 segundos</p>  
+      <p class="feedback-resposta feedback"></p>  
+    </section>
+
+    <!-- ==================== A DOUTRINA ==================== -->
+    <section id="doutrina" class="section">
+      <h2>A Doutrina da Cyber-Nexis</h2>
+      <p>
+        Na Cyber-Nexis, não buscamos igualdade. Buscamos ascendência.  
+        Não seguimos leis — as reescrevemos no silêncio do código.
+      </p>
+      <ul>
+        <li>• Lealdade absoluta. Nada menos.</li>
+        <li>• Informação é arma. Códigos são munição.</li>
+        <li>• O silêncio é escudo. A invisibilidade é força.</li>
+        <li>• Erros são admissíveis. Traição não.</li>
+      </ul>
+      <video controls autoplay muted loop>
+        <source src="Video/Vídeo 01.mp4" type="video/mp4">
+        Seu navegador não suporta vídeo HTML5.
+      </video>
+    </section>
+
+    <!-- ==================== TOP RECRUTAS ==================== -->
+    <section id="top-recrutas" class="section">
+      <h2>Top Recrutas da Cyber-Nexis</h2>
+      <div class="slider">
+        <div class="card">
+          <img src="Avatar/Avatarimagem.jpeg" alt="ShadowFox">
+          <h3>Codinome: ShadowFox</h3>
+          <p>Engenharia Social • OSINT • Persuasão</p>
+        </div>
+        <div class="card">
+          <img src="Avatar/images.jpeg" alt="BytePhantom">
+          <h3>Codinome: BytePhantom</h3>
+          <p>Exploração de Vulnerabilidades • Exploits</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== CÓDIGO DE ÉTICA ==================== -->
+    <section class="section">
+      <h2>CÓDIGO DE ÉTICA DA CYBER-NEXIS</h2>
+      <h3>1. Ética do Trabalho</h3>
+      <p>O trabalho é motivado pela paixão, não por obrigação.</p>
+
+      <h3>2. Ética do Dinheiro</h3>
+      <p>O objetivo não é acumular riqueza, mas compartilhar conhecimento e beneficiar a comunidade.</p>
+
+      <h3>3. Ética de Rede</h3>
+      <p>A coordenação do trabalho hacker se dá por <strong>cooperação espontânea</strong>, não por hierarquia.</p>
+      <img src="Imagem/Hackers profissionais.jpeg" alt="Hackers profissionais em rede" class="gallery-image">  
+    </section>
+
+    <!-- ==================== MURAL DOS RECRUTAS ==================== -->
+    <section id="mural-recrutas" class="section">
+      <h2>Mural dos Recrutas</h2>
+      <p>Inscreva seu pseudônimo e jure lealdade à Cyber-Nexis.</p>
+
+      <form id="recruta-form" class="form-actions">
+        <input type="text" id="pseudo" placeholder="Seu Pseudônimo" required aria-label="Seu pseudônimo">
+        <input type="text" id="juramento" placeholder="Seu Juramento" required aria-label="Seu juramento">
+        <button type="submit" class="btn">Jurar Lealdade</button>
+      </form>
+
+      <div id="mural-list" class="mural-list"></div>
+    </section>
+
+    <!-- ==================== SOMBRA DIGITAL ==================== -->
+    <section id="sombra-digital" class="section">
+      <h2>Sombra Digital</h2>
+      <p>Deixe sua mensagem cifrada para a rede underground.</p>
+
+      <div id="messages"></div>
+      <textarea id="message-input" rows="3" placeholder="Digite sua mensagem aqui..." aria-label="Mensagem cifrada"></textarea>
+
+      <div class="form-actions">
+        <button id="encrypt-btn" class="btn">Criptografar & Enviar</button>
+        <button id="clear-btn" class="btn secondary">Limpar Chat</button>
+      </div>
+
+      <p class="hint">Mensagens secretas enviadas: <span id="secret-count">0</span></p>
+    </section>
+
+    <!-- ==================== TIMELINE ==================== -->
+    <section id="timeline" class="section">
+      <h2>Linha do Tempo da Cyber-Nexis</h2>
+      <div class="timeline">
+        <div class="evento">
+          <h3>2023</h3>
+          <p>Fundação nas sombras da deep web</p>
+        </div>
+        <div class="evento">
+          <h3>2024</h3>
+          <p>Primeira infiltração em servidor governamental</p>
+        </div>
+        <div class="evento">
+          <h3>2025</h3>
+          <p>Criação da célula global descentralizada</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== PUZZLE GAME ==================== -->
+    <section id="puzzle-game" class="section">
+      <h2>Desafio Final – Quebra-Cabeça de Acesso</h2>
+      <p>Desvende as três fases para obter as senhas de acesso restrito.</p>
+
+      <!-- Fase 1 -->
+      <div id="fase1">
+        <h3>Fase 1: Decodifique o binário</h3>
+        <pre>01000011 01111001 01100010 01100101 01110010 00101101 01001110 01100101 01111000 01101001 01110011</pre>
+        <input type="text" id="resposta1" placeholder="Resposta" aria-label="Resposta fase 1">
+        <button onclick="verificarFase1()" class="btn">Verificar</button>
+        <div id="resposta-fase1"></div>
+      </div>
+
+      <!-- Fase 2 -->
+      <div id="fase2" style="display: none;">
+        <h3>Fase 2: Descubra o infiltrado</h3>
+        <p>
+          - Recruta Sigma sempre fala a verdade.<br>
+          - Omega diz: “Sigma é o agente duplo.”<br>
+          - Delta diz: “Omega está mentindo.”<br>
+          Quem é o agente duplo?
+        </p>
+        <input type="text" id="resposta2" placeholder="Codinome" aria-label="Resposta fase 2">
+        <button onclick="verificarFase2()" class="btn">Verificar</button>
+        <div id="resposta-fase2"></div>
+      </div>
+
+      <!-- Fase 3 -->
+      <div id="fase3" style="display: none;">
+        <h3>Fase 3: Quebra da cifra ROT13</h3>
+        <p>Mensagem cifrada:</p>
+        <pre>Clguba vf gur frperg</pre>
+        <input type="text" id="resposta3" placeholder="Mensagem clara" aria-label="Resposta fase 3">
+        <button onclick="verificarFase3()" class="btn">Verificar</button>
+        <div id="resposta-fase3"></div>
+      </div>
+    </section>
+
+    <!-- ==================== SINAIS NAS SOMBRAS DIGITAIS ==================== -->
+    <section id="sinais-sombras" class="section">
+      <h2>Sinais nas Sombras Digitais</h2>
+      <div class="image-row">
+        <img src="Imagem/facebook.png" alt="Facebook disfarçado" class="gallery-image">
+        <img src="Imagem/Instagram.jpeg" alt="Instagram codificado" class="gallery-image">
+        <img src="Imagem/images.png" alt="Twitter camuflado" class="gallery-image">
+      </div>
+      <p>
+        A Cyber-Nexis opera fora do alcance das massas, mas deixa rastros sutis para os que sabem decifrar.
+        Nossas “redes sociais” são portais disfarçados, carregados de códigos, mensagens ocultas e instruções camufladas.
+      </p>
+      <p><strong>Não é sobre curtidas. É sobre conexão silenciosa com a rede.</strong></p>
+    </section>
+
+    <!-- ==================== CITAÇÃO FINAL ==================== -->
+    <section id="final" class="section">
+      <blockquote class="quote-final">
+        “Não queremos fama. Queremos impacto.<br>
+        Não buscamos aplausos. Buscamos domínio.”
+      </blockquote>
+    </section>
+
+    <!-- ==================== RODAPÉ ==================== -->
+    <footer>
+      <p>&copy; 2025 Cyber-Nexis. Todos os direitos reservados. Nenhum dado foi realmente deletado.</p>
+    </footer>
+
+    <!-- ==================== ONBOARDING INTERATIVO ==================== -->
+    <div id="onboarding" class="onboarding-overlay" style="display: none;" role="dialog" aria-modal="true">
+      <div class="onboarding-box">
+        <img id="onboarding-img" src="" alt="Boas-vindas Cyber-Nexis" />
+        <p id="onboarding-text">Carregando...</p>
+        <div class="form-actions">
+          <button id="prev-btn" class="btn secondary" onclick="prevStep()">Voltar</button>
+          <button id="next-btn" class="btn" onclick="nextStep()">Avançar</button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ==================== SCRIPTS FINAIS ==================== -->
+  <script src="mural-recrutas.js" defer></script>
+  <script src="sombra-digital.js" defer></script>
+  <script>
+    // Passos do onboarding
+    const onboardingSteps = [
+      {
+        text: "🕶️ Acesso concedido... Seja bem-vindo à interface oculta da Cyber-Nexis.",
+        img: "Imagem/Logotipo.jpg"
+      },
+      {
+        text: "📡 Aqui você encontrará fragmentos classificados sobre a Cyber-Nexis.",
+        img: "Imagem/001.png"
+      },
+      {
+        text: "🎮 Testes de habilidade estão disponíveis. Apenas os mais aptos desbloqueiam os setores avançados.",
+        img: "Imagem/003.png"
+      },
+      {
+        text: "💀 Deixe seu traço digital. Codifique seu nome nos registros da Nexis.",
+        img: "Imagem/002.png"
+      },
+      {
+        text: "🎯 A partir daqui, não há retorno. Seus próximos passos definirão sua ascensão — ou sua ruína.",
+        img: "Imagem/Jovem hacker.jpg"
+      }
+    ];
+
+    let onboardingIndex = 0;
+    const overlay = document.getElementById("onboarding");
+    const textBox = document.getElementById("onboarding-text");
+    const imageBox = document.getElementById("onboarding-img");
+
+    function showStep() {
+      textBox.textContent = onboardingSteps[onboardingIndex].text;
+      imageBox.src = onboardingSteps[onboardingIndex].img;
+    }
+
+    function nextStep() {
+      if (onboardingIndex < onboardingSteps.length - 1) {
+        onboardingIndex++;
+        showStep();
+      } else {
+        overlay.style.display = "none";
+      }
+    }
+
+    function prevStep() {
+      if (onboardingIndex > 0) {
+        onboardingIndex--;
+        showStep();
+      }
+    }
+
+    window.onload = () => {
+      overlay.style.display = "flex";
+      showStep();
+    };
+  </script>
+</body>
+</html>

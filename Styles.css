@@ -1,0 +1,273 @@
+/* ===========================
+   Cyber-Nexis — Styles.css
+   Versão limpa e responsiva
+   Mantém estética "hacker" (neon verde + vermelho)
+   =========================== */
+
+/* ====== Variáveis (cores, espaçamentos) ====== */
+:root{
+  --bg: #000;
+  --panel: #0b0b0b;
+  --muted: #bfbfbf;
+  --neon-green: #0f0;
+  --neon-red: #ff0033;
+  --card-border: rgba(255,0,51,0.18);
+  --glass: rgba(255,255,255,0.03);
+  --max-width: 1200px;
+  --pad: 20px;
+  --radius: 10px;
+  --mono: 'Share Tech Mono', 'Courier New', monospace;
+}
+
+/* ====== Reset / Base ====== */
+*{box-sizing: border-box;}
+html,body{height:100%;}
+body{
+  margin:0;
+  font-family: var(--mono);
+  background: var(--bg);
+  color: var(--muted);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  line-height:1.6;
+}
+
+/* evitar bloqueio de seleção global — mantenha caso queira copiar textos */
+.no-select{ -webkit-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select:none; }
+
+/* ====== Container padrão ====== */
+.container{
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 calc(var(--pad) / 2);
+}
+
+/* ====== Tipografia ====== */
+h1,h2,h3,h4{ margin:0 0 12px 0; color:var(--neon-red); text-shadow:0 0 8px rgba(255,0,51,0.12); }
+h1{ font-size:2.4rem; color:var(--neon-green); }
+h2{ font-size:1.6rem; }
+p{ margin:0 0 12px 0; color:var(--muted); }
+
+/* ====== Header / Navegação ====== */
+header{
+  padding:var(--pad) 0;
+  border-bottom: 1px solid rgba(255,0,51,0.06);
+  background: linear-gradient(180deg, rgba(255,0,51,0.02), transparent);
+}
+.header-inner{
+  display:flex;
+  gap:16px;
+  align-items:center;
+  justify-content:space-between;
+}
+.logo-cyber{
+  display:flex;
+  gap:12px;
+  align-items:center;
+}
+.logo-cyber img{ max-width:140px; height:auto; border:2px solid var(--neon-red); border-radius:8px; box-shadow:0 0 10px rgba(255,0,51,0.12); }
+.site-title{ color:var(--neon-green); font-size:1.1rem; letter-spacing:1px; }
+
+/* nav links */
+.nav-links{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  align-items:center;
+}
+.nav-links a{
+  display:inline-block;
+  padding:8px 14px;
+  color:var(--neon-red);
+  background:transparent;
+  text-decoration:none;
+  border:1px solid transparent;
+  border-radius:6px;
+  transition: all .18s ease-in-out;
+  font-weight:700;
+}
+.nav-links a:hover,
+.nav-links a:focus{
+  background:var(--neon-red);
+  color:#000;
+  box-shadow:0 0 12px rgba(255,0,51,0.14);
+  outline: none;
+}
+
+/* idioma / select */
+.lang-select{
+  background:var(--panel);
+  color:var(--neon-red);
+  border:1px solid rgba(255,0,51,0.08);
+  padding:6px 8px;
+  border-radius:6px;
+}
+
+/* ====== Seções / Cards ====== */
+.section{
+  background: linear-gradient(180deg, rgba(255,255,255,0.01), var(--panel));
+  border:1px solid var(--card-border);
+  border-radius: var(--radius);
+  padding: calc(var(--pad) * 1.2);
+  margin: 24px 0;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+}
+
+/* destaque de título pequeno */
+.section .kicker{ color:var(--neon-green); font-weight:700; margin-bottom:8px; }
+
+/* ====== Imagens responsivas ====== */
+.gallery-image, img{
+  max-width:100%;
+  height:auto;
+  display:block;
+  border-radius:8px;
+  border:1px solid rgba(255,0,51,0.06);
+}
+
+/* grid de notícia / cards */
+.news-grid{
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap:18px;
+}
+.news-card{
+  background:#080808;
+  border-radius:8px;
+  overflow:hidden;
+  border:1px solid rgba(255,0,51,0.06);
+  box-shadow: 0 6px 18px rgba(255,0,51,0.04);
+  transition: transform .22s ease, box-shadow .22s ease;
+}
+.news-card:hover{ transform: translateY(-6px); box-shadow: 0 12px 36px rgba(255,0,51,0.08); }
+.news-card h3{ color:var(--neon-red); margin:12px; }
+.news-card p{ margin:0 12px 12px; color:var(--muted); }
+
+/* ====== Botões reutilizáveis ====== */
+.btn{
+  display:inline-block;
+  background:var(--neon-red);
+  color:#fff;
+  padding:10px 16px;
+  border-radius:8px;
+  text-decoration:none;
+  font-weight:700;
+  border: none;
+  cursor: pointer;
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+.btn.secondary{
+  background:transparent;
+  color:var(--neon-red);
+  border:1px solid rgba(255,0,51,0.12);
+}
+.btn:hover{ transform: translateY(-3px); box-shadow: 0 8px 20px rgba(255,0,51,0.12); }
+.btn:active{ transform: translateY(-1px); }
+
+/* ====== Formulários e inputs ====== */
+input[type="text"], input[type="password"], textarea, select{
+  width:100%;
+  padding:10px 12px;
+  border-radius:8px;
+  background:#0a0a0a;
+  color:var(--neon-green);
+  border:1px solid rgba(255,0,51,0.06);
+  font-family:var(--mono);
+  outline: none;
+  transition: box-shadow .12s ease, border-color .12s ease;
+}
+input:focus, textarea:focus, select:focus{
+  box-shadow: 0 0 6px rgba(255,0,51,0.12);
+  border-color: var(--neon-red);
+}
+
+/* botões de formulário */
+.form-actions{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+
+/* ====== Chat / mensagens ====== */
+#messages{
+  background:#080808;
+  color:var(--neon-green);
+  padding:12px;
+  border-radius:8px;
+  height:300px;
+  overflow:auto;
+  border:1px solid rgba(255,0,51,0.04);
+}
+.message { margin-bottom:8px; }
+.message .author{ color:var(--neon-red); font-weight:700; margin-right:6px; }
+
+/* ====== Slider / cards (top recrutas) ====== */
+.slider{
+  display:flex;
+  gap:12px;
+  overflow-x:auto;
+  padding-bottom:8px;
+}
+.card{
+  min-width:220px;
+  background:#0b0b0b;
+  border-radius:8px;
+  padding:12px;
+  border:1px solid rgba(255,0,51,0.04);
+}
+
+/* ====== Onboarding overlay (centralizado, acessível) ====== */
+.onboarding-overlay{
+  position:fixed;
+  inset:0;
+  background: rgba(0,0,0,0.95);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:9999;
+  padding:20px;
+}
+.onboarding-box{
+  max-width:600px;
+  width:100%;
+  text-align:center;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border-radius:12px;
+  padding:20px;
+  border:1px solid rgba(255,0,51,0.06);
+}
+.onboarding-box img{ max-width:220px; margin: 0 auto 14px; border-radius:8px; }
+
+/* ====== Matrix canvas (fundo animado) ====== */
+#matrix{
+  position:fixed;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
+  background:transparent;
+}
+
+/* ====== Acessibilidade: foco visível ====== */
+a:focus, button:focus, input:focus, textarea:focus{
+  outline: 2px dashed var(--neon-red);
+  outline-offset:4px;
+}
+
+/* ====== Pequenos utilitários ====== */
+.row{ display:flex; gap:12px; align-items:center; }
+.col{ display:flex; flex-direction:column; gap:8px; }
+
+/* ====== Timeline ====== */
+.timeline{ display:flex; flex-direction:column; gap:14px; }
+.timeline .evento{ border-left:3px solid var(--neon-red); padding-left:12px; color:var(--muted); }
+
+/* ====== Responsividade ====== */
+@media (max-width: 900px){
+  .header-inner{ flex-direction:column; gap:12px; align-items:flex-start; }
+  .nav-links{ justify-content:flex-start; }
+  h1{ font-size:1.8rem; }
+  .onboarding-box{ padding:16px; }
+}
+
+@media (max-width: 600px){
+  .container{ padding:0 12px; }
+  .news-grid{ grid-template-columns: 1fr; }
+  .slider{ gap:8px; }
+  .card{ min-width:180px; }
+}

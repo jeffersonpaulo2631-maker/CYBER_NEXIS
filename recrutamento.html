@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cyber-Nexis - Recrutamento Secreto</title>
+  <!-- Link do CSS -->
+  <link rel="stylesheet" href="Styles.css">
+
+  <script src="https://cdn.emailjs.com/sdk/3.2.0/email.min.js"></script>
+  <script>
+    (function(){
+     emailjs.init('service_sh17aco'); // coloque seu User ID aqui
+    })();
+
+    function enviarEmail(event) {
+      event.preventDefault();
+
+      emailjs.sendForm('service_sh17aco', event.target)
+        .then(() => {
+          alert('Formulário enviado com sucesso!');
+          event.target.reset(); // limpa o formulário
+        }, (error) => {
+          alert('Erro ao enviar o formulário: ' + JSON.stringify(error));
+        });
+    }
+  </script>
+</head>
+<body>
+  <div class="container">
+    <!-- Logotipo -->
+    <img src="Imagem/Logotipo.jpg" alt="Cyber-Nexis Logo" class="logo" />
+
+    <!-- MENU DE NAVEGAÇÃO abaixo do logotipo -->
+    <nav class="nav-links-container">
+      <div class="nav-links">
+        <a href="pagina inicial.html">Pagina inicial</a>
+        <a href="serviços.html">Serviços</a>
+        <a href="recrutamento.html">Recrutamento</a>
+        <a href="noticias.html">Notícias</a>
+        <a href="quiz.html">Teste Quiz</a>
+        <a href="contato.html">Contatos</a>
+        <a href="manual.html">Manual da organização</a>
+        <a href="Chat.html">Chat de conversas</a>
+        <a href="login.html">Login</a>
+        <a href="painel.html">Painel</a>
+        <a href="regras.html">Regras</a>
+      </div>
+    </nav>
+
+    <!-- Conteúdo principal -->
+    <h1>RECRUTAMENTO</h1>
+    <h2>Cyber-Nexis</h2>
+    <img src="Imagem/Imagem089.jpg"alt="Imagem089.jpg" width="1900 "height="1095" class="gallery-image" />
+    <form onsubmit="enviarEmail(event)">
+      <label for="codinome">Codinome:</label>
+      <input type="text" id="codinome" name="codinome" required />
+
+      <label for="especialidade">Especialidade:</label>
+      <select id="especialidade" name="especialidade" required>
+        <option value="inteligencia">Inteligência Cibernética</option>
+        <option value="seguranca">Segurança da Informação</option>
+        <option value="hacker">Hacker Avançado</option>
+        <option value="engenharia">Engenharia Social</option>
+        <option value="analise">Análise de Dados</option>
+      </select>
+
+      <label for="experiencia">Experiência anterior (resumo):</label>
+      <textarea id="experiencia" name="experiencia" rows="4" required></textarea>
+
+      <label for="motivacao">Por que deseja fazer parte da Cyber-Nexis?</label>
+      <textarea id="motivacao" name="motivacao" rows="4" required></textarea>
+
+      <label for="contato">Forma de Contato (e-mail anônimo ou forma segura):</label>
+      <input type="text" id="contato" name="contato" required />
+
+      <button type="submit">Enviar</button>
+    </form>
+
+    <div class="footer">
+      Cyber-Nexis &copy; 2025 — Segurança, Discrição e Inteligência
+    </div>
+  </div>
+</body>
+</html>

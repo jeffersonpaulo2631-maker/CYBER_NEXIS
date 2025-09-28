@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Portal de Notícias Avançado">
+    <title>Portal de Notícias</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- HEADER -->
+    <header>
+        <div class="header-container">
+            <img src="Imagem/Logotipo.jpg" alt="Logo do Portal" class="logo">
+            <nav>
+                <ul class="menu">
+                    <li><a href="noticias.html">Início</a></li>
+                    <li><a href="politica.html">Política</a></li>
+                    <li><a href="tecnologia.html">Tecnologia</a></li>
+                    <li><a href="esportes.html">Esportes</a></li>
+                    <li><a href="cyber_nexis.html">Cyber_Nexis</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- BANNER -->
+    <section class="banner">
+        <h1>Últimas Notícias</h1>
+        <p>Fique atualizado com as principais manchetes do momento.</p>
+
+        <!-- Busca -->
+        <input type="text" id="searchInput" placeholder="Buscar notícias..." class="search-bar">
+
+        <!-- Carrossel -->
+        <div class="carousel">
+            <div class="carousel-item active">
+                <img src="img/destaque1.jpg" alt="Destaque 1">
+                <div class="carousel-caption">
+                    <h2>Destaque: Economia em Alta</h2>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="img/destaque2.jpg" alt="Destaque 2">
+                <div class="carousel-caption">
+                    <h2>Tecnologia: IA Revoluciona Indústrias</h2>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="img/destaque3.jpg" alt="Destaque 3">
+                <div class="carousel-caption">
+                    <h2>Esporte: Grandes Jogos no Fim de Semana</h2>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NOTÍCIAS -->
+    <main>
+        <section class="news-grid">
+            <article class="news-card">
+                <img src="img/noticia1.jpg" alt="Notícia 1">
+                <h2>Título da Notícia 1</h2>
+                <p>Resumo rápido da notícia. Clique para saber mais.</p>
+                <a href="#" class="btn">Leia Mais</a>
+            </article>
+            <article class="news-card">
+                <img src="img/noticia2.jpg" alt="Notícia 2">
+                <h2>Título da Notícia 2</h2>
+                <p>Resumo rápido da notícia. Clique para saber mais.</p>
+                <a href="#" class="btn">Leia Mais</a>
+            </article>
+            <article class="news-card">
+                <img src="img/noticia3.jpg" alt="Notícia 3">
+                <h2>Título da Notícia 3</h2>
+                <p>Resumo rápido da notícia. Clique para saber mais.</p>
+                <a href="#" class="btn">Leia Mais</a>
+            </article>
+        </section>
+    </main>
+
+    <!-- RODAPÉ -->
+    <footer>
+        <p>&copy; 2025 Portal de Notícias - Todos os direitos reservados.</p>
+    </footer>
+
+    <!-- LINK PARA JS -->
+    <script src="portal.js"></script>
+</body>
+</html>

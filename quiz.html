@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Teste de Talento em Tecnologia - Cyber-Nexis</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+</head>
+<body>
+  <header class="header">
+    <h1>Teste de Talento em Tecnologia - Cyber-Nexis</h1>
+    <p>Descubra suas habilidades e conhecimentos em tecnologia!</p>
+  </header>
+  
+  <main class="container quiz-container">
+    <div id="timer" class="timer">Tempo restante: <span id="time">--</span> segundos</div>
+
+    <form id="quiz-form">
+      <!-- Etapa 1 -->
+      <div class="step" id="step1">
+        <h2>Etapa 1</h2>
+        <div class="question-block">
+          <img src="Imagem/images (11).jpeg" alt="Protocolo Internet" class="question-image" />
+          <p>Pergunta 1: Qual é o principal protocolo de comunicação da internet?</p>
+          <label><input type="radio" name="q1" value="HTTP" /> HTTP</label><br />
+          <label><input type="radio" name="q1" value="TCP/IP" /> TCP/IP</label><br />
+          <label><input type="radio" name="q1" value="FTP" /> FTP</label><br />
+          <label><input type="radio" name="q1" value="SMTP" /> SMTP</label><br />
+        </div>
+
+        <div class="question-block">
+          <p>Pergunta 2: Qual é a linguagem de programação mais utilizada para desenvolvimento web?</p>
+          <label><input type="radio" name="q2" value="Python" /> Python</label><br />
+          <label><input type="radio" name="q2" value="JavaScript" /> JavaScript</label><br />
+          <label><input type="radio" name="q2" value="Java" /> Java</label><br />
+          <label><input type="radio" name="q2" value="C++" /> C++</label><br />
+        </div>
+
+        <button type="button" class="next-step">Próximo</button>
+        <div class="step-feedback"></div>
+      </div>
+
+      <!-- Etapa 2 -->
+      <div class="step" id="step2" style="display: none;">
+        <h2>Etapa 2</h2>
+        <div class="question-block">
+          <p>Pergunta 3: O que é um firewall?</p>
+          <label><input type="radio" name="q3" value="Incendio" /> Um dispositivo que protege contra incêndios</label><br />
+          <label><input type="radio" name="q3" value="Seguranca" /> Um sistema de segurança que monitora e controla o tráfego de rede</label><br />
+          <label><input type="radio" name="q3" value="Editor" /> Um software para edição de imagens</label><br />
+          <label><input type="radio" name="q3" value="Protecao" /> Um dispositivo para proteger contra hackers</label><br />
+        </div>
+
+        <div class="question-block">
+          <img src="Imagem/dns.png" alt="DNS" class="question-image" />
+          <p>Pergunta 4: Qual é a função principal do DNS?</p>
+          <label><input type="radio" name="q4" value="IP" /> Converter nomes de domínio em endereços IP</label><br />
+          <label><input type="radio" name="q4" value="Conexao" /> Fornecer conexão à internet</label><br />
+          <label><input type="radio" name="q4" value="DDoS" /> Proteger contra ataques DDoS</label><br />
+          <label><input type="radio" name="q4" value="Armazenar" /> Armazenar dados de sites</label><br />
+        </div>
+
+        <button type="button" class="prev-step">Anterior</button>
+        <button type="button" class="next-step">Próximo</button>
+        <div class="step-feedback"></div>
+      </div>
+
+      <!-- Etapa 3 -->
+      <div class="step" id="step3" style="display: none;">
+        <h2>Etapa 3</h2>
+        <div class="question-block">
+          <img src="Imagem/ip-address.png" alt="Endereço IP" class="question-image" />
+          <p>Pergunta 5: O que é um endereço IP?</p>
+          <label><input type="radio" name="q5" value="Protocolo" /> Um protocolo de rede</label><br />
+          <label><input type="radio" name="q5" value="Endereco" /> Um endereço único atribuído a cada dispositivo conectado à rede</label><br />
+          <label><input type="radio" name="q5" value="Firewall" /> Um tipo de firewall</label><br />
+          <label><input type="radio" name="q5" value="Software" /> Um software de segurança</label><br />
+        </div>
+
+        <div class="question-block">
+          <img src="Imagem/servidor-web.png" alt="Servidor Web" class="question-image" />
+          <p>Pergunta 6: Qual é a principal função de um servidor web?</p>
+          <label><input type="radio" name="q6" value="Arquivos" /> Armazenar arquivos</label><br />
+          <label><input type="radio" name="q6" value="Email" /> Enviar e receber e-mails</label><br />
+          <label><input type="radio" name="q6" value="Conteudo" /> Servir conteúdo da web para os usuários</label><br />
+          <label><input type="radio" name="q6" value="Monitorar" /> Monitorar tráfego de rede</label><br />
+        </div>
+
+        <button type="button" class="prev-step">Anterior</button>
+        <button type="button" class="next-step">Próximo</button>
+        <div class="step-feedback"></div>
+      </div>
+
+      <!-- Etapa 4 -->
+      <div class="step" id="step4" style="display: none;">
+        <h2>Etapa 4</h2>
+        <div class="question-block">
+          <img src="Imagem/https.png" alt="HTTPS" class="question-image" />
+          <p>Pergunta 7: Qual a função do HTTPS em um site?</p>
+          <label><input type="radio" name="q7" value="Velocidade" /> Aumentar a velocidade de carregamento</label><br />
+          <label><input type="radio" name="q7" value="Criptografia" /> Criptografar a comunicação entre o navegador e o servidor</label><br />
+          <label><input type="radio" name="q7" value="Publicidade" /> Exibir anúncios personalizados</label><br />
+          <label><input type="radio" name="q7" value="Firewall" /> Ativar um firewall</label><br />
+        </div>
+
+        <button type="button" class="prev-step">Anterior</button>
+        <button type="button" id="finalizar-btn">Finalizar Teste</button>
+        <div class="step-feedback"></div>
+      </div>
+    </form>
+  </main>
+
+  <!-- Resultado final -->
+  <section id="resultado-envio" style="display:none;">
+    <h3>Resultado do Quiz</h3>
+    <p id="pontuacao-final"></p>
+
+    <form id="form-envio-email">
+      <label for="nome">Seu nome:</label><br />
+      <input type="text" id="nome" name="nome" required /><br /><br />
+      <label for="email">Seu email:</label><br />
+      <input type="email" id="email" name="email" required /><br /><br />
+      <button type="submit">Enviar Resultado</button>
+    </form>
+    <div id="status-envio" class="status-message"></div>
+    <button id="reiniciar-btn">Reiniciar Quiz</button>
+  </section>
+
+  <script src="quiz.js"></script>
+</body>
+</html>
