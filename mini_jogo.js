@@ -143,7 +143,7 @@ document.addEventListener("DOMContentLoaded", () => {
         feedback.style.color = "#0f0";
         feedback.textContent = "Parabéns! Você passou no teste. Redirecionando...";
         setTimeout(() => {
-          window.location.href = "pagina-secreta.html";
+          window.location.href = "pagina-secreta.bkp.html";
         }, 3000);
       } else {
         mostrarPergunta();
