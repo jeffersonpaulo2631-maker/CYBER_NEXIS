@@ -18,7 +18,7 @@
 
       emailjs.sendForm('service_sh17aco', event.target)
         .then(() => {
-          alert('Formulário enviado com sucesso!');
+          alert('Formulário enviado com sucesso! Sua candidatura será analisada de forma confidencial.');
           event.target.reset(); // limpa o formulário
         }, (error) => {
           alert('Erro ao enviar o formulário: ' + JSON.stringify(error));
@@ -34,14 +34,14 @@
     <!-- MENU DE NAVEGAÇÃO abaixo do logotipo -->
     <nav class="nav-links-container">
       <div class="nav-links">
-        <a href="pagina inicial.html">Pagina inicial</a>
+        <a href="pagina inicial.html">Página Inicial</a>
         <a href="serviços.html">Serviços</a>
         <a href="recrutamento.html">Recrutamento</a>
         <a href="noticias.html">Notícias</a>
         <a href="quiz.html">Teste Quiz</a>
         <a href="contato.html">Contatos</a>
-        <a href="manual.html">Manual da organização</a>
-        <a href="Chat.html">Chat de conversas</a>
+        <a href="manual.html">Manual da Organização</a>
+        <a href="Chat.html">Chat Secreto</a>
         <a href="login.html">Login</a>
         <a href="painel.html">Painel</a>
         <a href="regras.html">Regras</a>
@@ -49,13 +49,24 @@
     </nav>
 
     <!-- Conteúdo principal -->
-    <h1>RECRUTAMENTO</h1>
+    <h1>RECRUTAMENTO CONFIDENCIAL</h1>
     <h2>Cyber-Nexis</h2>
-    <img src="Imagem/Imagem089.jpg"alt="Imagem089.jpg" width="1900 "height="1095" class="gallery-image" />
+    <img src="Imagem/Imagem089.jpg" alt="Recrutamento Cyber-Nexis" width="1900" height="1095" class="gallery-image" />
+
+    <p>
+      O ingresso na Cyber-Nexis é restrito a indivíduos com habilidades técnicas, estratégicas ou analíticas excepcionais.  
+      Todas as informações fornecidas aqui serão tratadas com **o mais alto nível de confidencialidade**.  
+      Apenas candidatos atentos e persistentes prosseguem.
+    </p>
+
+    <!-- Dica secreta no HTML -->
+    <!-- Observador: os codinomes fortes possuem referência a animais ou sombras. -->
+
     <form onsubmit="enviarEmail(event)">
       <label for="codinome">Codinome:</label>
-      <input type="text" id="codinome" name="codinome" required />
+      <input type="text" id="codinome" name="codinome" placeholder="Ex.: ShadowFox ou NightOwl" required />
 
+      <!-- Dica invisível no placeholder da especialidade -->
       <label for="especialidade">Especialidade:</label>
       <select id="especialidade" name="especialidade" required>
         <option value="inteligencia">Inteligência Cibernética</option>
@@ -66,16 +77,25 @@
       </select>
 
       <label for="experiencia">Experiência anterior (resumo):</label>
-      <textarea id="experiencia" name="experiencia" rows="4" required></textarea>
+      <textarea id="experiencia" name="experiencia" rows="4" placeholder="Descreva conquistas relevantes ou situações em que atuou discretamente" required></textarea>
 
       <label for="motivacao">Por que deseja fazer parte da Cyber-Nexis?</label>
-      <textarea id="motivacao" name="motivacao" rows="4" required></textarea>
+      <textarea id="motivacao" name="motivacao" rows="4" placeholder="Mostre seu comprometimento, discrição e capacidade analítica" required></textarea>
 
-      <label for="contato">Forma de Contato (e-mail anônimo ou forma segura):</label>
-      <input type="text" id="contato" name="contato" required />
+      <label for="contato">Forma de contato segura (e-mail anônimo, PGP ou outro canal protegido):</label>
+      <input type="text" id="contato" name="contato" placeholder="Ex.: shadowfox@protonmail.com ou outro canal seguro" required />
 
-      <button type="submit">Enviar</button>
+      <!-- Mensagem secreta para candidatos atentos -->
+      <!-- Nota: usuários que mencionarem protocolos de segurança em sua motivação terão prioridade na triagem -->
+
+      <button type="submit">Enviar Candidatura</button>
     </form>
+
+    <p>
+      Nota: Apenas candidatos aprovados em nossa triagem inicial receberão retorno.  
+      Todas as submissões são avaliadas dentro de protocolos internos de segurança e confidencialidade.  
+      <em>Somente observadores atentos perceberão as sutis instruções ocultas nesta página.</em>
+    </p>
 
     <div class="footer">
       Cyber-Nexis &copy; 2025 — Segurança, Discrição e Inteligência
