@@ -1,23 +1,25 @@
-/* ================================
-   📌 CONFIGURAÇÕES INICIAIS
-==================================*/
-
+/* =====================================================
+   ✅ REFERÊNCIAS DO FIREBASE (VINDO DE firebase.js)
+=====================================================*/
 const db = window.firebaseDB;
 const col = window.firebaseCollection;
-const sendDB = window.firebaseAddDoc;
+const addDB = window.firebaseAddDoc;
 const q = window.firebaseQuery;
 const ord = window.firebaseOrderBy;
 const listen = window.firebaseOnSnapshot;
 
-let currentRoom = "publica";     // sala atual
-let currentPass = "";            // senha da sala privada
-let secretKey = null;            // chave AES
-let userID = null;               // ID do visitante
-let lastTimestamp = 0;
+/* =====================================================
+   ✅ VARIÁVEIS GLOBAIS
+=====================================================*/
+let currentRoom = "publica";
+let roomPassword = "";
+let secretKey = null;    // chave AES da sala
+let userID = null;
+let unsubscribe = null;
 
-/* ================================
-   📌 ELEMENTOS DO HTML
-==================================*/
+/* =====================================================
+   ✅ ELEMENTOS HTML
+=====================================================*/
 const messagesEl = document.getElementById("messages");
 const msgInput = document.getElementById("msg-input");
 const codinomeEl = document.getElementById("codinome");
@@ -27,98 +29,99 @@ const sendPublicBtn = document.getElementById("send-public");
 const sendSecretBtn = document.getElementById("send-secret");
 const attachBtn = document.getElementById("attach-btn");
 const fileInput = document.getElementById("file-input");
+
 const themeSelect = document.getElementById("theme");
-const peopleCountEl = document.getElementById("people-count");
-const convoCountEl = document.getElementById("convo-count");
 const lastAction = document.getElementById("last-action");
+const convoCountEl = document.getElementById("convo-count");
+const peopleCountEl = document.getElementById("people-count");
 const roomTag = document.getElementById("room-tag");
 
-const enterRoomBtn = document.getElementById("enter-room");
+// Salas privadas
 const roomPassEl = document.getElementById("room-pass");
+const enterRoomBtn = document.getElementById("enter-room");
 
-/* ================================
-   ✅ LOGIN ANÔNIMO PRONTO
-==================================*/
-window.firebaseAuth.onAuthStateChanged((user) => {
+/* =====================================================
+   ✅ LOGIN ANÔNIMO DO FIREBASE
+=====================================================*/
+window.firebaseAuth.onAuthStateChanged(user => {
   if (user) {
     userID = user.uid;
-    console.log("Usuário logado:", user.uid);
     initChat();
   }
 });
 
-/* ================================
-   ✅ FUNÇÃO INICIAL
-==================================*/
+/* =====================================================
+   ✅ INICIAR SISTEMA DE CHAT
+=====================================================*/
 function initChat() {
+  generateKey("default");   // chave da sala pública
   startRoom("publica");
-  generateKey("default"); // chave de backup
   setupListeners();
 }
 
-/* ================================
-   ✅ TROCAR DE SALA (pública/privada)
-==================================*/
+/* =====================================================
+   ✅ TROCAR ENTRE SALA PÚBLICA E PRIVADA
+=====================================================*/
 enterRoomBtn.addEventListener("click", () => {
   const pass = roomPassEl.value.trim();
 
   if (pass.length === 0) {
+    // voltar para sala pública
     currentRoom = "publica";
     roomTag.textContent = "Sala: pública";
+    generateKey("default");
     startRoom("publica");
     return;
   }
 
-  // entrar na sala privada
+  // sala privada com senha
   currentRoom = "privada-" + pass;
-  currentPass = pass;
-
+  roomPassword = pass;
   roomTag.textContent = "Sala privada";
-  generateKey(pass); // nova chave de criptografia para esta sala
 
+  generateKey(pass);
   startRoom(currentRoom);
 });
 
-/* ================================
-   ✅ OUVINTE DA SALA ATUAL
-==================================*/
-let unsubscribe = null;
-
+/* =====================================================
+   ✅ INICIAR OUVIDOR DA SALA
+=====================================================*/
 function startRoom(roomName) {
-  if (unsubscribe) unsubscribe(); // remove ouvinte anterior
+
+  // cancela ouvinte anterior
+  if (unsubscribe) unsubscribe();
+
   messagesEl.innerHTML = "";
 
   const ref = col(db, "salas", roomName, "mensagens");
   const queryRoom = q(ref, ord("timestamp"));
 
-  unsubscribe = listen(queryRoom, (snap) => {
-    snap.docChanges().forEach((change) => {
+  unsubscribe = listen(queryRoom, snap => {
+    snap.docChanges().forEach(change => {
       if (change.type === "added") {
         renderMessage(change.doc.data());
       }
     });
 
-    lastTimestamp = Date.now();
-    updateConvoCount(snap.size);
+    convoCountEl.textContent = "Conversas: " + snap.size;
   });
 
-  updatePeopleCount();
+  // contagem de pessoas fictícia
+  peopleCountEl.textContent = "Pessoas: ~1";
 }
 
-/* ================================
-   ✅ LISTENERS DE EVENTOS
-==================================*/
+/* =====================================================
+   ✅ LISTENERS DE BOTÕES
+=====================================================*/
 function setupListeners() {
-
   sendPublicBtn.addEventListener("click", () => trySend(false));
   sendSecretBtn.addEventListener("click", () => trySend(true));
 
-  msgInput.addEventListener("keydown", (e) => {
+  msgInput.addEventListener("keydown", e => {
     if (e.key === "Enter") trySend(false);
   });
 
   attachBtn.addEventListener("click", () => fileInput.click());
-
   fileInput.addEventListener("change", handleImageUpload);
 
   themeSelect.addEventListener("change", () => {
@@ -126,19 +129,19 @@ function setupListeners() {
   });
 }
 
-/* ================================
-   ✅ ENVIAR MENSAGEM
-==================================*/
+/* =====================================================
+   ✅ ENVIAR MENSAGEM (PÚBLICA OU SECRETA)
+=====================================================*/
 async function trySend(isSecret) {
   const text = msgInput.value.trim();
+  if (text.length === 0) return;
+
   const codinome = codinomeEl.value.trim() || "Anônimo";
   const avatar = avatarSel.value;
 
-  if (text.length === 0) return;
-
   const encrypted = await encryptText(text);
 
-  await sendDB(col(db, "salas", currentRoom, "mensagens"), {
+  await addDB(col(db, "salas", currentRoom, "mensagens"), {
     uid: userID,
     codinome,
     avatar,
@@ -152,34 +155,35 @@ async function trySend(isSecret) {
   playUserSound();
   registerAction("Enviou uma mensagem");
 
-  // BOT automático
   botAutoResponse(text, isSecret, codinome);
 }
 
-/* ================================
-   ✅ UPLOAD DE IMAGEM
-==================================*/
+/* =====================================================
+   ✅ ENVIO DE IMAGENS
+=====================================================*/
 async function handleImageUpload() {
   const file = fileInput.files[0];
   if (!file) return;
 
   if (!file.type.startsWith("image/")) {
-    alert("Apenas imagens permitidas.");
+    alert("Apenas imagens!");
     return;
   }
+
   if (file.size > 2 * 1024 * 1024) {
-    alert("Imagem muito grande. Máximo 2MB.");
+    alert("Máximo permitido: 2MB");
     return;
   }
 
   const reader = new FileReader();
   reader.onload = async () => {
+    const base64 = reader.result;
+
+    const encrypted = await encryptText(base64);
     const codinome = codinomeEl.value.trim() || "Anônimo";
     const avatar = avatarSel.value;
 
-    const encrypted = await encryptText(reader.result);
-
-    await sendDB(col(db, "salas", currentRoom, "mensagens"), {
+    await addDB(col(db, "salas", currentRoom, "mensagens"), {
       uid: userID,
       codinome,
       avatar,
@@ -191,12 +195,13 @@ async function handleImageUpload() {
 
     playUserSound();
   };
+
   reader.readAsDataURL(file);
 }
 
-/* ================================
+/* =====================================================
    ✅ CRIPTOGRAFIA AES-GCM
-==================================*/
+=====================================================*/
 async function generateKey(pass) {
   const enc = new TextEncoder();
   const hash = await crypto.subtle.digest("SHA-256", enc.encode(pass));
@@ -240,53 +245,44 @@ async function decryptText(encoded) {
     return new TextDecoder().decode(decrypted);
 
   } catch (e) {
-    return "[ERRO: não foi possível descriptografar]";
+    return "[Falha ao descriptografar]";
   }
 }
 
-/* ================================
-   ✅ EXPORTAR MENSAGENS
-==================================*/
-window.exportPublic = () => exportChat(false);
-window.exportSecret = () => exportChat(true);
-
-/* =======================================================
+/* =====================================================
    ✅ RENDERIZAÇÃO DAS MENSAGENS
-=======================================================*/
+=====================================================*/
 async function renderMessage(msg) {
   const div = document.createElement("div");
   div.classList.add("msg");
 
-  // usuário ou bot?
   if (msg.uid === "BOT") div.classList.add("bot");
   else div.classList.add("user");
 
   if (msg.secret) div.classList.add("secret");
 
   const avatarImg = getAvatar(msg.avatar);
-
-  // descriptografar conteúdo
   const text = await decryptText(msg.text);
 
-  const html =
-    `<div class="avatar"><img src="${avatarImg}"></div>
-     <div class="bubble">
-       <div class="meta">${msg.codinome}</div>
-       ${
-         msg.type === "img"
-           ? `<img src="${text}" style="max-width:240px;border-radius:6px;">`
-           : `<div class="text">${text}</div>`
-       }
-     </div>`;
+  div.innerHTML = `
+    <div class="avatar"><img src="${avatarImg}"></div>
+    <div class="bubble">
+      <div class="meta">${msg.codinome}</div>
+      ${
+        msg.type === "img"
+        ? `<img src="${text}" class="img-msg">`
+        : `<div class="text">${text}</div>`
+      }
+    </div>
+  `;
 
-  div.innerHTML = html;
   messagesEl.appendChild(div);
   messagesEl.scrollTop = messagesEl.scrollHeight;
 }
 
-/* =======================================================
+/* =====================================================
    ✅ AVATARES
-=======================================================*/
+=====================================================*/
 function getAvatar(code) {
   switch (code) {
     case "hacker1": return "https://i.imgur.com/Qf6bH4y.png";
@@ -296,28 +292,23 @@ function getAvatar(code) {
   }
 }
 
-/* =======================================================
-   ✅ BOT AUTOMÁTICO AGENTE-X
-=======================================================*/
+/* =====================================================
+   ✅ BOT AGENTE-X
+=====================================================*/
 async function botAutoResponse(text, isSecret, codinome) {
-  let resp = "";
 
-  text = text.toLowerCase();
+  let resp = "Mensagem recebida.";
 
-  if (text.includes("oi") || text.includes("ola"))
-    resp = "Saudações, agente.";
-  else if (text.includes("ajuda"))
-    resp = "Envie o código da missão para consulta.";
-  else if (text.includes("missão"))
-    resp = "Missão confirmada. Processando...";
-  else if (text.includes("quem sou eu"))
-    resp = `Você é ${codinome}, agente classificado.`;
-  else
-    resp = "Mensagem recebida. Operação em andamento.";
+  const t = text.toLowerCase();
+
+  if (t.includes("oi") || t.includes("ola")) resp = "Saudações, agente.";
+  else if (t.includes("ajuda")) resp = "Envie o código da missão.";
+  else if (t.includes("missão")) resp = "Processando sua solicitação...";
+  else if (t.includes("quem sou eu")) resp = `Você é ${codinome}.`;
 
   const encrypted = await encryptText(resp);
 
-  await sendDB(col(db, "salas", currentRoom, "mensagens"), {
+  await addDB(col(db, "salas", currentRoom, "mensagens"), {
     uid: "BOT",
     codinome: "Agente-X",
     avatar: "hacker2",
@@ -330,61 +321,25 @@ async function botAutoResponse(text, isSecret, codinome) {
   playBotSound();
 }
 
-/* =======================================================
-   ✅ CONTADORES
-=======================================================*/
-function updatePeopleCount() {
-  peopleCountEl.textContent = "PESSOAS: ~1";
+/* =====================================================
+   ✅ LOG DE AÇÃO
+=====================================================*/
+function registerAction(action) {
+  lastAction.textContent =
+    action + " (" + new Date().toLocaleTimeString() + ")";
 }
 
-function updateConvoCount(n) {
-  convoCountEl.textContent = "Conversas: " + n;
-}
+/* =====================================================
+   ✅ EXPORTAR CONVERSAS
+=====================================================*/
+window.exportPublic = () => exportChat(false);
+window.exportSecret = () => exportChat(true);
 
-/* =======================================================
-   ✅ PARTICIPANTES (lista lateral)
-=======================================================*/
-listen(col(db, "statusOnline"), (snap) => {
-  const container = document.getElementById("participants");
-  container.innerHTML = "";
-
-  snap.forEach(doc => {
-    const data = doc.data();
-    const div = document.createElement("div");
-    div.className = "participant";
-
-    const avatar = getAvatar(data.avatar || "default");
-
-    div.innerHTML = `
-      <img src="${avatar}">
-      <div>
-        <div>${data.codinome}</div>
-        <div class="small">Sala: ${data.room}</div>
-      </div>
-    `;
-
-    container.appendChild(div);
-  });
-});
-
-/* =======================================================
-   ✅ REGISTRO DE AÇÕES
-=======================================================*/
-function registerAction(text) {
-  lastAction.textContent = text + " (" + new Date().toLocaleTimeString() + ")";
-}
-
-/* =======================================================
-   ✅ EXPORTAR HISTÓRICO
-=======================================================*/
-async function exportChat(isSecret) {
-  const ref = col(db, "salas", currentRoom, "mensagens");
-  const qs = await window.firebaseOnSnapshot;
-
+function exportChat(isSecret) {
   const lines = [];
+
   messagesEl.querySelectorAll(".msg").forEach(el => {
     if (isSecret && !el.classList.contains("secret")) return;
-
     lines.push(el.innerText.replace(/\n+/g, " "));
   });
 
@@ -399,9 +354,9 @@ async function exportChat(isSecret) {
   URL.revokeObjectURL(url);
 }
 
-/* =======================================================
+/* =====================================================
    ✅ SONS
-=======================================================*/
+=====================================================*/
 function playUserSound() {
   const snd = document.getElementById("snd-user");
   snd.src = "https://actions.google.com/sounds/v1/cartoon/wood_plank_flicks.ogg";
