@@ -65,7 +65,7 @@ header{
   gap:12px;
   align-items:center;
 }
-.logo-cyber img{ max-width:140px; height:auto; border:2px solid var(--neon-red); border-radius:8px; box-shadow:0 0 10px rgba(255,0,51,0.12); }
+.logo-cyber img{ max-width:1006x; height:auto; border:none; border-radius:8px; box-shadow:0 0 0px rgba(255,0,51,0.12); }
 .site-title{ color:var(--neon-green); font-size:1.1rem; letter-spacing:1px; }
 
 /* nav links */
