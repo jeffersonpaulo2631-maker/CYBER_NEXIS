@@ -1,0 +1,198 @@
+:root{
+  --bg:#000; --panel:#111; --accent:#e11; --accent-2:#0c0;
+  --text:#f33; --muted:#888; --input-bg:#222;
+  --radius:10px;
+}
+
+/* Cyberpunk */
+[data-theme="cyberpunk"]{
+  --accent:#e11;
+  --accent-2:#0f8;
+  --text:#f33;
+}
+
+/* Neon Blue */
+[data-theme="neon-blue"]{
+  --bg:#040b13;
+  --panel:#071025;
+  --accent:#06f;
+  --accent-2:#3ff;
+  --text:#8fd0ff;
+  --input-bg:#072033;
+}
+
+/* Gray */
+[data-theme="gray"]{
+  --bg:#0b0b0b; --panel:#111; --accent:#a00; --accent-2:#0a0;
+  --text:#ddd; --muted:#aaa;
+}
+
+html,body{
+  height:100%; margin:0; background:var(--bg);
+  font-family: "Segoe UI", monospace; color:var(--text);
+}
+
+.app{
+  display:grid; gap:12px; height:100%;
+  grid-template-rows:80px 1fr;
+  padding:8px;
+}
+
+/* ==== TOPBAR ==== */
+.topbar{
+  display:flex; align-items:center; justify-content:space-between;
+  background:var(--panel);
+  border:4px solid var(--accent);
+  padding:10px; border-radius:8px;
+}
+
+.brand h1{margin:0; font-size:1.5rem; color:var(--accent);}
+.hint{color:var(--muted); font-size:.9rem;}
+
+.stats{display:flex; gap:10px;}
+.stat{
+  background:var(--accent); color:#000;
+  padding:6px 10px; border-radius:6px;
+  font-weight:bold;
+}
+
+.room-box{
+  display:flex; gap:8px;
+}
+.room-box input{
+  padding:6px; border-radius:6px; background:var(--input-bg);
+  border:2px solid #333; color:var(--text);
+}
+.theme-select{
+  padding:6px; border-radius:6px;
+  background:transparent; border:2px solid var(--accent);
+  color:var(--accent);
+}
+
+/* ==== MAIN LAYOUT ==== */
+main{
+  display:grid; grid-template-columns:1fr 300px; gap:12px;
+}
+
+/* CHAT FRAME */
+.chat-frame{
+  border:4px solid var(--accent);
+  background:var(--panel);
+  border-radius:var(--radius);
+  padding:12px;
+  display:flex; flex-direction:column;
+}
+
+.chat-head{
+  display:flex; justify-content:space-between; align-items:center;
+  margin-bottom:10px;
+}
+.chat-title{color:var(--accent); font-size:1.3rem;}
+
+.messages{
+  flex:1; overflow-y:auto;
+  background:#000; border-radius:8px;
+  padding:12px; border:1px solid #222;
+}
+
+/* ==== MESSAGE ITEM ==== */
+.msg{
+  display:flex; gap:10px; margin-bottom:12px;
+  opacity:0; transform:translateY(10px);
+  animation:msgIn .25s forwards;
+}
+@keyframes msgIn{to{opacity:1; transform:none;}}
+
+.avatar{
+  width:50px; height:50px;
+  border-radius:8px; overflow:hidden;
+  border:3px solid var(--accent);
+}
+.avatar img{width:100%; height:100%;}
+
+.bubble{
+  background:#111;
+  padding:8px 12px; border-radius:8px;
+  max-width:75%;
+}
+.meta{color:var(--accent); font-weight:bold; margin-bottom:4px;}
+.text{color:var(--muted);}
+
+/* user vs bot */
+.user .avatar{border-color:var(--accent);}
+.bot .avatar{border-color:var(--accent-2);}
+.bot .bubble{border:1px solid var(--accent-2); color:var(--accent-2);}
+
+/* secret */
+.secret .bubble{border-style:dashed;}
+
+/* ==== COMPOSER ==== */
+.composer{
+  display:flex; gap:8px; align-items:center;
+  border-top:3px solid var(--accent);
+  padding-top:10px; margin-top:12px;
+}
+.codinome{
+  width:150px; padding:6px; background:var(--input-bg);
+  border:none; border-radius:6px; color:var(--text);
+}
+
+.msg{
+  flex:1; padding:10px; font-size:18px;
+  border:2px solid var(--accent); background:var(--input-bg);
+  color:var(--text); border-radius:6px;
+}
+
+.attach{
+  width:46px; height:46px;
+  border:2px solid var(--accent); border-radius:8px;
+  display:flex; align-items:center; justify-content:center;
+  cursor:pointer; font-size:22px;
+}
+
+.send-box{
+  display:flex; flex-direction:column; gap:6px;
+}
+.btn{
+  padding:8px 10px; font-weight:bold;
+  background:var(--accent); color:#000;
+  border:none; border-radius:6px; cursor:pointer;
+}
+.secret-btn{
+  background:transparent; color:var(--accent);
+  border:2px solid var(--accent);
+}
+
+/* ==== RIGHT PANEL ==== */
+.panel-right{
+  background:var(--panel); border-radius:var(--radius);
+  border:4px solid var(--accent);
+  padding:12px; display:flex; flex-direction:column;
+}
+
+.participants{
+  flex:1; overflow-y:auto; margin-bottom:10px;
+}
+.participant{
+  display:flex; gap:10px; align-items:center;
+  padding:8px; border-radius:6px;
+}
+.participant img{
+  width:40px; height:40px; border-radius:6px;
+}
+
+.badge{
+  border:2px solid var(--accent);
+  padding:4px 8px; border-radius:6px;
+  color:var(--accent);
+}
+
+.small{font-size:.85rem; color:var(--muted);}
+
+/* ==== RESPONSIVO ==== */
+@media(max-width:900px){
+  main{grid-template-columns:1fr;}
+  .panel-right{order:3;}
+  .composer{position:fixed; bottom:8px; left:8px; right:8px; background:var(--panel);}
+  .messages{height:60vh;}
+}
