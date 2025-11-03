@@ -1,8 +1,30 @@
+/* ============================================================
+   🌐 CyberNexis — CSS Completo Acessível + Responsivo
+   Desenvolvido especialmente para Jefferson Paulo
+============================================================ */
+
+/* ===============================
+   🎨 VARIÁVEIS PRINCIPAIS
+=================================*/
 :root{
-  --bg:#000; --panel:#111; --accent:#e11; --accent-2:#0c0;
-  --text:#f33; --muted:#888; --input-bg:#222;
+  --bg:#000;
+  --panel:#111;
+  --accent:#e11;
+  --accent-2:#0c0;
+  --text:#f33;
+  --muted:#888;
+  --input-bg:#222;
   --radius:10px;
+
+  /* Acessibilidade */
+  --text-high:#fff;
+  --text-medium:#ccc;
+  --text-low:#888;
 }
+
+/* ===============================
+   🎨 TEMAS
+=================================*/
 
 /* Cyberpunk */
 [data-theme="cyberpunk"]{
@@ -23,176 +45,397 @@
 
 /* Gray */
 [data-theme="gray"]{
-  --bg:#0b0b0b; --panel:#111; --accent:#a00; --accent-2:#0a0;
-  --text:#ddd; --muted:#aaa;
+  --bg:#0b0b0b;
+  --panel:#111;
+  --accent:#a00;
+  --accent-2:#0a0;
+  --text:#ddd;
+  --muted:#aaa;
 }
 
-html,body{
-  height:100%; margin:0; background:var(--bg);
-  font-family: "Segoe UI", monospace; color:var(--text);
+/* ===============================
+   📱 FONTE ADAPTÁVEL
+=================================*/
+html{
+  font-size:16px;
 }
 
+@media(max-width:500px){
+  html{
+    font-size:15px;
+  }
+}
+
+body{
+  margin:0;
+  background:var(--bg);
+  height:100%;
+  font-family:"Segoe UI", monospace;
+  color:var(--text);
+}
+
+/* ===============================
+   📌 ESTRUTURA
+=================================*/
 .app{
-  display:grid; gap:12px; height:100%;
+  display:grid;
+  gap:12px;
+  min-height:100vh;
   grid-template-rows:80px 1fr;
   padding:8px;
 }
 
-/* ==== TOPBAR ==== */
+/* ===============================
+   🔺 TOPO
+=================================*/
 .topbar{
-  display:flex; align-items:center; justify-content:space-between;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
   background:var(--panel);
   border:4px solid var(--accent);
-  padding:10px; border-radius:8px;
+  padding:10px;
+  border-radius:8px;
 }
 
-.brand h1{margin:0; font-size:1.5rem; color:var(--accent);}
-.hint{color:var(--muted); font-size:.9rem;}
-
-.stats{display:flex; gap:10px;}
-.stat{
-  background:var(--accent); color:#000;
-  padding:6px 10px; border-radius:6px;
-  font-weight:bold;
-}
-
-.room-box{
-  display:flex; gap:8px;
-}
-.room-box input{
-  padding:6px; border-radius:6px; background:var(--input-bg);
-  border:2px solid #333; color:var(--text);
-}
-.theme-select{
-  padding:6px; border-radius:6px;
-  background:transparent; border:2px solid var(--accent);
+.brand h1{
+  margin:0;
+  font-size:1.6rem;
   color:var(--accent);
 }
 
-/* ==== MAIN LAYOUT ==== */
-main{
-  display:grid; grid-template-columns:1fr 300px; gap:12px;
+.hint{
+  font-size:0.9rem;
+  color:var(--muted);
 }
 
-/* CHAT FRAME */
+.stats{
+  display:flex;
+  gap:10px;
+}
+
+.stat{
+  background:var(--accent);
+  color:#000;
+  padding:6px 10px;
+  border-radius:6px;
+  font-weight:bold;
+}
+
+/* TOPBAR – Acessibilidade */
+.room-box input{
+  padding:6px;
+  border-radius:6px;
+  background:var(--input-bg);
+  border:2px solid #333;
+  color:var(--text);
+}
+
+.theme-select{
+  padding:6px;
+  border-radius:6px;
+  min-width:50px;
+  background:transparent;
+  border:2px solid var(--accent);
+  color:var(--accent);
+}
+
+/* ===============================
+   🖥️ LAYOUT GERAL
+=================================*/
+main{
+  display:grid;
+  grid-template-columns:1fr 300px;
+  gap:12px;
+}
+
+/* ===============================
+   💬 ÁREA DO CHAT
+=================================*/
 .chat-frame{
   border:4px solid var(--accent);
   background:var(--panel);
   border-radius:var(--radius);
   padding:12px;
-  display:flex; flex-direction:column;
+  display:flex;
+  flex-direction:column;
 }
 
 .chat-head{
-  display:flex; justify-content:space-between; align-items:center;
+  display:flex;
+  justify-content:space-between;
   margin-bottom:10px;
 }
-.chat-title{color:var(--accent); font-size:1.3rem;}
+
+.chat-title{
+  color:var(--accent);
+  font-size:1.3rem;
+}
+
+.status{
+  color:var(--accent-2);
+  font-size:.85rem;
+}
 
 .messages{
-  flex:1; overflow-y:auto;
-  background:#000; border-radius:8px;
-  padding:12px; border:1px solid #222;
+  flex:1;
+  overflow-y:auto;
+  padding:12px;
+  background:#000;
+  border-radius:8px;
+  border:1px solid #222;
 }
 
-/* ==== MESSAGE ITEM ==== */
+/* ===============================
+   🗨️ MENSAGEM
+=================================*/
 .msg{
-  display:flex; gap:10px; margin-bottom:12px;
-  opacity:0; transform:translateY(10px);
+  display:flex;
+  gap:10px;
+  margin-bottom:12px;
+  opacity:0;
+  transform:translateY(10px);
   animation:msgIn .25s forwards;
 }
-@keyframes msgIn{to{opacity:1; transform:none;}}
+
+@keyframes msgIn{
+  to{opacity:1; transform:none;}
+}
 
 .avatar{
-  width:50px; height:50px;
-  border-radius:8px; overflow:hidden;
+  width:50px;
+  height:50px;
+  border-radius:8px;
+  overflow:hidden;
   border:3px solid var(--accent);
 }
-.avatar img{width:100%; height:100%;}
+
+.avatar img{
+  width:100%;
+  height:100%;
+}
 
 .bubble{
   background:#111;
-  padding:8px 12px; border-radius:8px;
+  padding:8px 12px;
+  border-radius:8px;
   max-width:75%;
 }
-.meta{color:var(--accent); font-weight:bold; margin-bottom:4px;}
-.text{color:var(--muted);}
 
-/* user vs bot */
-.user .avatar{border-color:var(--accent);}
-.bot .avatar{border-color:var(--accent-2);}
-.bot .bubble{border:1px solid var(--accent-2); color:var(--accent-2);}
-
-/* secret */
-.secret .bubble{border-style:dashed;}
-
-/* ==== COMPOSER ==== */
-.composer{
-  display:flex; gap:8px; align-items:center;
-  border-top:3px solid var(--accent);
-  padding-top:10px; margin-top:12px;
+.meta{
+  color:var(--text-high);
+  font-weight:bold;
 }
+
+.text{
+  color:var(--text-medium);
+}
+
+/* BOT */
+.bot .avatar{
+  border-color:var(--accent-2);
+}
+.bot .bubble{
+  border:1px solid var(--accent-2);
+  color:var(--accent-2);
+}
+
+/* SECRETA */
+.secret .bubble{
+  border-style:dashed;
+}
+
+/* ===============================
+   ✏️ COMPOSER
+=================================*/
+.composer{
+  display:flex;
+  gap:8px;
+  align-items:center;
+  border-top:3px solid var(--accent);
+  padding-top:10px;
+  margin-top:12px;
+}
+
 .codinome{
-  width:150px; padding:6px; background:var(--input-bg);
-  border:none; border-radius:6px; color:var(--text);
+  width:150px;
+  padding:8px;
+  border-radius:6px;
+  background:var(--input-bg);
+  border:none;
+  color:var(--text);
+  font-size:1rem;
 }
 
 .msg{
-  flex:1; padding:10px; font-size:18px;
-  border:2px solid var(--accent); background:var(--input-bg);
-  color:var(--text); border-radius:6px;
+  flex:1;
+  padding:10px;
+  font-size:1rem;
+  border:2px solid var(--accent);
+  background:var(--input-bg);
+  border-radius:6px;
+  color:var(--text-high);
 }
 
 .attach{
-  width:46px; height:46px;
-  border:2px solid var(--accent); border-radius:8px;
-  display:flex; align-items:center; justify-content:center;
-  cursor:pointer; font-size:22px;
+  width:48px;
+  height:48px;
+  border-radius:8px;
+  border:2px solid var(--accent);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  font-size:22px;
+  user-select:none;
 }
 
-.send-box{
-  display:flex; flex-direction:column; gap:6px;
+.attach, button{
+  min-width:48px;
+  min-height:48px;
+  touch-action:manipulation;
 }
+
 .btn{
-  padding:8px 10px; font-weight:bold;
-  background:var(--accent); color:#000;
-  border:none; border-radius:6px; cursor:pointer;
+  padding:8px 10px;
+  background:var(--accent);
+  color:#000;
+  border:none;
+  border-radius:6px;
+  cursor:pointer;
+  font-weight:bold;
 }
+
 .secret-btn{
-  background:transparent; color:var(--accent);
+  background:transparent;
   border:2px solid var(--accent);
-}
-
-/* ==== RIGHT PANEL ==== */
-.panel-right{
-  background:var(--panel); border-radius:var(--radius);
-  border:4px solid var(--accent);
-  padding:12px; display:flex; flex-direction:column;
-}
-
-.participants{
-  flex:1; overflow-y:auto; margin-bottom:10px;
-}
-.participant{
-  display:flex; gap:10px; align-items:center;
-  padding:8px; border-radius:6px;
-}
-.participant img{
-  width:40px; height:40px; border-radius:6px;
-}
-
-.badge{
-  border:2px solid var(--accent);
-  padding:4px 8px; border-radius:6px;
   color:var(--accent);
 }
 
-.small{font-size:.85rem; color:var(--muted);}
+.send-box{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
 
-/* ==== RESPONSIVO ==== */
+/* ===============================
+   👥 PARTICIPANTES
+=================================*/
+.panel-right{
+  background:var(--panel);
+  border-radius:var(--radius);
+  border:4px solid var(--accent);
+  padding:12px;
+  display:flex;
+  flex-direction:column;
+}
+
+.participants{
+  flex:1;
+  overflow-y:auto;
+}
+
+.participant{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  padding:8px;
+}
+
+.participant img{
+  width:40px;
+  height:40px;
+  border-radius:6px;
+}
+
+.small{
+  font-size:.85rem;
+  color:var(--text-low);
+}
+
+.badge{
+  padding:4px 8px;
+  border:2px solid var(--accent);
+  color:var(--accent);
+  border-radius:6px;
+}
+
+/* ===============================
+   📱 RESPONSIVIDADE
+=================================*/
+
 @media(max-width:900px){
-  main{grid-template-columns:1fr;}
-  .panel-right{order:3;}
-  .composer{position:fixed; bottom:8px; left:8px; right:8px; background:var(--panel);}
-  .messages{height:60vh;}
+
+  main{
+    grid-template-columns:1fr;
+  }
+
+  .panel-right{
+    order:3;
+    margin-top:12px;
+  }
+
+  .messages{
+    height:65vh;
+    margin-bottom:90px;
+  }
+
+  .composer{
+    position:fixed;
+    bottom:0;
+    left:0;
+    right:0;
+    background:var(--panel);
+    padding:12px;
+    border-radius:0;
+    z-index:999;
+  }
+
+  .avatar{
+    width:40px;
+    height:40px;
+  }
+
+  .bubble{
+    max-width:80vw;
+  }
+}
+
+@media(min-width:900px) and (max-width:1300px){
+  main{
+    grid-template-columns:1fr 260px;
+  }
+}
+
+/* TELA GRANDE */
+@media(min-width:1300px){
+  html{
+    font-size:18px;
+  }
+}
+
+/* ===============================
+   ♿ ACESSIBILIDADE
+=================================*/
+
+/* Alto contraste automático */
+@media(prefers-contrast:more){
+  :root{
+    --accent:#ff0000;
+    --accent-2:#00ff00;
+    --text:#fff;
+    --muted:#aaa;
+  }
+
+  .bubble{
+    border:2px solid var(--accent) !important;
+  }
+}
+
+/* Redução de movimento */
+@media(prefers-reduced-motion:reduce){
+  *{
+    animation:none!important;
+    transition:none!important;
+  }
 }
