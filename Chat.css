@@ -1,22 +1,21 @@
 /* ============================================================
-   🌐 CyberNexis — CSS Completo Acessível + Responsivo
+   🌐 CyberNexis — CSS Revisado, Corrigido, Acessível e Responsivo
    Desenvolvido especialmente para Jefferson Paulo
 ============================================================ */
 
 /* ===============================
-   🎨 VARIÁVEIS PRINCIPAIS
+   🎨 VARIÁVEIS GLOBAIS
 =================================*/
 :root{
   --bg:#000;
   --panel:#111;
   --accent:#e11;
-  --accent-2:#0c0;
+  --accent-2:#0f8;
   --text:#f33;
   --muted:#888;
   --input-bg:#222;
   --radius:10px;
 
-  /* Acessibilidade */
   --text-high:#fff;
   --text-medium:#ccc;
   --text-low:#888;
@@ -25,15 +24,12 @@
 /* ===============================
    🎨 TEMAS
 =================================*/
-
-/* Cyberpunk */
 [data-theme="cyberpunk"]{
   --accent:#e11;
   --accent-2:#0f8;
   --text:#f33;
 }
 
-/* Neon Blue */
 [data-theme="neon-blue"]{
   --bg:#040b13;
   --panel:#071025;
@@ -43,7 +39,6 @@
   --input-bg:#072033;
 }
 
-/* Gray */
 [data-theme="gray"]{
   --bg:#0b0b0b;
   --panel:#111;
@@ -54,35 +49,31 @@
 }
 
 /* ===============================
-   📱 FONTE ADAPTÁVEL
+   📱 FONTE
 =================================*/
 html{
   font-size:16px;
 }
-
 @media(max-width:500px){
-  html{
-    font-size:15px;
-  }
-}
-
-body{
-  margin:0;
-  background:var(--bg);
-  height:100%;
-  font-family:"Segoe UI", monospace;
-  color:var(--text);
+  html{ font-size:15px; }
 }
 
 /* ===============================
-   📌 ESTRUTURA
+   ⚙️ GERAL
 =================================*/
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:"Segoe UI", monospace;
+}
+
 .app{
   display:grid;
   gap:12px;
   min-height:100vh;
-  grid-template-rows:80px 1fr;
   padding:8px;
+  grid-template-rows:80px 1fr;
 }
 
 /* ===============================
@@ -91,11 +82,11 @@ body{
 .topbar{
   display:flex;
   justify-content:space-between;
+  padding:10px;
+  border-radius:8px;
   align-items:center;
   background:var(--panel);
   border:4px solid var(--accent);
-  padding:10px;
-  border-radius:8px;
 }
 
 .brand h1{
@@ -103,9 +94,8 @@ body{
   font-size:1.6rem;
   color:var(--accent);
 }
-
 .hint{
-  font-size:0.9rem;
+  font-size:.9rem;
   color:var(--muted);
 }
 
@@ -116,46 +106,44 @@ body{
 
 .stat{
   background:var(--accent);
-  color:#000;
   padding:6px 10px;
   border-radius:6px;
   font-weight:bold;
+  color:#000;
 }
 
-/* TOPBAR – Acessibilidade */
 .room-box input{
   padding:6px;
-  border-radius:6px;
   background:var(--input-bg);
+  border-radius:6px;
   border:2px solid #333;
   color:var(--text);
 }
 
 .theme-select{
   padding:6px;
-  border-radius:6px;
-  min-width:50px;
   background:transparent;
-  border:2px solid var(--accent);
   color:var(--accent);
+  border:2px solid var(--accent);
+  border-radius:6px;
 }
 
 /* ===============================
-   🖥️ LAYOUT GERAL
+   🖥️ LAYOUT
 =================================*/
 main{
   display:grid;
-  grid-template-columns:1fr 300px;
   gap:12px;
+  grid-template-columns:1fr 300px;
 }
 
 /* ===============================
-   💬 ÁREA DO CHAT
+   💬 CHAT
 =================================*/
 .chat-frame{
-  border:4px solid var(--accent);
   background:var(--panel);
   border-radius:var(--radius);
+  border:4px solid var(--accent);
   padding:12px;
   display:flex;
   flex-direction:column;
@@ -168,38 +156,33 @@ main{
 }
 
 .chat-title{
-  color:var(--accent);
   font-size:1.3rem;
-}
-
-.status{
-  color:var(--accent-2);
-  font-size:.85rem;
+  color:var(--accent);
 }
 
 .messages{
   flex:1;
   overflow-y:auto;
-  padding:12px;
-  background:#000;
   border-radius:8px;
+  background:#000;
+  padding:12px;
   border:1px solid #222;
 }
 
 /* ===============================
-   🗨️ MENSAGEM
+   💬 MENSAGENS
 =================================*/
 .msg{
   display:flex;
   gap:10px;
   margin-bottom:12px;
-  opacity:0;
   transform:translateY(10px);
+  opacity:0;
   animation:msgIn .25s forwards;
 }
 
 @keyframes msgIn{
-  to{opacity:1; transform:none;}
+  to{ opacity:1; transform:none; }
 }
 
 .avatar{
@@ -210,21 +193,17 @@ main{
   border:3px solid var(--accent);
 }
 
-.avatar img{
-  width:100%;
-  height:100%;
-}
-
 .bubble{
-  background:#111;
-  padding:8px 12px;
-  border-radius:8px;
   max-width:75%;
+  padding:8px 12px;
+  background:#111;
+  border-radius:8px;
 }
 
 .meta{
-  color:var(--text-high);
   font-weight:bold;
+  color:var(--text-high);
+  margin-bottom:4px;
 }
 
 .text{
@@ -232,49 +211,42 @@ main{
 }
 
 /* BOT */
-.bot .avatar{
-  border-color:var(--accent-2);
-}
-.bot .bubble{
-  border:1px solid var(--accent-2);
-  color:var(--accent-2);
-}
+.bot .avatar{ border-color:var(--accent-2); }
+.bot .bubble{ border:1px solid var(--accent-2); color:var(--accent-2); }
 
 /* SECRETA */
-.secret .bubble{
-  border-style:dashed;
-}
+.secret .bubble{ border-style:dashed; }
 
 /* ===============================
-   ✏️ COMPOSER
+   ✏️ INPUT (renomeado para evitar conflito)
 =================================*/
+.msg-input{
+  flex:1;
+  padding:10px;
+  font-size:1rem;
+  border-radius:6px;
+  background:var(--input-bg);
+  border:2px solid var(--accent);
+  color:var(--text-high);
+}
+
+/* Composer */
 .composer{
   display:flex;
   gap:8px;
-  align-items:center;
-  border-top:3px solid var(--accent);
-  padding-top:10px;
   margin-top:12px;
+  padding-top:10px;
+  border-top:3px solid var(--accent);
+  align-items:center;
 }
 
 .codinome{
   width:150px;
   padding:8px;
-  border-radius:6px;
   background:var(--input-bg);
-  border:none;
+  border-radius:6px;
   color:var(--text);
-  font-size:1rem;
-}
-
-.msg{
-  flex:1;
-  padding:10px;
-  font-size:1rem;
-  border:2px solid var(--accent);
-  background:var(--input-bg);
-  border-radius:6px;
-  color:var(--text-high);
+  border:none;
 }
 
 .attach{
@@ -282,18 +254,12 @@ main{
   height:48px;
   border-radius:8px;
   border:2px solid var(--accent);
+  font-size:22px;
   display:flex;
+  cursor:pointer;
+  user-select:none;
   align-items:center;
   justify-content:center;
-  cursor:pointer;
-  font-size:22px;
-  user-select:none;
-}
-
-.attach, button{
-  min-width:48px;
-  min-height:48px;
-  touch-action:manipulation;
 }
 
 .btn{
@@ -308,14 +274,14 @@ main{
 
 .secret-btn{
   background:transparent;
-  border:2px solid var(--accent);
   color:var(--accent);
+  border:2px solid var(--accent);
 }
 
 .send-box{
   display:flex;
-  flex-direction:column;
   gap:6px;
+  flex-direction:column;
 }
 
 /* ===============================
@@ -338,8 +304,8 @@ main{
 .participant{
   display:flex;
   gap:10px;
-  align-items:center;
   padding:8px;
+  align-items:center;
 }
 
 .participant img{
@@ -348,27 +314,12 @@ main{
   border-radius:6px;
 }
 
-.small{
-  font-size:.85rem;
-  color:var(--text-low);
-}
-
-.badge{
-  padding:4px 8px;
-  border:2px solid var(--accent);
-  color:var(--accent);
-  border-radius:6px;
-}
-
 /* ===============================
-   📱 RESPONSIVIDADE
+   📱 RESPONSIVO
 =================================*/
-
 @media(max-width:900px){
 
-  main{
-    grid-template-columns:1fr;
-  }
+  main{ grid-template-columns:1fr; }
 
   .panel-right{
     order:3;
@@ -385,10 +336,10 @@ main{
     bottom:0;
     left:0;
     right:0;
-    background:var(--panel);
-    padding:12px;
-    border-radius:0;
     z-index:999;
+    padding:12px;
+    background:var(--panel);
+    border-radius:0;
   }
 
   .avatar{
@@ -401,24 +352,14 @@ main{
   }
 }
 
-@media(min-width:900px) and (max-width:1300px){
-  main{
-    grid-template-columns:1fr 260px;
-  }
-}
-
-/* TELA GRANDE */
-@media(min-width:1300px){
-  html{
-    font-size:18px;
-  }
-}
-
 /* ===============================
    ♿ ACESSIBILIDADE
 =================================*/
+:focus{
+  outline:2px solid var(--accent-2);
+  outline-offset:3px;
+}
 
-/* Alto contraste automático */
 @media(prefers-contrast:more){
   :root{
     --accent:#ff0000;
@@ -426,13 +367,11 @@ main{
     --text:#fff;
     --muted:#aaa;
   }
-
   .bubble{
     border:2px solid var(--accent) !important;
   }
 }
 
-/* Redução de movimento */
 @media(prefers-reduced-motion:reduce){
   *{
     animation:none!important;
