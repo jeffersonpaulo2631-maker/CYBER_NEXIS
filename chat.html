@@ -4,6 +4,10 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>CyberNexis — Chat de Conversas</title>
+
+<!-- Acessibilidade: cores adaptáveis -->
+<meta name="color-scheme" content="dark light">
+
 <link rel="stylesheet" href="Chat.css">
 </head>
 
@@ -12,18 +16,19 @@
 <div class="app">
 
   <!-- Topbar -->
-  <header class="topbar">
+  <header class="topbar" role="banner">
     <div class="brand">
-      <h1>CHAT DE CONVERSAS</h1>
+      <h1 id="title-site">CHAT DE CONVERSAS</h1>
       <div class="hint">CyberNexis</div>
     </div>
 
-    <div class="stats">
+    <div class="stats" role="status" aria-live="polite">
       <div class="stat" id="people-count">PESSOAS: 0</div>
       <div class="stat" id="convo-count">Conversas: 0</div>
     </div>
 
-    <div class="controls">
+    <div class="controls" aria-label="Controles de tema e sala">
+      <label for="theme" class="sr-only">Escolher tema</label>
       <select id="theme" class="theme-select">
         <option value="cyberpunk">Cyberpunk (R/V)</option>
         <option value="neon-blue">Neon Blue</option>
@@ -31,6 +36,7 @@
       </select>
 
       <div class="room-box">
+        <label for="room-pass" class="sr-only">Senha da sala privada</label>
         <input id="room-pass" type="text" placeholder="Senha sala (opcional)">
         <button id="enter-room" class="btn secondary">Entrar</button>
       </div>
@@ -38,27 +44,34 @@
   </header>
 
   <!-- Main -->
-  <main>
-    <section class="chat-frame">
+  <main role="main">
+    <section class="chat-frame" aria-label="Janela de conversa">
 
       <div class="chat-head">
         <div>
           <div class="chat-title">Canal de Comunicação</div>
           <div class="small">Escolha o tipo: Pública ou Secreta</div>
         </div>
+
         <div class="room-controls">
-          <div id="status" class="status">Offline</div>
+          <div id="status" class="status" role="status" aria-live="polite">Offline</div>
 
           <button id="export-public" class="btn small-btn">Exportar Pública</button>
           <button id="export-secret" class="btn small-btn">Exportar Secreta</button>
         </div>
       </div>
 
-      <div class="messages" id="messages"></div>
+      <!-- ÁREA DE MENSAGENS ACESSÍVEL -->
+      <div class="messages" id="messages" role="log" aria-live="polite" aria-label="Mensagens do chat"></div>
 
-      <div class="composer">
+      <!-- COMPOSER -->
+      <div class="composer" aria-label="Área de digitação">
+
         <div class="left">
+          <label for="codinome" class="sr-only">Seu codinome</label>
           <input id="codinome" class="codinome" type="text" placeholder="Codinome">
+
+          <label for="avatar-select" class="sr-only">Escolher avatar</label>
           <select id="avatar-select">
             <option value="default">Avatar padrão</option>
             <option value="hacker1">Hacker #1</option>
@@ -67,10 +80,11 @@
           </select>
         </div>
 
+        <label for="msg-input" class="sr-only">Mensagem</label>
         <input id="msg-input" class="msg" type="text" placeholder="Mensagem">
 
         <input id="file-input" type="file" accept="image/*" hidden>
-        <div id="attach-btn" class="attach">📎</div>
+        <div id="attach-btn" class="attach" role="button" tabindex="0" aria-label="Anexar imagem">📎</div>
 
         <div class="send-box">
           <button id="send-public" class="btn">Pública</button>
@@ -80,17 +94,18 @@
 
     </section>
 
-    <!-- Right panel -->
-    <aside class="panel-right">
+    <!-- Painel direito -->
+    <aside class="panel-right" aria-label="Participantes e atividades">
       <div class="panel-top">
         <div class="title">Participantes</div>
         <div id="room-tag" class="badge">Sala: pública</div>
       </div>
 
-      <div id="participants" class="participants"></div>
+      <div id="participants" class="participants" role="list"></div>
+
       <div class="activity">
         <div class="small">Última ação:</div>
-        <div id="last-action" class="small">—</div>
+        <div id="last-action" class="small" aria-live="polite">—</div>
       </div>
     </aside>
 
