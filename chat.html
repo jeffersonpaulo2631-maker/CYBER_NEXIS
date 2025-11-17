@@ -1,539 +1,597 @@
-<!doctype html>  
-<html lang="pt-BR">  
-<head>  
-<meta charset="utf-8" />  
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />  
-<title>Chat de Mensagens - Penumbra (Fullscreen)</title>  
-<style>  
-  :root{  
-    --red:#ff0f0f;  
-    --bg:#000;  
-    --panel:#0b0b0b;  
-    --muted:#555;  
-    --accent:#ff3b3b;  
-    font-family: "Segoe UI", Roboto, Arial, sans-serif;  
-  }  
-  /* Fullscreen app */  
-  html,body{height:100%;margin:0;background:var(--bg);color:#eee}  
-  body{min-height:100vh; -webkit-font-smoothing:antialiased; -webkit-text-size-adjust:100%;}  
-  /* Remove any scroll margins on mobile */  
-  :root { --safe-top: env(safe-area-inset-top); --safe-bottom: env(safe-area-inset-bottom); }  
-  
-  .chat-app{  
-    width:100vw;  
-    height:100vh;  
-    box-sizing:border-box;  
-    border:8px solid var(--red);  
-    display:flex;  
-    flex-direction:column;  
-    background:linear-gradient(0deg, #050505 0%, #000 100%);  
-    margin:0;  
-    overflow:hidden;  
-  }  
-  
-  /* Top bar */  
-  .topbar{  
-    display:flex;  
-    align-items:center;  
-    justify-content:space-between;  
-    background:var(--red);  
-    color:black;  
-    padding:calc(8px + var(--safe-top)) 16px 10px 16px;  
-    font-weight:700;  
-    letter-spacing:1px;  
-    flex: 0 0 auto;  
-  }  
-  .top-left{font-size:28px}  
-  .top-stats{display:flex;gap:10px}  
-  .stat{  
-    background:#0b0b0b;  
-    border:4px solid black;  
-    padding:6px 12px;  
-    min-width:80px;  
-    text-align:center;  
-    color:var(--red);  
-    font-weight:700;  
-  }  
-  
-  /* Main area - mensagens */  
-  .messages{  
-    flex:1 1 auto;  
-    padding:20px;  
-    overflow:auto;  
-    background:#000;  
-  }  
-  .message{  
-    display:flex;  
-    gap:12px;  
-    align-items:flex-start;  
-    margin-bottom:18px;  
-  }  
-  .avatar{  
-    width:64px;height:64px;border:4px solid var(--red);box-sizing:border-box;  
-    border-radius:6px;flex:0 0 64px;background:#111;background-size:cover;background-position:center;  
-  }  
-  .bubble{  
-    color:var(--red);  
-    font-weight:700;  
-  }  
-  .text{  
-    color:#e0e0e0;  
-    margin-top:6px;  
-    white-space:pre-wrap;  
-    word-break:break-word;  
-  }  
-  .message img.attachment{  
-    max-width:220px;  
-    display:block;  
-    margin-top:8px;  
-    border:2px solid var(--red);  
-    border-radius:6px;  
-  }  
-  
-  /* Composer (footer) */  
-  .composer{  
-    display:flex;  
-    align-items:center;  
-    gap:10px;  
-    padding:12px;  
-    border-top:6px solid var(--red);  
-    background:linear-gradient(180deg,#111,#1a1a1a);  
-    box-sizing:border-box;  
-    flex: 0 0 auto;  
-    padding-bottom: calc(12px + var(--safe-bottom));  
-  }  
-  .input-wrap{  
-    flex:1;  
-    display:flex;  
-    align-items:center;  
-    gap:8px;  
-    background:#333;  
-    border-radius:6px;  
-    padding:6px 10px;  
-    border:4px solid var(--red);  
-    min-height:56px;  
-  }  
-  textarea#message-input{  
-    flex:1;  
-    background:transparent;border:0;outline:none;color:#111;  
-    font-size:32px;  
-    height:40px;  
-    resize:none;  
-  }  
-  button.send{  
-    background:var(--red);  
-    border:3px solid black;  
-    color:black;  
-    padding:10px 14px;  
-    border-radius:8px;  
-    font-weight:800;  
-    cursor:pointer;  
-    min-width:84px;  
-    height:56px;  
-  }  
-  .attach{  
-    width:56px;height:56px;border:3px solid var(--red);display:flex;align-items:center;justify-content:center;border-radius:6px;background:#222;cursor:pointer;  
-    font-size:22px;  
-  }  
-  
-  /* Role badge to show current type */  
-  .role-badge{  
-    font-size:12px;  
-    background:#111;  
-    color:var(--red);  
-    padding:4px 8px;  
-    border-radius:6px;  
-    border:2px solid black;  
-    font-weight:700;  
-  }  
-  
-  /* Acessibilidade e responsivo */  
-  @media(max-width:900px){  
-    .top-left{font-size:20px}  
-    .avatar{width:48px;height:48px;flex:0 0 48px}  
-    textarea#message-input{font-size:18px}  
-    .stat{min-width:60px;padding:6px 8px}  
-    .message img.attachment{max-width:160px}  
-  }  
-  
-  /* focus styles */  
-  [tabindex]:focus, button:focus, input:focus, textarea:focus{outline:3px solid rgba(255,15,15,0.5);outline-offset:2px}  
-  textarea::placeholder{color:#666}  
-  
-  /* Modal de escolha de tipo */  
-  .overlay{  
-    position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.65);z-index:9999;  
-  }  
-  .role-modal{  
-    width:min(520px,92vw);  
-    background:#070707;border:6px solid var(--red);padding:20px;border-radius:8px;color:#eee;  
-    box-sizing:border-box;text-align:center;  
-  }  
-  .role-modal h2{margin:0 0 10px 0;color:var(--red)}  
-  .roles{display:flex;gap:12px;justify-content:center;margin-top:12px}  
-  .role-card{flex:1;border:2px solid #222;padding:12px;border-radius:8px;cursor:pointer;background:#0b0b0b}  
-  .role-card:hover{box-shadow:0 0 0 3px rgba(255,15,15,0.12)}  
-  .role-avatar{width:84px;height:84px;margin:0 auto 8px;border-radius:6px;border:4px solid var(--red);background-size:cover;background-position:center}  
-  .role-card strong{display:block;margin-bottom:6px;color:var(--red)}  
-  .role-desc{font-size:13px;color:#bbb}  
-  .choose-btn{margin-top:14px;background:var(--red);color:black;border:none;padding:8px 14px;border-radius:6px;font-weight:800;cursor:pointer;} .
-</style>  
-</head>  
-<body>  
-<div class="chat-app" role="application" aria-labelledby="app-title">  
-  <div class="topbar">  
-    <div style="display:flex;align-items:center;gap:12px">  
-      <div class="top-left" id="app-title">CHAT DE CONVESAS</div>  
-      <div id="role-display" class="role-badge" aria-live="polite">Tipo: —</div>  
-    </div>  
-    <div class="top-stats" aria-hidden="false">  
-      <div class="stat" id="people-count" aria-live="polite">PESSOAS: 0</div>  
-      <div class="stat" id="conv-count" aria-live="polite">Conversas: 0</div>  
-    </div>  
-  </div>  
-  
-  <main class="messages" id="messages" aria-live="polite" aria-label="Lista de mensagens">  
-    <!-- mensagens serão injetadas aqui -->  
-  </main>  
-  
-  <form id="composer" class="composer" aria-label="Enviar mensagem">  
-    <label for="file" class="attach" title="Anexar imagem" role="button" tabindex="0" aria-hidden="false">  
-      📎  
-    </label>  
-    <input type="file" id="file" accept="image/*" style="display:none" aria-hidden="true">  
-    <div class="input-wrap">  
-      <textarea id="message-input" placeholder="Escrever mensagem" aria-label="Escrever mensagem" rows="1"></textarea>  
-    </div>  
-    <button type="submit" class="send" aria-label="Enviar mensagem">ENVIAR</button>  
-  </form>  
-</div>  
-  
-<!-- Modal (escolha de tipo) -->    
-<div id="role-overlay" class="overlay" role="dialog" aria-modal="true" aria-labelledby="role-title">    
-  <div class="role-modal" role="document">    
-    <h2 id="role-title">Escolha como entrar no chat</h2>    
-    <p>Selecione o seu tipo de usuário. Você pode trocar depois (recarregando a página).</p>    
-    <div class="roles" role="list">    
-      <div class="role-card" id="role-visitor" role="listitem" tabindex="0" aria-label="Entrar como Visitante">    
-        <div class="role-avatar" id="avatar-visitor"></div>    
-        <strong>Visitante</strong>    
-        <div class="role-desc">Nome: <em>Visitante</em><br>Avatar gerado automaticamente</div>    
-      </div>    
-      <div class="role-card" id="role-hacker" role="listitem" tabindex="0" aria-label="Entrar como Anônimo (Hacker)">    
-        <div class="role-avatar" id="avatar-hacker"></div>    
-        <strong>Anônimo (Hacker)</strong>    
-        <div class="role-desc">Nome: <em>Anônimo</em><br>Avatar estilo hacker embutido</div>    
-      </div>    
-    </div>    
-    <button class="choose-btn" id="btn-choose" aria-label="Confirmar escolha">Confirmar</button>    
-  </div>    
-</div>  
-  
-<!-- Firebase (v9 modular) -->  
-<script type="module">  
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";  
-  import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";  
-  import { getFirestore, collection, addDoc, serverTimestamp, query, orderBy, onSnapshot, doc, setDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";  
-  import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-storage.js";  
-  
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<title>Chat de Mensagens - Penumbra (Fullscreen)</title>
+<style>
+  :root{
+    --red:#ff0f0f;
+    --bg:#000;
+    --panel:#0b0b0b;
+    --muted:#555;
+    --accent:#ff3b3b;
+    font-family: "Segoe UI", Roboto, Arial, sans-serif;
+  }
+  /* Fullscreen app */
+  html,body{height:100%;margin:0;background:var(--bg);color:#eee}
+  body{min-height:100vh; -webkit-font-smoothing:antialiased; -webkit-text-size-adjust:100%;}
+  /* Remove any scroll margins on mobile */
+  :root { --safe-top: env(safe-area-inset-top); --safe-bottom: env(safe-area-inset-bottom); }
+
+  .chat-app{
+    width:100vw;
+    height:100vh;
+    box-sizing:border-box;
+    border:8px solid var(--red);
+    display:flex;
+    flex-direction:column;
+    background:linear-gradient(0deg, #050505 0%, #000 100%);
+    margin:0;
+    overflow:hidden;
+  }
+
+  /* Top bar */
+  .topbar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    background:var(--red);
+    color:black;
+    padding:calc(8px + var(--safe-top)) 16px 10px 16px;
+    font-weight:700;
+    letter-spacing:1px;
+    flex: 0 0 auto;
+  }
+  .top-left{font-size:28px}
+  .top-stats{display:flex;gap:10px}
+  .stat{
+    background:#0b0b0b;
+    border:4px solid black;
+    padding:6px 12px;
+    min-width:80px;
+    text-align:center;
+    color:var(--red);
+    font-weight:700;
+  }
+
+  /* Main area - mensagens */
+  .messages{
+    flex:1 1 auto;
+    padding:20px;
+    overflow:auto;
+    background:#000;
+  }
+  .message{
+    display:flex;
+    gap:12px;
+    align-items:flex-start;
+    margin-bottom:18px;
+  }
+  .avatar{
+    width:64px;height:64px;border:4px solid var(--red);box-sizing:border-box;
+    border-radius:6px;flex:0 0 64px;background:#111;background-size:cover;background-position:center;
+  }
+  .bubble{
+    color:#ffb3b3;
+    font-weight:800;
+  }
+  .text{
+    color:#e0e0e0;
+    margin-top:6px;
+    white-space:pre-wrap;
+    word-break:break-word;
+    font-size:16px;
+  }
+  .message img.attachment{
+    max-width:220px;
+    display:block;
+    margin-top:8px;
+    border:2px solid var(--red);
+    border-radius:6px;
+  }
+
+  /* Composer (footer) */
+  .composer{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:12px;
+    border-top:6px solid var(--red);
+    background:linear-gradient(180deg,#111,#1a1a1a);
+    box-sizing:border-box;
+    flex: 0 0 auto;
+    padding-bottom: calc(12px + var(--safe-bottom));
+  }
+  .input-wrap{
+    flex:1;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    background:#333;
+    border-radius:6px;
+    padding:6px 10px;
+    border:4px solid var(--red);
+    min-height:56px;
+  }
+  textarea#message-input{
+    flex:1;
+    background:transparent;border:0;outline:none;color:#eee;
+    font-size:18px;
+    height:40px;
+    resize:none;
+  }
+  button.send{
+    background:var(--red);
+    border:3px solid black;
+    color:black;
+    padding:10px 14px;
+    border-radius:8px;
+    font-weight:800;
+    cursor:pointer;
+    min-width:84px;
+    height:56px;
+  }
+  .attach{
+    width:56px;height:56px;border:3px solid var(--red);display:flex;align-items:center;justify-content:center;border-radius:6px;background:#222;cursor:pointer;
+    font-size:22px;
+  }
+
+  /* Role badge to show current type */
+  .role-badge{
+    font-size:12px;
+    background:#111;
+    color:var(--red);
+    padding:4px 8px;
+    border-radius:6px;
+    border:2px solid black;
+    font-weight:700;
+  }
+
+  /* Acessibilidade e responsivo */
+  @media(max-width:900px){
+    .top-left{font-size:20px}
+    .avatar{width:48px;height:48px;flex:0 0 48px}
+    textarea#message-input{font-size:16px}
+    .stat{min-width:60px;padding:6px 8px}
+    .message img.attachment{max-width:160px}
+  }
+
+  /* focus styles */
+  [tabindex]:focus, button:focus, input:focus, textarea:focus{outline:3px solid rgba(255,15,15,0.5);outline-offset:2px}
+  textarea::placeholder{color:#999}
+
+  /* Modal de escolha de tipo */
+  .overlay{
+    position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.65);z-index:9999;
+  }
+  .role-modal{
+    width:min(520px,92vw);
+    background:#070707;border:6px solid var(--red);padding:20px;border-radius:8px;color:#eee;
+    box-sizing:border-box;text-align:center;
+  }
+  .role-modal h2{margin:0 0 10px 0;color:var(--red)}
+  .roles{display:flex;gap:12px;justify-content:center;margin-top:12px}
+  .role-card{flex:1;border:2px solid #222;padding:12px;border-radius:8px;cursor:pointer;background:#0b0b0b}
+  .role-card:hover{box-shadow:0 0 0 3px rgba(255,15,15,0.12)}
+  .role-avatar{width:84px;height:84px;margin:0 auto 8px;border-radius:6px;border:4px solid var(--red);background-size:cover;background-position:center}
+  .role-card strong{display:block;margin-bottom:6px;color:var(--red)}
+  .role-desc{font-size:13px;color:#bbb}
+  .choose-btn{margin-top:14px;background:var(--red);color:black;border:none;padding:8px 14px;border-radius:6px;font-weight:800;cursor:pointer;}
+</style>
+</head>
+<body>
+<div class="chat-app" role="application" aria-labelledby="app-title">
+  <div class="topbar">
+    <div style="display:flex;align-items:center;gap:12px">
+      <div class="top-left" id="app-title">CHAT DE CONVERSAS</div>
+      <div id="role-display" class="role-badge" aria-live="polite">Tipo: —</div>
+    </div>
+    <div class="top-stats" aria-hidden="false">
+      <div class="stat" id="people-count" aria-live="polite">PESSOAS: 0</div>
+      <div class="stat" id="conv-count" aria-live="polite">Conversas: 0</div>
+    </div>
+  </div>
+
+  <main class="messages" id="messages" aria-live="polite" aria-label="Lista de mensagens">
+    <!-- mensagens serão injetadas aqui -->
+  </main>
+
+  <form id="composer" class="composer" aria-label="Enviar mensagem">
+    <label for="file" class="attach" title="Anexar imagem" role="button" tabindex="0" aria-hidden="false">
+      📎
+    </label>
+    <input type="file" id="file" accept="image/*" style="display:none" aria-hidden="true">
+    <div class="input-wrap">
+      <textarea id="message-input" placeholder="Escrever mensagem" aria-label="Escrever mensagem" rows="1"></textarea>
+    </div>
+    <button type="submit" class="send" aria-label="Enviar mensagem">ENVIAR</button>
+  </form>
+</div>
+
+<!-- Modal (escolha de tipo) -->
+<div id="role-overlay" class="overlay" role="dialog" aria-modal="true" aria-labelledby="role-title">
+  <div class="role-modal" role="document">
+    <h2 id="role-title">Escolha como entrar no chat</h2>
+    <p>Selecione o seu tipo de usuário. Você pode trocar depois (recarregando a página).</p>
+    <div class="roles" role="list">
+      <div class="role-card" id="role-visitor" role="listitem" tabindex="0" aria-label="Entrar como Visitante">
+        <div class="role-avatar" id="avatar-visitor"></div>
+        <strong>Visitante</strong>
+        <div class="role-desc">Nome: <em>Visitante</em><br>Avatar gerado automaticamente</div>
+      </div>
+      <div class="role-card" id="role-hacker" role="listitem" tabindex="0" aria-label="Entrar como Anônimo (Hacker)">
+        <div class="role-avatar" id="avatar-hacker"></div>
+        <strong>Anônimo (Hacker)</strong>
+        <div class="role-desc">Nome: <em>Anônimo</em><br>Avatar estilo hacker embutido</div>
+      </div>
+    </div>
+    <button class="choose-btn" id="btn-choose" aria-label="Confirmar escolha">Confirmar</button>
+  </div>
+</div>
+
+<!-- Firebase (v9 modular) -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+  import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
+  import { getFirestore, collection, addDoc, serverTimestamp, query, orderBy, onSnapshot, doc, setDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
+  import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-storage.js";
+
   // ====== CONFIG DO FIREBASE ======
-const firebaseConfig = {
-  apiKey: "AIzaSyA-SrKZcuO6YfZjVyWWTdvLNg17s8u7fgM",
-  authDomain: "chat-cyber-47f3d.firebaseapp.com",
-  databaseURL: "https://chat-cyber-47f3d-default-rtdb.firebaseio.com",
-  projectId: "chat-cyber-47f3d",
-  storageBucket: "chat-cyber-47f3d.firebasestorage.app",
-  messagingSenderId: "742279388826",
-  appId: "1:742279388826:web:cf57b6dee3a54f1e868923"
-};
-// ===============================================
-  // ===============================================  
-  
-  const app = initializeApp(firebaseConfig);  
-  const auth = getAuth(app);  
-  const db = getFirestore(app);  
-  const storage = getStorage(app);  
-  
-  const messagesCol = collection(db, "messages");  
-  const presenceCol = collection(db, "presence");  
-  
-  const messagesEl = document.getElementById("messages");  
-  const peopleCountEl = document.getElementById("people-count");  
-  const convCountEl = document.getElementById("conv-count");  
-  const form = document.getElementById("composer");  
-  const input = document.getElementById("message-input");  
-  const fileInput = document.getElementById("file");  
-  const attachLabel = document.querySelector("label[for='file']");  
-  const roleOverlay = document.getElementById("role-overlay");  
-  const roleVisitor = document.getElementById("role-visitor");  
-  const roleHacker = document.getElementById("role-hacker");  
-  const btnChoose = document.getElementById("btn-choose");  
-  const roleDisplay = document.getElementById("role-display");  
-  const avatarVisitorEl = document.getElementById("avatar-visitor");  
-  const avatarHackerEl = document.getElementById("avatar-hacker");  
-  
-  let currentUser = null;  
-  let displayName = null;  
-  let currentAvatarUrl = null;  
-  let chosenRole = null; // "visitor" | "hacker"  
-  
-  // Avatar hacker embutido: SVG "hooded figure" (base64)  
-  const hackerSvg = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'>  
-    <rect width='100%' height='100%' fill='#080808'/>  
-    <g fill='#ff1f1f' transform='translate(0,6)'>  
-      <path d='M100 18c-25 0-45 25-45 56 0 28 20 51 45 51s45-23 45-51c0-31-20-56-45-56z' opacity='0.95'/>  
-      <path d='M50 140c10-18 28-26 50-26s40 8 50 26v8H50v-8z' opacity='0.9'/>  
-      <rect x='15' y='150' width='170' height='12' rx='6' opacity='0.85'/>  
-    </g>  
-  </svg>`;  
-  const hackerDataUrl = 'data:image/svg+xml;utf8,' + encodeURIComponent(hackerSvg);  
-  
-  // Prepara avatars das opções no modal (avatar visitante gerado aleatoriamente)  
-  function avatarDataUrl(seed) {  
-    try {  
-      const h = parseInt(seed.slice(-6),16) % 360;  
-      const bg = `hsl(${h} 100% 8%)`;  
-      const fg = `hsl(${(h+30)%360} 80% 60%)`;  
-      const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><rect width='100%' height='100%' fill='${bg}'/><g fill='${fg}'><circle cx='100' cy='70' r='36'/><rect x='50' y='120' width='100' height='40' rx='12'/></g></svg>`;  
-      return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);  
-    } catch(e){  
-      return '';  
-    }  
-  }  
-  
-  // coloca pré-visualizações no modal  
-  const tmpSeed = Math.random().toString(16).slice(2) + Date.now().toString(16);  
-  avatarVisitorEl.style.backgroundImage = `url(${avatarDataUrl(tmpSeed)})`;  
-  avatarHackerEl.style.backgroundImage = `url(${hackerDataUrl})`;  
-  
-  // Eventos para seleção por teclado/enter  
-  [roleVisitor, roleHacker].forEach(el => {  
-    el.addEventListener("click", () => {  
-      selectRole(el.id === "role-visitor" ? "visitor" : "hacker");  
-    });  
-    el.addEventListener("keydown", (e) => {  
-      if (e.key === "Enter" || e.key === " ") {  
-        e.preventDefault();  
-        selectRole(el.id === "role-visitor" ? "visitor" : "hacker");  
-      }  
-    });  
-  });  
-  
-  // selecionar role visualmente  
-  function selectRole(role){  
-    chosenRole = role;  
-    roleVisitor.style.borderColor = role === "visitor" ? "var(--red)" : "#222";  
-    roleHacker.style.borderColor = role === "hacker" ? "var(--red)" : "#222";  
-    btnChoose.focus();  
-  }  
-  
-  btnChoose.addEventListener("click", () => {  
-    // aplica default caso nada selecionado  
-    if (!chosenRole) chosenRole = "visitor";  
-    roleOverlay.style.display = "none";  
-    roleDisplay.textContent = chosenRole === "visitor" ? "Tipo: Visitante" : "Tipo: Anônimo (Hacker)";  
-    // se já estiver logado, atualiza displayName/avatar; caso contrário será feito no onAuthStateChanged  
-    if (currentUser) {  
-      applyRoleToSession();  
-    }  
-  });  
-  
-  // Faz login anônimo  
-  signInAnonymously(auth).catch(err => {  
-    console.error("Erro ao autenticar:", err);  
-    alert("Erro ao conectar ao Firebase. Verifique as configurações.");  
-  });  
-  
-  onAuthStateChanged(auth, async (user) => {  
-    if (user) {  
-      currentUser = user;  
-      // pega ou define um displayName simples (para visitante pode ser "Visitante")  
-      // mas o nome final depende da escolha do role  
-      displayName = localStorage.getItem("chatDisplayName") || null;  
-      if (!displayName) {  
-        // Não forçamos prompt aqui; será definido pela role  
-        localStorage.setItem("chatDisplayName", "");  
-      }  
-      // se role já escolhida (modal fechado), aplica. Caso contrário, espera escolha.  
-      if (!roleOverlay || roleOverlay.style.display === "none") {  
-        applyRoleToSession();  
-      }  
-      // registra presença  
-      try {  
-        await setDoc(doc(presenceCol, user.uid), { name: displayName || "Anon", uid: user.uid, lastSeen: serverTimestamp() });  
-      } catch (e){  
-        console.warn("Não foi possível registrar presença:", e);  
-      }  
-      startListening();  
-    } else {  
-      currentUser = null;  
-    }  
-  });  
-  
-  function applyRoleToSession(){  
-    if (chosenRole === "hacker") {  
-      displayName = "Anônimo";  
-      currentAvatarUrl = hackerDataUrl;  
-    } else {  
-      // visitante  
-      displayName = "Visitante";  
-      currentAvatarUrl = avatarDataUrl(currentUser ? currentUser.uid : Math.random().toString(16).slice(2));  
-    }  
-    roleDisplay.textContent = chosenRole === "hacker" ? "Tipo: Anônimo (Hacker)" : "Tipo: Visitante";  
-    localStorage.setItem("chatDisplayName", displayName);  
-    // atualiza presença doc com nome  
-    if (currentUser) {  
-      setDoc(doc(presenceCol, currentUser.uid), { name: displayName, uid: currentUser.uid, lastSeen: serverTimestamp() }).catch(()=>{});  
-    }  
-  }  
-  
-  // Escuta mensagens em tempo real  
-  function startListening() {  
-    const q = query(messagesCol, orderBy("timestamp", "asc"));  
-    onSnapshot(q, (snapshot) => {  
-      messagesEl.innerHTML = "";  
-      snapshot.forEach(docSnap => {  
-        const m = docSnap.data();  
-        renderMessage({ id: docSnap.id, ...m });  
-      });  
-      messagesEl.scrollTop = messagesEl.scrollHeight;  
-    });  
-  
-    onSnapshot(presenceCol, (snap) => {  
-      const count = snap.size;  
-      peopleCountEl.textContent = `PESSOAS: ${count}`;  
-    });  
-  
-    onSnapshot(messagesCol, (snap) => {  
-      convCountEl.textContent = `Conversas: ${snap.size}`;  
-    });  
-  }  
-  
-  function renderMessage(m){  
-    const wrapper = document.createElement("article");  
-    wrapper.className = "message";  
-    wrapper.setAttribute("tabindex","0");  
-    wrapper.setAttribute("role","article");  
-    wrapper.setAttribute("aria-label", `${m.name}: ${m.text ? m.text : 'imagem'}`);  
-  
-    const avatar = document.createElement("div");  
-    avatar.className = "avatar";  
-    avatar.style.backgroundImage = `url(${m.photoURL || currentAvatarUrl})`;  
-  
-    const body = document.createElement("div");  
-    const nameEl = document.createElement("div");  
-    nameEl.className = "bubble";  
-    nameEl.textContent = m.name || "Anônimo";  
-    const textEl = document.createElement("div");  
-    textEl.className = "text";  
-    textEl.textContent = m.text || "";  
-  
-    body.appendChild(nameEl);  
-    body.appendChild(textEl);  
-  
-    if (m.attachmentUrl) {  
-      const img = document.createElement("img");  
-      img.className = "attachment";  
-      img.src = m.attachmentUrl;  
-      img.alt = `${m.name || 'imagem anexada'}`;  
-      body.appendChild(img);  
-    }  
-  
-    wrapper.appendChild(avatar);  
-    wrapper.appendChild(body);  
-    messagesEl.appendChild(wrapper);  
-  }  
-  
-  // Envio do form  
-  form.addEventListener("submit", async (e) => {  
-    e.preventDefault();  
-    await sendMessage();  
-  });  
-  
-  input.addEventListener("keydown", (e) => {  
-    if (e.key === "Enter" && !e.shiftKey) {  
-      e.preventDefault();  
-      sendMessage();  
-    }  
-  });  
-  
-  attachLabel.addEventListener("keydown", (e) => {  
-    if (e.key === "Enter" || e.key === " ") {  
-      e.preventDefault();  
-      fileInput.click();  
-    }  
-  });  
-  
-  fileInput.addEventListener("change", async (ev) => {  
-    const file = ev.target.files[0];  
-    if (!file) return;  
-    const path = `attachments/${currentUser.uid}_${Date.now()}_${file.name}`;  
-    const sRef = storageRef(storage, path);  
-    try {  
-      await uploadBytes(sRef, file);  
-      const url = await getDownloadURL(sRef);  
-      await addDoc(messagesCol, {  
-        uid: currentUser.uid,  
-        name: displayName,  
-        photoURL: currentAvatarUrl,  
-        text: "",  
-        attachmentUrl: url,  
-        timestamp: serverTimestamp()  
-      });  
-      fileInput.value = "";  
-    } catch (err) {  
-      console.error("Erro upload:", err);  
-      alert("Erro ao enviar arquivo.");  
-    }  
-  });  
-  
-  async function sendMessage(){  
-    const text = input.value.trim();  
-    if (!text) return;  
-    try {  
-      // garante que role esteja aplicada  
-      if (!displayName || !currentAvatarUrl) applyRoleToSession();  
-      await addDoc(messagesCol, {  
-        uid: currentUser.uid,  
-        name: displayName,  
-        photoURL: currentAvatarUrl,  
-        text: text,  
-        timestamp: serverTimestamp()  
-      });  
-      input.value = "";  
-      input.focus();  
-    } catch (err) {  
-      console.error("Erro ao enviar mensagem:", err);  
-      alert("Erro ao enviar mensagem.");  
-    }  
-  }  
-  
-  // Atualiza lastSeen a cada 30s  
-  setInterval(async () => {  
-    if (!currentUser) return;  
-    try {  
-      await setDoc(doc(presenceCol, currentUser.uid), { name: displayName, uid: currentUser.uid, lastSeen: serverTimestamp() });  
-    } catch (e) {}  
-  }, 30000);  
-  
-  window.addEventListener("beforeunload", async () => {  
-    if (!currentUser) return;  
-    try {  
-      await deleteDoc(doc(presenceCol, currentUser.uid));  
-    } catch (e){}  
-  });  
-  
-  // auto-expand textarea  
-  function adjustHeight(){  
-    input.style.height = "1px";  
-    input.style.height = (input.scrollHeight) + "px";  
-  }  
-  input.addEventListener("input", adjustHeight);  
-  adjustHeight();  
-  
-  // Se o usuário clicar fora do modal, não fecha. Forçamos escolha.  
-  // Foco inicial  
-  roleVisitor.focus();  
-</script>  
-</body>  
+  // Atenção: chaves de cliente em front-end são esperadas, mas verifique regras do Firestore/Storage.
+  const firebaseConfig = {
+    apiKey: "AIzaSyA-SrKZcuO6YfZjVyWWTdvLNg17s8u7fgM",
+    authDomain: "chat-cyber-47f3d.firebaseapp.com",
+    // databaseURL: "https://chat-cyber-47f3d-default-rtdb.firebaseio.com", // removido porque o projeto usa Firestore
+    projectId: "chat-cyber-47f3d",
+    storageBucket: "chat-cyber-47f3d.appspot.com", // corrigido para .appspot.com
+    messagingSenderId: "742279388826",
+    appId: "1:742279388826:web:cf57b6dee3a54f1e868923"
+  };
+  // ===============================================
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+  const storage = getStorage(app);
+
+  const messagesCol = collection(db, "messages");
+  const presenceCol = collection(db, "presence");
+
+  const messagesEl = document.getElementById("messages");
+  const peopleCountEl = document.getElementById("people-count");
+  const convCountEl = document.getElementById("conv-count");
+  const form = document.getElementById("composer");
+  const input = document.getElementById("message-input");
+  const fileInput = document.getElementById("file");
+  const attachLabel = document.querySelector("label[for='file']");
+  const roleOverlay = document.getElementById("role-overlay");
+  const roleVisitor = document.getElementById("role-visitor");
+  const roleHacker = document.getElementById("role-hacker");
+  const btnChoose = document.getElementById("btn-choose");
+  const roleDisplay = document.getElementById("role-display");
+  const avatarVisitorEl = document.getElementById("avatar-visitor");
+  const avatarHackerEl = document.getElementById("avatar-hacker");
+
+  let currentUser = null;
+  let displayName = null;
+  let currentAvatarUrl = null;
+  let chosenRole = null; // "visitor" | "hacker"
+  let presenceIntervalId = null;
+
+  // Avatar hacker embutido: SVG "hooded figure" (base64)
+  const hackerSvg = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'>
+    <rect width='100%' height='100%' fill='#080808'/>
+    <g fill='#ff1f1f' transform='translate(0,6)'>
+      <path d='M100 18c-25 0-45 25-45 56 0 28 20 51 45 51s45-23 45-51c0-31-20-56-45-56z' opacity='0.95'/>
+      <path d='M50 140c10-18 28-26 50-26s40 8 50 26v8H50v-8z' opacity='0.9'/>
+      <rect x='15' y='150' width='170' height='12' rx='6' opacity='0.85'/>
+    </g>
+  </svg>`;
+  const hackerDataUrl = 'data:image/svg+xml;utf8,' + encodeURIComponent(hackerSvg);
+
+  // deterministic avatar generator (seed-based) - used when message has no photoURL
+  function avatarDataUrl(seed) {
+    try {
+      const s = String(seed || Math.random().toString(16).slice(2));
+      const code = Array.from(s).reduce((acc,c)=>acc + c.charCodeAt(0), 0);
+      const h = code % 360;
+      const bg = `hsl(${h} 100% 8%)`;
+      const fg = `hsl(${(h+30)%360} 80% 60%)`;
+      const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><rect width='100%' height='100%' fill='${bg}'/><g fill='${fg}'><circle cx='100' cy='70' r='36'/><rect x='50' y='120' width='100' height='40' rx='12'/></g></svg>`;
+      return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
+    } catch(e){
+      return '';
+    }
+  }
+
+  // coloca pré-visualizações no modal (seed único por carga)
+  const tmpSeed = Math.random().toString(16).slice(2) + Date.now().toString(16);
+  avatarVisitorEl.style.backgroundImage = `url(${avatarDataUrl(tmpSeed)})`;
+  avatarHackerEl.style.backgroundImage = `url(${hackerDataUrl})`;
+
+  // Eventos para seleção por teclado/enter
+  [roleVisitor, roleHacker].forEach(el => {
+    el.addEventListener("click", () => {
+      selectRole(el.id === "role-visitor" ? "visitor" : "hacker");
+    });
+    el.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        selectRole(el.id === "role-visitor" ? "visitor" : "hacker");
+      }
+    });
+  });
+
+  // selecionar role visualmente
+  function selectRole(role){
+    chosenRole = role;
+    roleVisitor.style.borderColor = role === "visitor" ? "var(--red)" : "#222";
+    roleHacker.style.borderColor = role === "hacker" ? "var(--red)" : "#222";
+    btnChoose.focus();
+  }
+
+  btnChoose.addEventListener("click", async () => {
+    // aplica default caso nada selecionado
+    if (!chosenRole) chosenRole = "visitor";
+    // Aplica role imediatamente à sessão (se já logado)
+    roleOverlay.style.display = "none";
+    roleDisplay.textContent = chosenRole === "visitor" ? "Tipo: Visitante" : "Tipo: Anônimo (Hacker)";
+    if (currentUser) {
+      applyRoleToSession();
+    } else {
+      // salva escolha no localStorage para quando o auth acontecer
+      localStorage.setItem("chatChosenRole", chosenRole);
+    }
+  });
+
+  // Faz login anônimo
+  signInAnonymously(auth).catch(err => {
+    console.error("Erro ao autenticar:", err);
+    alert("Erro ao conectar ao Firebase. Verifique as configurações.");
+  });
+
+  onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      currentUser = user;
+      // pega role escolhida (se já tiver)
+      chosenRole = localStorage.getItem("chatChosenRole") || chosenRole || null;
+      // pega ou define um displayName simples (para visitante pode ser "Visitante")
+      displayName = localStorage.getItem("chatDisplayName") || null;
+      if (!displayName) {
+        // Deixa vazio por enquanto; será definido pela role
+        localStorage.setItem("chatDisplayName", "");
+      }
+      // aplica role se já escolhida; caso contrário, espera escolha no modal
+      if (chosenRole) {
+        applyRoleToSession();
+      }
+      // registra presença inicial (nome pode ser vazio; atualizaremos quando tiver)
+      try {
+        await setDoc(doc(presenceCol, user.uid), { name: displayName || "Anon", uid: user.uid, lastSeen: serverTimestamp() }, { merge: true });
+      } catch (e){
+        console.warn("Não foi possível registrar presença:", e);
+      }
+      startListening();
+      startPresenceHeartbeat();
+    } else {
+      currentUser = null;
+      stopPresenceHeartbeat();
+    }
+  });
+
+  function applyRoleToSession(){
+    if (!chosenRole) chosenRole = "visitor";
+    if (chosenRole === "hacker") {
+      displayName = "Anônimo";
+      currentAvatarUrl = hackerDataUrl;
+    } else {
+      // visitante
+      displayName = "Visitante";
+      // gera avatar determinístico a partir do uid (se houver) ou um seed
+      currentAvatarUrl = avatarDataUrl(currentUser && currentUser.uid ? currentUser.uid : Math.random().toString(16).slice(2));
+    }
+    roleDisplay.textContent = chosenRole === "hacker" ? "Tipo: Anônimo (Hacker)" : "Tipo: Visitante";
+    localStorage.setItem("chatDisplayName", displayName);
+    // atualiza presença doc com nome (merge true para evitar sobrescrever fields não desejados)
+    if (currentUser) {
+      setDoc(doc(presenceCol, currentUser.uid), { name: displayName, uid: currentUser.uid, lastSeen: serverTimestamp() }, { merge: true }).catch(()=>{});
+    }
+  }
+
+  // Escuta mensagens em tempo real
+  let messagesUnsub = null;
+  function startListening() {
+    if (messagesUnsub) messagesUnsub(); // evita duplo listen
+
+    const q = query(messagesCol, orderBy("timestamp", "asc"));
+    messagesUnsub = onSnapshot(q, (snapshot) => {
+      // checa se o usuário está próximo do final antes de re-renderizar
+      const atBottom = isUserNearBottom();
+      // Reconstruir a lista de mensagens (simples e robusto)
+      messagesEl.innerHTML = "";
+      snapshot.forEach(docSnap => {
+        const m = docSnap.data();
+        renderMessage({ id: docSnap.id, ...m });
+      });
+      // Se o usuário estava no final, auto-scroll; caso contrário, preserva posição
+      if (atBottom) {
+        messagesEl.scrollTop = messagesEl.scrollHeight;
+      }
+    });
+
+    // presença: atualiza contador
+    onSnapshot(presenceCol, (snap) => {
+      const count = snap.size;
+      peopleCountEl.textContent = `PESSOAS: ${count}`;
+    });
+
+    // contagem das conversas (número de mensagens)
+    onSnapshot(messagesCol, (snap) => {
+      convCountEl.textContent = `Conversas: ${snap.size}`;
+    });
+  }
+
+  function isUserNearBottom() {
+    const threshold = 140; // px
+    return (messagesEl.scrollTop + messagesEl.clientHeight) >= (messagesEl.scrollHeight - threshold);
+  }
+
+  function renderMessage(m){
+    const wrapper = document.createElement("article");
+    wrapper.className = "message";
+    wrapper.setAttribute("tabindex","0");
+    wrapper.setAttribute("role","article");
+    wrapper.setAttribute("aria-label", `${m.name || 'Anônimo'}: ${m.text ? m.text : 'imagem'}`);
+
+    const avatar = document.createElement("div");
+    avatar.className = "avatar";
+    // evita usar variáveis mutáveis (currentAvatarUrl) como fallback para mensagens antigas
+    const avatarUrl = m.photoURL || (m.uid ? avatarDataUrl(m.uid) : avatarDataUrl(m.name || Math.random().toString(16)));
+    avatar.style.backgroundImage = `url(${avatarUrl})`;
+
+    const body = document.createElement("div");
+    const nameEl = document.createElement("div");
+    nameEl.className = "bubble";
+    nameEl.textContent = m.name || "Anônimo";
+    const textEl = document.createElement("div");
+    textEl.className = "text";
+    textEl.textContent = m.text || "";
+
+    body.appendChild(nameEl);
+    body.appendChild(textEl);
+
+    if (m.attachmentUrl) {
+      const img = document.createElement("img");
+      img.className = "attachment";
+      img.src = m.attachmentUrl;
+      img.alt = `${m.name || 'imagem anexada'}`;
+      body.appendChild(img);
+    }
+
+    wrapper.appendChild(avatar);
+    wrapper.appendChild(body);
+    messagesEl.appendChild(wrapper);
+  }
+
+  // Envio do form
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    await sendMessage();
+  });
+
+  input.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage();
+    }
+  });
+
+  attachLabel.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      fileInput.click();
+    }
+  });
+
+  fileInput.addEventListener("change", async (ev) => {
+    const file = ev.target.files[0];
+    if (!file) return;
+    if (!currentUser) {
+      alert("Aguarde — autenticando...");
+      fileInput.value = "";
+      return;
+    }
+    const safeName = file.name.replace(/[^a-zA-Z0-9.\-_]/g, "_");
+    const path = `attachments/${currentUser.uid}_${Date.now()}_${safeName}`;
+    const sRef = storageRef(storage, path);
+    try {
+      await uploadBytes(sRef, file);
+      const url = await getDownloadURL(sRef);
+      await addDoc(messagesCol, {
+        uid: currentUser.uid,
+        name: displayName,
+        photoURL: currentAvatarUrl,
+        text: "",
+        attachmentUrl: url,
+        timestamp: serverTimestamp()
+      });
+      fileInput.value = "";
+    } catch (err) {
+      console.error("Erro upload:", err);
+      alert("Erro ao enviar arquivo.");
+    }
+  });
+
+  async function sendMessage(){
+    const text = input.value.trim();
+    if (!text) return;
+    try {
+      // garante que role esteja aplicada
+      if (!displayName || !currentAvatarUrl) applyRoleToSession();
+      await addDoc(messagesCol, {
+        uid: currentUser.uid,
+        name: displayName,
+        photoURL: currentAvatarUrl,
+        text: text,
+        timestamp: serverTimestamp()
+      });
+      input.value = "";
+      input.focus();
+    } catch (err) {
+      console.error("Erro ao enviar mensagem:", err);
+      alert("Erro ao enviar mensagem.");
+    }
+  }
+
+  // Presença: atualiza lastSeen a cada 60s (reduzimos a frequência para evitar writes desnecessários)
+  function startPresenceHeartbeat(){
+    stopPresenceHeartbeat();
+    if (!currentUser) return;
+    presenceIntervalId = setInterval(async () => {
+      try {
+        await setDoc(doc(presenceCol, currentUser.uid), { name: displayName, uid: currentUser.uid, lastSeen: serverTimestamp() }, { merge: true });
+      } catch (e) {}
+    }, 60000); // 60s
+  }
+  function stopPresenceHeartbeat(){
+    if (presenceIntervalId) {
+      clearInterval(presenceIntervalId);
+      presenceIntervalId = null;
+    }
+  }
+
+  window.addEventListener("beforeunload", async () => {
+    if (!currentUser) return;
+    try {
+      await deleteDoc(doc(presenceCol, currentUser.uid));
+    } catch (e){}
+  });
+
+  // auto-expand textarea
+  function adjustHeight(){
+    input.style.height = "1px";
+    input.style.height = (input.scrollHeight) + "px";
+  }
+  input.addEventListener("input", adjustHeight);
+  adjustHeight();
+
+  // Forçamos escolha: foco inicial no modal
+  roleVisitor.focus();
+
+  // se houver escolha salva (por exemplo recarregou), mostra modal fechado
+  (function initFromStorage(){
+    const savedChosen = localStorage.getItem("chatChosenRole");
+    if (savedChosen) {
+      chosenRole = savedChosen;
+      roleOverlay.style.display = "none";
+      roleDisplay.textContent = chosenRole === "hacker" ? "Tipo: Anônimo (Hacker)" : "Tipo: Visitante";
+    } else {
+      // manter modal visível
+      roleOverlay.style.display = "flex";
+    }
+  })();
+
+</script>
+</body>
 </html>
