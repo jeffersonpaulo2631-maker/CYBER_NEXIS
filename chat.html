@@ -238,16 +238,15 @@
   import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-storage.js";
 
   // ====== CONFIG DO FIREBASE ======
-  // Atenção: chaves de cliente em front-end são esperadas, mas verifique regras do Firestore/Storage.
+ // Atenção: chaves de cliente em front-end são esperadas, mas verifique regras do Firestore/Storage.
   const firebaseConfig = {
-    apiKey: "AIzaSyA-SrKZcuO6YfZjVyWWTdvLNg17s8u7fgM",
-    authDomain: "chat-cyber-47f3d.firebaseapp.com",
-    // databaseURL: "https://chat-cyber-47f3d-default-rtdb.firebaseio.com", // removido porque o projeto usa Firestore
-    projectId: "chat-cyber-47f3d",
-    storageBucket: "chat-cyber-47f3d.appspot.com", // corrigido para .appspot.com
-    messagingSenderId: "742279388826",
-    appId: "1:742279388826:web:cf57b6dee3a54f1e868923"
-  };
+  apiKey: "AIzaSyA4Q8KHC5A0dmWAAotx1iPU4fMBlnsaloo",
+  authDomain: "penumbra-chat.firebaseapp.com",
+  projectId: "penumbra-chat",
+  storageBucket: "penumbra-chat.firebasestorage.app",
+  messagingSenderId: "715420431774",
+  appId: "1:715420431774:web:837a2fa9013989796cd28f"
+};
   // ===============================================
 
   const app = initializeApp(firebaseConfig);
