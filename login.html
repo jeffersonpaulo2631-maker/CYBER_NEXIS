@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Acesso Restrito — Cyber-Nexis</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="Styles.css">
+</head>
+<body>
+
+<main class="container">
+  <section class="section">
+    <h2>ACESSO RESTRITO</h2>
+    <p>Identificação necessária para prosseguir.</p>
+
+    <input type="email" id="email" placeholder="Email operacional">
+    <input type="password" id="senha" placeholder="Código de acesso">
+
+    <div class="form-actions">
+      <button onclick="login()">Entrar</button>
+      <button onclick="registrar()" class="secondary">Registrar</button>
+    </div>
+
+    <p id="feedback"></p>
+  </section>
+</main>
+
+<!-- ==================== FIREBASE SDK (MODULAR) ==================== -->
+<script type="module">
+  // Importações Firebase v9 (web)
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+  import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged } 
+    from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics.js";
+
+  // Configuração Firebase (a sua)
+  const firebaseConfig = {
+    apiKey: "AIzaSyBKUG6939mNuyHfj6rnGE6ua13uh-QnC4w",
+    authDomain: "cybernexislogin.firebaseapp.com",
+    projectId: "cybernexislogin",
+    storageBucket: "cybernexislogin.firebasestorage.app",
+    messagingSenderId: "1076315711474",
+    appId: "1:1076315711474:web:fa0d15932379b12ea32d6b",
+    measurementId: "G-0KC9817BW0"
+  };
+
+  // Inicialização
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  getAnalytics(app);
+
+  // ===== FUNÇÕES GLOBAIS =====
+  window.login = function () {
+    const email = document.getElementById("email").value;
+    const senha = document.getElementById("senha").value;
+    const feedback = document.getElementById("feedback");
+
+    signInWithEmailAndPassword(auth, email, senha)
+      .then(() => {
+        window.location.href = "index.html";
+      })
+      .catch(() => {
+        feedback.innerText = "Acesso negado. Credenciais inválidas.";
+      });
+  };
+
+  window.registrar = function () {
+    const email = document.getElementById("email").value;
+    const senha = document.getElementById("senha").value;
+    const feedback = document.getElementById("feedback");
+
+    createUserWithEmailAndPassword(auth, email, senha)
+      .then(() => {
+        window.location.href = "index.html";
+      })
+      .catch(error => {
+        feedback.innerText = error.message;
+      });
+  };
+
+  // ===== EVITA USUÁRIO LOGADO VER LOGIN =====
+  onAuthStateChanged(auth, user => {
+    if (user) {
+      window.location.href = "index.html";
+    }
+  });
+</script>
+
+</body>
+</html>
