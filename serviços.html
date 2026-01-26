@@ -5,7 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Serviços da Cyber-Nexis — investigação forense, auditoria de segurança, proteção de fontes e remediação de incidentes.">
     <title>Serviços - Cyber-Nexis</title>
-    <link rel="stylesheet" href="Styles.css">
+    <link rel="stylesheet" href="Styles.css">  
+  <script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } 
+    from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBKUG6939mNuyHfj6rnGE6ua13uh-QnC4w",
+    authDomain: "cybernexislogin.firebaseapp.com",
+    projectId: "cybernexislogin",
+    storageBucket: "cybernexislogin.firebasestorage.app",
+    messagingSenderId: "1076315711474",
+    appId: "1:1076315711474:web:fa0d15932379b12ea32d6b"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  onAuthStateChanged(auth, user => {
+    if (!user) {
+      window.location.href = "login.html";
+    }
+  });
+</script>  
 </head>
 <body>
     <header>
