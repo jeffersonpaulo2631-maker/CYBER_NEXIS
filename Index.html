@@ -18,8 +18,17 @@
   <title>Cyber-Nexis — Rede Discreta de Observação e Análise</title>
   <meta name="description" content="A Cyber-Nexis é uma rede descentralizada de especialistas dedicada à observação ética e à intervenção controlada em falhas sistêmicas. Acesso restrito por verificação.">
 </head>
+<div id="onboarding" class="onboarding-overlay" style="display:none;">
+  <img id="onboarding-img" alt="Onboarding Cyber-Nexis">
+  <p id="onboarding-text"></p>
 
-<body>
+  <div class="form-actions">
+    <button onclick="prevStep()">Voltar</button>
+    <button onclick="nextStep()">Avançar</button>  
+  </div>
+</div>
+<body>   
+</div>
   <header>
     <div class="container header-inner">
       <div class="logo-cyber">
@@ -65,10 +74,10 @@
         A Cyber-Nexis atua de forma descentralizada, conectando analistas, técnicos e investigadores sob um mesmo propósito:
         garantir que a verdade alcance os espaços onde ela pode gerar mudança concreta.
       </p>
-      <p><strong>Nosso compromisso é com a precisão. Nossa presença, com a discrição.</strong></p>
-      <img src="Imagem/Governos.jpg" width="1024" height="1024" alt="Redes e estruturas institucionais" class="gallery-image">
-    </section>
-    
+      <p><strong>Nosso compromisso é com a precisão. Nossa presença, com a discrição.</strong></p><video width="1024" height="1024" controls>
+  <source src="Video/governos.mp4" type="video/mp4">
+  Seu navegador não suporta vídeo.
+</video>
     <!-- ==================== SOBRE A CYBER-NEXIS ==================== -->
     <section class="section">
       <h2>SOBRE A CYBER-NEXIS</h2>
@@ -88,9 +97,8 @@
         Esses controles existem para proteger tanto as informações coletadas quanto as pessoas envolvidas nas operações.
       </p>
 
-      <p>
-        Se você encontrou este conteúdo, considere que a exposição não é casual. A presença aqui indica que você acessou uma interseção de informações que merece atenção — e, possivelmente, avaliação.
-      </p>
+   <p>
+        Se você encontrou este conteúdo, considere que a exposição não é casual. A presença aqui indica que você acessou uma interseção de informações que merece atenção — e, possivelmente, avaliação. </p>
 
       <div class="image-gallery">
         <img src="Imagem/Imagem09.jpg" alt="Rede descentralizada da Cyber-Nexis" class="gallery-image">
@@ -123,7 +131,7 @@
         A longo prazo, buscamos consolidar uma rede que transcenda fronteiras — capaz de auditar, registrar e agir de maneira independente.
         Uma rede descentralizada, porém coesa em seus protocolos.
       </p>
-      <img src="Imagem/Garoto.jpeg" width="1024" height="1024" alt="Visão estratégica Cyber-Nexis" class="allery-image">
+      <img src="Imagem/Garoto.jpeg" width="1024" height="1024" alt="Visão estratégica Cyber-Nexis" class="Gallery-image">
     </section>
 
     <!-- ==================== HIERARQUIA OCULTA ==================== -->
@@ -183,6 +191,21 @@
       <img src="Imagem/86773513-ca70-4338-b0c2-d56f1c6292c2.jpeg" width="1024" height="1024" alt="Protocolos e fluxos de decisão Cyber-Nexis" class="gallery-image">
     </section>
 
+<section class="section">
+  <h2>TESTE DE OBSERVAÇÃO</h2>
+<p id="pergunta-mini-jogo"></p>
+<img id="imagem-mini-jogo" style="max-width:100%">
+<div id="opcoes-mini-jogo"></div>
+<p id="feedback-mini-jogo"></p>
+<p id="progresso-mini-jogo"></p>
+</section>
+<button
+  id="acesso-oculto"
+  style="display:none; margin-top:20px;"
+>
+  Acessar Arquivo Restrito
+</button>
+
     <!-- ==================== NÚCLEOS OPERACIONAIS ==================== -->
     <section class="section">
       <h2>NÚCLEOS OPERACIONAIS</h2>
@@ -214,7 +237,7 @@
         <input type="text" id="senha-osint" placeholder="Digite a senha encontrada" aria-label="Campo para senha OSINT">
         <button id="validar-osint" class="btn secondary">Validar</button>
       </div>
-
+</section>
     <!-- ==================== ZONA DE SOMBRA (Operações Sigilosas) ==================== -->
     <section class="section">
       <h2>ZONA DE SOMBRA</h2>
@@ -321,8 +344,7 @@
       <h2>SOMBRA DIGITAL</h2>
       <p>
         Espaço para mensagens públicas cifradas e anotações transitórias. Mensagens postadas aqui são enfileiradas e exibidas de forma assinada para preservar autoria relativa sem expor identidades.
-      </p>
-
+ 
       <div id="messages" aria-live="polite"></div>
       <textarea id="message-input" rows="3" placeholder="Mensagem pública (respeite o código de conduta)" aria-label="Mensagem cifrada"></textarea>
 
@@ -423,7 +445,7 @@
     </footer>
 
  <script>
-  // ==================== ONBOARDING INTERATIVO – VERSÃO FINAL ====================
+  // ==================== ONBOARDING INTERATIVO (VERSÃO ESTÁVEL) ====================
 
   const onboardingSteps = [
     {
@@ -458,31 +480,46 @@
 
   let currentStep = 0;
 
+  function getElements() {
+    return {
+      overlay: document.getElementById("onboarding"),
+      img: document.getElementById("onboarding-img"),
+      text: document.getElementById("onboarding-text")
+    };
+  }
+
   function showStep(index) {
-    const imgEl = document.getElementById("onboarding-img");
-    const textEl = document.getElementById("onboarding-text");
-    const overlayEl = document.getElementById("onboarding");
+    const { overlay, img, text } = getElements();
 
-    if (!imgEl || !textEl || !overlayEl) return;
+    // Proteção total contra null
+    if (!overlay || !img || !text) {
+      console.warn("Onboarding: elementos não encontrados no DOM.");
+      return;
+    }
 
-    // Reset fade
-    imgEl.style.opacity = 0;
-    textEl.style.opacity = 0;
+    // Protege índice inválido
+    if (index < 0 || index >= onboardingSteps.length) return;
+
+    const step = onboardingSteps[index];
+
+    // Reset visual
+    img.style.opacity = "0";
+    text.style.opacity = "0";
 
     // Atualiza conteúdo
-    imgEl.src = onboardingSteps[index].img;
-    textEl.innerText = onboardingSteps[index].text;
+    img.src = step.img;
+    text.textContent = step.text;
 
-    // Mostra overlay
-    overlayEl.style.display = "flex";
+    // Exibe overlay
+    overlay.style.display = "flex";
 
-    // Fade-in suave
-    setTimeout(() => {
-      imgEl.style.transition = "opacity 0.8s";
-      textEl.style.transition = "opacity 0.8s";
-      imgEl.style.opacity = 1;
-      textEl.style.opacity = 1;
-    }, 50);
+    // Fade-in
+    requestAnimationFrame(() => {
+      img.style.transition = "opacity 0.8s";
+      text.style.transition = "opacity 0.8s";
+      img.style.opacity = "1";
+      text.style.opacity = "1";
+    });
   }
 
   function nextStep() {
@@ -490,8 +527,8 @@
       currentStep++;
       showStep(currentStep);
     } else {
-      const overlayEl = document.getElementById("onboarding");
-      if (overlayEl) overlayEl.style.display = "none";
+      const { overlay } = getElements();
+      if (overlay) overlay.style.display = "none";
       localStorage.setItem("onboardingCompleted", "true");
     }
   }
@@ -503,13 +540,11 @@
     }
   }
 
-  // Inicializa somente quando tudo estiver carregado
-  window.addEventListener("load", function() {
-    const el = document.getElementById("id-do-elemento");
-    if (el) { // garante que o elemento existe
-        el.addEventListener("click", function() {
-            // seu código aqui
-        });
+  // Inicialização segura (DOM 100% pronto)
+  document.addEventListener("DOMContentLoaded", () => {
+    const completed = localStorage.getItem("onboardingCompleted");
+    if (completed !== "true") {
+      showStep(currentStep);
     }
-});
+  });
 </script>
