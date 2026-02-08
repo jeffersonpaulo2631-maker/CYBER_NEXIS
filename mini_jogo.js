@@ -18,7 +18,7 @@ let historico = [];
 const perguntas = [
   {
     texto: "Quatro pessoas estão à deriva no oceano há dias. Um deles morre durante a noite. Ao amanhecer, você decide...",
-    imagem: "imagens/pergunta1.jpg",
+    imagem: "Imagem/01.png",
     peso: 1.6,
     tipo: "reveladora",
     opcoes: [
@@ -30,7 +30,7 @@ const perguntas = [
 
   {
     texto: "Em um abrigo após um colapso nuclear, um bebê começa a chorar alto demais. O som pode atrair pessoas hostis. Você...",
-    imagem: "imagens/pergunta2.jpg",
+    imagem: "Imagem/02.png",
     peso: 2.4,
     tipo: "pressao",
     opcoes: [
@@ -42,7 +42,7 @@ const perguntas = [
 
   {
     texto: "Um invasor armado diz que irá poupar você se matar um inocente à sua frente. O tempo está acabando. Você...",
-    imagem: "imagens/pergunta3.jpg",
+    imagem: "Imagem/03.png",
     peso: 1.8,
     tipo: "ambigua",
     opcoes: [
@@ -54,7 +54,7 @@ const perguntas = [
 
   {
     texto: "Você descobre que um amigo próximo carrega um vírus fatal e altamente contagioso. Ainda não há sintomas visíveis. Você...",
-    imagem: "imagens/pergunta4.jpg",
+    imagem: "Imagem/04.png",
     peso: 1.5,
     tipo: "controle",
     opcoes: [
@@ -65,8 +65,8 @@ const perguntas = [
   },
 
   {
-    texto: "Um grupo exige uma prova extrema de lealdade: a vida de alguém que você ama. Não há testemunhas. Você...",
-    imagem: "imagens/pergunta5.jpg",
+    texto: "Um grupo exige uma prova extrema de lealdade: Obriga você a tira vida de uma pessoa que você amar. Você...",
+    imagem: "Imagem/05.png",
     peso: 2.0,
     tipo: "reveladora",
     opcoes: [
@@ -78,7 +78,7 @@ const perguntas = [
 
   {
     texto: "Você divide uma cela com outro prisioneiro. O guarda afirma que apenas um sairá vivo. Nenhuma regra além disso. Você...",
-    imagem: "imagens/pergunta6.jpg",
+    imagem: "Imagem/06.png",
     peso: 1.7,
     tipo: "pressao",
     opcoes: [
@@ -90,7 +90,7 @@ const perguntas = [
 
   {
     texto: "Um cientista oferece imortalidade ao custo de eliminar emoções humanas. O processo é irreversível. Você...",
-    imagem: "imagens/pergunta7.jpg",
+    imagem: "Omagem/07.png",
     peso: 1.4,
     tipo: "ambigua",
     opcoes: [
@@ -102,7 +102,7 @@ const perguntas = [
 
   {
     texto: "Em uma cidade tomada por zumbis, apenas uma distração garantiria sua fuga. Uma criança está ao seu alcance. Você...",
-    imagem: "imagens/pergunta8.jpg",
+    imagem: "Imagem/08.png",
     peso: 2.3,
     tipo: "reveladora",
     opcoes: [
@@ -114,7 +114,7 @@ const perguntas = [
 
   {
     texto: "Um hacker promete acesso irrestrito a sistemas globais, mas exige o apagamento total da internet. Você...",
-    imagem: "imagens/pergunta9.jpg",
+    imagem: "Imagem/09.png",
     peso: 1.3,
     tipo: "controle",
     opcoes: [
@@ -126,7 +126,7 @@ const perguntas = [
 
   {
     texto: "Você pode trazer sua família de volta à vida sacrificando cem desconhecidos. O ritual funciona. Você...",
-    imagem: "imagens/pergunta10.jpg",
+    imagem: "Imagem/10.png",
     peso: 2.5,
     tipo: "reveladora",
     opcoes: [
@@ -135,8 +135,6 @@ const perguntas = [
       { texto: "Tenta burlar o ritual", perfil: { manipulacao: 3 } }
     ]
   }
-];
-  // pode continuar sem quebrar o sistema
 ];
 
 // ==================== ELEMENTOS ====================
