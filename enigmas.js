@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (atual.redireciona) {
         setTimeout(() => {
-          window.location.href = 'pagina-secreta.bkp.html';
+          window.location.href = ' 'pagina-secreta.bkp (1).html';
         }, 1500);
       } else {
         setTimeout(proximoEnigma, 2500);
