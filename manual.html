@@ -3,131 +3,196 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Manual da Organização - Cyber-Nexis</title>
-  <link rel="stylesheet" href="Styles.css">
+  <title>Manual da Organização — Cyber-Nexis</title>
+
+  <meta name="description" content="Documento interno. Distribuição não recomendada.">
+  <meta name="theme-color" content="#000000">
+
+  <!-- build: CNX-7.4.21 | node: mirror-eu3 | status: passive -->
+  <!-- integrity check disabled (fallback mode) -->
+
   <style>
     body {
       background-color: #000;
       color: #fff;
-      font-family: 'Courier New', Courier, monospace;
-      padding: 20px;
+      font-family: "Courier New", Courier, monospace;
+      margin: 0;
+      padding: 40px 20px;
     }
-    h1, h2 {
-      color: #f00;
-    }
-    .container {
+
+    main {
       max-width: 800px;
       margin: auto;
-      border: 1px solid #f00;
-      padding: 30px;
-      background-color: #111;
-      border-radius: 10px;
+      border: 2px solid red;
+      padding: 40px;
+      background-color: #000;
       animation: fadeIn 1.5s ease-in-out;
     }
-    ul {
-      margin-top: 20px;
+
+    h1, h2 {
+      color: red;
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
+
+    .logo {
+      display: block;
+      margin: 0 auto 25px;
+      width: 180px;
+    }
+
+    .intro {
+      border-left: 4px solid red;
+      padding-left: 20px;
+      margin-bottom: 40px;
+      font-style: italic;
+    }
+
+    section {
+      margin-bottom: 45px;
+      opacity: 0;
+      transform: translateY(25px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    ul {
+      margin-top: 15px;
+      padding-left: 20px;
+    }
+
     li {
       margin-bottom: 10px;
     }
-    .logo {
-      display: block;
-      margin: 0 auto 20px;
-      width: 200px;
+
+    .divider {
+      border: none;
+      border-top: 1px solid red;
+      margin: 50px 0;
     }
-    #auth {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
+
+    footer {
+      margin-top: 60px;
+      padding-top: 20px;
+      border-top: 2px solid red;
+      font-size: 0.9em;
+      color: red;
       text-align: center;
-      background-color: #000;
     }
-    input, button {
-      padding: 10px;
-      margin: 10px;
-      background-color: #111;
-      color: white;
-      border: 2px solid red;
-    }
+
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(30px); }
+      from { opacity: 0; transform: translateY(40px); }
       to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
+
 <body>
 
-<div id="auth">
-  <h2 style="color:red;">Acesso Restrito</h2>
-  <p>Autenticação necessária para prosseguir</p>
-  <input type="password" id="senhaInput" placeholder="Código de acesso...">
-  <button onclick="verificarSenha()">Acessar</button>
-</div>
+<main>
 
-<div id="conteudo" style="display: none;">
-  <div class="container">
-    <img src="Imagem/Logotipo.jpg" alt="Logotipo da Cyber-Nexis" class="logo">
-    <h1>Manual da Cyber-Nexis</h1>
+  <img src="Imagem/Logotipo.jpg" alt="Logotipo Cyber-Nexis" class="logo">
 
-    <h2>8. Código de Conduta Cyber-Nexis</h2>
-    <ul>
-      <li><strong>1.</strong> Silêncio é poder.</li>
-      <li><strong>2.</strong> Lealdade à causa acima de tudo.</li>
-      <li><strong>3.</strong> Nunca exponha a organização.</li>
-      <li><strong>4.</strong> Cada ação deve ter propósito estratégico.</li>
-      <li><strong>5.</strong> Evolua continuamente.</li>
-      <li><strong>6.</strong> Nunca se torne previsível.</li>
-      <li><strong>7.</strong> O invisível governa o visível.</li>
-    </ul>
+  <h1>Manual da Cyber-Nexis</h1>
 
-    <h2>Hierarquia da Organização</h2>
-    <p>A Cyber-Nexis segue uma estrutura piramidal oculta, onde cada nível conhece apenas o necessário:</p>
-    <ul>
-      <li><strong>Líder Supremo:</strong> Você. O cérebro e a força da criação.</li>
-      <li><strong>Conselheiro Zero:</strong> Inteligência estratégica e análise de decisões.</li>
-      <li><strong>Divisões Operacionais:</strong> Inteligência, Hacker Avançado, Engenharia Social, Contrainteligência.</li>
-      <li><strong>Agentes:</strong> Operam sob codinomes e protocolos rígidos, nunca se revelam entre si.</li>
-    </ul>
-
-    <h2>Protocolos de Missão</h2>
-    <ul>
-      <li>Missões são designadas por camadas: Reconhecimento, Infiltração, Execução, Retirada.</li>
-      <li>Agentes devem usar canais criptografados e operar com alias descartáveis.</li>
-      <li>Relatórios devem ser entregues com assinatura digital da célula local.</li>
-    </ul>
-
-    <h2>Penalidades e Punições</h2>
-    <ul>
-      <li><strong>Vazamento:</strong> Isolamento total e desligamento imediato.</li>
-      <li><strong>Insubordinação:</strong> Rebaixamento e restrição de acesso por tempo indeterminado.</li>
-      <li><strong>Quebra de lealdade:</strong> Inversão. O agente se torna alvo da organização.</li>
-    </ul>
-
-    <p><strong>Que o silêncio seja sua capa. E a informação, sua arma.</strong></p>
+  <div class="intro">
+    Este documento opera em modo passivo.  
+    Nenhuma ação é exigida.  
+    Nenhuma ação é ignorada.
   </div>
-</div>
+
+  <hr class="divider">
+
+  <section>
+    <h2>Código de Conduta</h2>
+    <ul>
+      <li>Silêncio é poder.</li>
+      <li>Lealdade precede identidade.</li>
+      <li>O previsível é descartável.</li>
+      <li>O invisível governa o visível.</li>
+    </ul>
+  </section>
+
+  <hr class="divider">
+
+  <section>
+    <h2>Hierarquia Interna</h2>
+    <p>
+      Compartimentação total.  
+      A visão completa é considerada uma vulnerabilidade.
+    </p>
+  </section>
+
+  <footer>
+    Documento espelhado.  
+    Versões paralelas podem existir.
+  </footer>
+
+</main>
 
 <script>
-  const senhaHashCorreta = "4e810c24e2a445a43df08c5cb4893a9aa9d1be84115a7893998cfeb3b7b4e530"; // SHA-256 de "cybernexis2025"
+/*
+  CNX.Observer v3
+  status: active (shadow)
+  last-sync: 2025-11-03T02:17Z
+  note: fallback routing enabled
+*/
 
-  async function verificarSenha() {
-    const senha = document.getElementById('senhaInput').value;
-    const encoder = new TextEncoder();
-    const data = encoder.encode(senha);
-    const hashBuffer = await crypto.subtle.digest("SHA-256", data);
-    const hashArray = Array.from(new Uint8Array(hashBuffer));
-    const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join("");
+// objeto isca — parece fingerprinting, não faz nada
+const CNX_FINGERPRINT = {
+  entropy: Math.random().toString(36).substring(2),
+  tz: Intl.DateTimeFormat().resolvedOptions().timeZone,
+  cores: navigator.hardwareConcurrency || "unknown",
+  mem: navigator.deviceMemory || "masked",
+  flag: "PASSIVE_NODE"
+};
 
-    if (hashHex === senhaHashCorreta) {
-      document.getElementById('auth').style.display = 'none';
-      document.getElementById('conteudo').style.display = 'block';
-    } else {
-      alert("Acesso negado.");
-      location.href = 'index.html';
+// função falsa de beacon (não envia nada)
+function syncMirror(payload) {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve({
+        status: "IGNORED",
+        mirror: "eu3-shadow",
+        checksum: null
+      });
+    }, 120);
+  });
+}
+
+// log enganoso
+console.info(
+  "[CNX] mirror handshake skipped | reason: observer-only mode"
+);
+
+// animação real (única parte funcional)
+const sections = document.querySelectorAll("section");
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add("visible");
     }
-  }
+  });
+}, { threshold: 0.2 });
+
+sections.forEach(section => observer.observe(section));
+
+// chamada falsa para parecer fluxo maior
+syncMirror(CNX_FINGERPRINT).then(() => {
+  // noop intencional
+});
 </script>
+
+<!--
+  WARNING:
+  Manual público ≠ infraestrutura real
+  Análises profundas tendem a retornar ruído.
+-->
+
 </body>
 </html>
