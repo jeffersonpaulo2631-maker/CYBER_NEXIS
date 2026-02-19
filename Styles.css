@@ -213,36 +213,53 @@ input:focus, textarea:focus, select:focus{
 }
 
 /* ====== Onboarding overlay (centralizado, acessível) ====== */
-.onboarding-overlay{
-  position:fixed;
-  inset:0;
-  background: rgba(0,0,0,0.95);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  z-index:9999;
-  padding:20px;
-}
-.onboarding-box{
-  max-width:600px;
-  width:100%;
-  text-align:center;
-  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-  border-radius:12px;
-  padding:20px;
-  border:1px solid rgba(255,0,51,0.06);
-}
-.onboarding-box img{ max-width:220px; margin: 0 auto 14px; border-radius:8px; }
-
-/* ====== Matrix canvas (fundo animado) ====== */
-#matrix{
-  position:fixed;
-  inset:0;
-  z-index:-1;
-  pointer-events:none;
-  background:transparent;
+.onboarding-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.92);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
 }
 
+.onboarding-box {
+  max-width: 600px;
+  text-align: center;
+  color: #e0e0e0;
+  font-family: monospace;
+}
+
+.onboarding-box img {
+  width: 100%;
+  max-height: 300px;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 1s;
+}
+
+#onboarding-text {
+  margin-top: 20px;
+  line-height: 1.6;
+  opacity: 0;
+  transition: opacity 1s;
+}
+
+.onboarding-controls {
+  margin-top: 30px;
+}
+
+.onboarding-controls .btn {
+  background: transparent;
+  border: 1px solid #666;
+  color: #ccc;
+  padding: 10px 30px;
+  cursor: pointer;
+}
+
+.onboarding-controls .btn:hover {
+  background: #111;
+}
 /* ====== Acessibilidade: foco visível ====== */
 a:focus, button:focus, input:focus, textarea:focus{
   outline: 2px dashed var(--neon-red);
@@ -270,4 +287,20 @@ a:focus, button:focus, input:focus, textarea:focus{
   .news-grid{ grid-template-columns: 1fr; }
   .slider{ gap:8px; }
   .card{ min-width:180px; }
+}
+
+.progress-container {
+  width: 100%;
+  height: 8px;
+  background: #2a2a2a;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #00ff88, #00ccff);
+  transition: width 0.4s ease;
 }
