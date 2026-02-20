@@ -17,13 +17,27 @@
       <img src="Imagem/Logotipo.jpg" alt="Logotipo Cyber-Nexis">
     </div>
   </div>
+  <style>
+/* Perguntas em vermelho */
+.question-text {
+  color: #ff2b2b;
+  font-weight: bold;
+}
+
+/* Respostas em verde */
+.step label {
+  color: #00cc44;
+  display: block;
+  margin: 6px 0;
+}
+</style>
 </header>
 
 <main class="container quiz-container">
 
   <section class="section">
 
-    <h1 class="quiz-main-title">Teste seu talento em tecnologia</h1>
+    <h1 class="question-text">Teste seu talento em tecnologia</h1>
 
     <div class="progress-container">
       <div class="progress-bar" id="progress-bar"></div>
@@ -38,13 +52,13 @@
       <div class="step">
         <h2>ETAPA 01</h2>
 
-        <p>1) Quando você acessa um site HTTPS, o que garante a criptografia?</p>
+        <p class="question-text">1) Quando você acessa um site HTTPS, o que garante a criptografia?</p>
         <label><input type="radio" name="q1" value="DNS"> DNS</label>
         <label><input type="radio" name="q1" value="TLS"> TLS + Certificado Digital</label>
         <label><input type="radio" name="q1" value="Firewall"> Firewall</label>
         <label><input type="radio" name="q1" value="Roteador"> Roteador</label>
 
-        <p>2) O que ocorre primeiro ao acessar um domínio?</p>
+        <p class="question-text">2) O que ocorre primeiro ao acessar um domínio?</p>
         <label><input type="radio" name="q2" value="IP"> Resolução DNS</label>
         <label><input type="radio" name="q2" value="HTML"> Download HTML</label>
         <label><input type="radio" name="q2" value="Firewall"> Validação Firewall</label>
@@ -56,7 +70,7 @@
       <div class="step" style="display:none;">
         <h2>ETAPA 02</h2>
 
-        <p>3) O que caracteriza força bruta?</p>
+        <p class="question-text">3) O que caracteriza força bruta?</p>
         <label><input type="radio" name="q3" value="ZeroDay"> Zero Day</label>
         <label><input type="radio" name="q3" value="Senha"> Tentativas massivas de senha</label>
         <label><input type="radio" name="q3" value="Fisico"> Ataque físico</label>
@@ -69,7 +83,7 @@
       <div class="step" style="display:none;">
         <h2>ETAPA FINAL</h2>
 
-        <p>4) Vulnerabilidade descoberta. Ação correta?</p>
+        <p class="question-text">4) Vulnerabilidade descoberta. Ação correta?</p>
         <label><input type="radio" name="q4" value="Explorar"> Explorar</label>
         <label><input type="radio" name="q4" value="Publicar"> Publicar</label>
         <label><input type="radio" name="q4" value="Reportar"> Reportar responsável</label>
