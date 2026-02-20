@@ -50,51 +50,160 @@
     <form id="quiz-form">
 
       <div class="step">
-        <h2>ETAPA 01</h2>
+       <form id="quiz-form">
 
-        <p class="question-text">1) Quando você acessa um site HTTPS, o que garante a criptografia?</p>
-        <label><input type="radio" name="q1" value="DNS"> DNS</label>
-        <label><input type="radio" name="q1" value="TLS"> TLS + Certificado Digital</label>
-        <label><input type="radio" name="q1" value="Firewall"> Firewall</label>
-        <label><input type="radio" name="q1" value="Roteador"> Roteador</label>
+  <!-- ETAPA 01 -->
+  <div class="step">
+    <h2>ETAPA 01</h2>
 
-        <p class="question-text">2) O que ocorre primeiro ao acessar um domínio?</p>
-        <label><input type="radio" name="q2" value="IP"> Resolução DNS</label>
-        <label><input type="radio" name="q2" value="HTML"> Download HTML</label>
-        <label><input type="radio" name="q2" value="Firewall"> Validação Firewall</label>
-        <label><input type="radio" name="q2" value="Ping"> Ping automático</label>
+    <p class="question-text">1) Quando você acessa um site HTTPS, o que garante a criptografia?</p>
+    <label><input type="radio" name="q1" value="DNS"> DNS</label>
+    <label><input type="radio" name="q1" value="TLS"> TLS + Certificado Digital</label>
+    <label><input type="radio" name="q1" value="Firewall"> Firewall</label>
+    <label><input type="radio" name="q1" value="Roteador"> Roteador</label>
 
-        <button type="button" class="next">Próximo</button>
-      </div>
+    <p class="question-text">2) O que ocorre primeiro ao acessar um domínio?</p>
+    <label><input type="radio" name="q2" value="IP"> Resolução DNS</label>
+    <label><input type="radio" name="q2" value="HTML"> Download HTML</label>
+    <label><input type="radio" name="q2" value="Firewall"> Validação Firewall</label>
+    <label><input type="radio" name="q2" value="Ping"> Ping automático</label>
 
-      <div class="step" style="display:none;">
-        <h2>ETAPA 02</h2>
+    <p class="question-text">3) O que é um ataque de phishing?</p>
+    <label><input type="radio" name="q3" value="EmailFalso"> Email ou site falso para roubo de dados</label>
+    <label><input type="radio" name="q3" value="Malware"> Malware automático</label>
+    <label><input type="radio" name="q3" value="ForcaBruta"> Tentativa de senha</label>
+    <label><input type="radio" name="q3" value="Firewall"> Bloqueio de firewall</label>
 
-        <p class="question-text">3) O que caracteriza força bruta?</p>
-        <label><input type="radio" name="q3" value="ZeroDay"> Zero Day</label>
-        <label><input type="radio" name="q3" value="Senha"> Tentativas massivas de senha</label>
-        <label><input type="radio" name="q3" value="Fisico"> Ataque físico</label>
-        <label><input type="radio" name="q3" value="Malware"> Malware automático</label>
+    <p class="question-text">4) Qual protocolo é usado para enviar emails seguros?</p>
+    <label><input type="radio" name="q4" value="SMTP"> SMTP</label>
+    <label><input type="radio" name="q4" value="SMTPS"> SMTPS (SMTP + SSL/TLS)</label>
+    <label><input type="radio" name="q4" value="POP3"> POP3</label>
+    <label><input type="radio" name="q4" value="HTTP"> HTTP</label>
 
-        <button type="button" class="prev">Voltar</button>
-        <button type="button" class="next">Próximo</button>
-      </div>
+    <p class="question-text">5) O que significa VPN?</p>
+    <label><input type="radio" name="q5" value="RedeVirtual"> Rede Virtual Privada</label>
+    <label><input type="radio" name="q5" value="Virus"> Virus Protegido</label>
+    <label><input type="radio" name="q5" value="IP"> IP Virtual</label>
+    <label><input type="radio" name="q5" value="Firewall"> Firewall Avançado</label>
 
-      <div class="step" style="display:none;">
-        <h2>ETAPA FINAL</h2>
+    <button type="button" class="next">Próximo</button>
+  </div>
 
-        <p class="question-text">4) Vulnerabilidade descoberta. Ação correta?</p>
-        <label><input type="radio" name="q4" value="Explorar"> Explorar</label>
-        <label><input type="radio" name="q4" value="Publicar"> Publicar</label>
-        <label><input type="radio" name="q4" value="Reportar"> Reportar responsável</label>
-        <label><input type="radio" name="q4" value="Ignorar"> Ignorar</label>
+  <!-- ETAPA 02 -->
+  <div class="step" style="display:none;">
+    <h2>ETAPA 02</h2>
 
-        <button type="button" class="prev">Voltar</button>
-        <button type="button" id="finalizar">Finalizar</button>
-      </div>
+    <p class="question-text">6) O que caracteriza força bruta?</p>
+    <label><input type="radio" name="q6" value="ZeroDay"> Zero Day</label>
+    <label><input type="radio" name="q6" value="Senha"> Tentativas massivas de senha</label>
+    <label><input type="radio" name="q6" value="Fisico"> Ataque físico</label>
+    <label><input type="radio" name="q6" value="Malware"> Malware automático</label>
 
-    </form>
+    <p class="question-text">7) Qual a função do firewall?</p>
+    <label><input type="radio" name="q7" value="Bloquear"> Bloquear ou liberar tráfego de rede</label>
+    <label><input type="radio" name="q7" value="Criptografar"> Criptografar dados</label>
+    <label><input type="radio" name="q7" value="DNS"> Resolver domínios</label>
+    <label><input type="radio" name="q7" value="Ping"> Ping automático</label>
 
+    <p class="question-text">8) O que é um ataque DDoS?</p>
+    <label><input type="radio" name="q8" value="Negacao"> Sobrecarga de serviço por múltiplas requisições</label>
+    <label><input type="radio" name="q8" value="Phishing"> Email falso</label>
+    <label><input type="radio" name="q8" value="Malware"> Instalação de vírus</label>
+    <label><input type="radio" name="q8" value="ForcaBruta"> Força bruta</label>
+
+    <p class="question-text">9) O que é autenticação multifator?</p>
+    <label><input type="radio" name="q9" value="SenhaUnica"> Apenas senha única</label>
+    <label><input type="radio" name="q9" value="MFA"> Uso de mais de um fator (senha + código)</label>
+    <label><input type="radio" name="q9" value="Biometria"> Apenas biometria</label>
+    <label><input type="radio" name="q9" value="Captcha"> Apenas captcha</label>
+
+    <p class="question-text">10) Qual é o objetivo do SSL/TLS?</p>
+    <label><input type="radio" name="q10" value="Criptografia"> Garantir criptografia entre cliente e servidor</label>
+    <label><input type="radio" name="q10" value="DNS"> Resolver DNS</label>
+    <label><input type="radio" name="q10" value="Firewall"> Filtrar tráfego</label>
+    <label><input type="radio" name="q10" value="Malware"> Detectar malware</label>
+
+    <button type="button" class="prev">Voltar</button>
+    <button type="button" class="next">Próximo</button>
+  </div>
+
+  <!-- ETAPA 03 -->
+  <div class="step" style="display:none;">
+    <h2>ETAPA 03</h2>
+
+    <p class="question-text">11) Vulnerabilidade descoberta. Ação correta?</p>
+    <label><input type="radio" name="q11" value="Explorar"> Explorar</label>
+    <label><input type="radio" name="q11" value="Publicar"> Publicar</label>
+    <label><input type="radio" name="q11" value="Reportar"> Reportar responsável</label>
+    <label><input type="radio" name="q11" value="Ignorar"> Ignorar</label>
+
+    <p class="question-text">12) O que é um Zero Day?</p>
+    <label><input type="radio" name="q12" value="Falha"> Vulnerabilidade desconhecida sem patch</label>
+    <label><input type="radio" name="q12" value="Ataque"> Ataque conhecido</label>
+    <label><input type="radio" name="q12" value="DNS"> Problema de DNS</label>
+    <label><input type="radio" name="q12" value="Firewall"> Bloqueio de firewall</label>
+
+    <p class="question-text">13) O que é engenharia social?</p>
+    <label><input type="radio" name="q13" value="Manipulacao"> Manipulação psicológica para obter informações</label>
+    <label><input type="radio" name="q13" value="Senha"> Ataque de senha</label>
+    <label><input type="radio" name="q13" value="Malware"> Malware</label>
+    <label><input type="radio" name="q13" value="DDoS"> DDoS</label>
+
+    <p class="question-text">14) Qual comando verifica conectividade em rede?</p>
+    <label><input type="radio" name="q14" value="Ping"> Ping</label>
+    <label><input type="radio" name="q14" value="Traceroute"> Traceroute</label>
+    <label><input type="radio" name="q14" value="IPConfig"> ipconfig</label>
+    <label><input type="radio" name="q14" value="Netstat"> netstat</label>
+
+    <p class="question-text">15) O que é malware?</p>
+    <label><input type="radio" name="q15" value="SoftwareMalicioso"> Software malicioso</label>
+    <label><input type="radio" name="q15" value="Hardware"> Componente físico</label>
+    <label><input type="radio" name="q15" value="DNS"> Problema de DNS</label>
+    <label><input type="radio" name="q15" value="Firewall"> Bloqueio de firewall</label>
+
+    <button type="button" class="prev">Voltar</button>
+    <button type="button" class="next">Próximo</button>
+  </div>
+
+  <!-- ETAPA 04 -->
+  <div class="step" style="display:none;">
+    <h2>ETAPA 04</h2>
+
+    <p class="question-text">16) O que é criptografia simétrica?</p>
+    <label><input type="radio" name="q16" value="MesmaChave"> Mesma chave para criptografar e descriptografar</label>
+    <label><input type="radio" name="q16" value="DiferenteChave"> Chave diferente</label>
+    <label><input type="radio" name="q16" value="Senha"> Apenas senha</label>
+    <label><input type="radio" name="q16" value="Firewall"> Firewall avançado</label>
+
+    <p class="question-text">17) O que é criptografia assimétrica?</p>
+    <label><input type="radio" name="q17" value="ChavesDiferentes"> Chaves diferentes para criptografar e descriptografar</label>
+    <label><input type="radio" name="q17" value="MesmaChave"> Mesma chave</label>
+    <label><input type="radio" name="q17" value="Senha"> Apenas senha</label>
+    <label><input type="radio" name="q17" value="Firewall"> Firewall</label>
+
+    <p class="question-text">18) O que é um certificado digital?</p>
+    <label><input type="radio" name="q18" value="ProvaIdentidade"> Prova de identidade de site ou pessoa</label>
+    <label><input type="radio" name="q18" value="Malware"> Software malicioso</label>
+    <label><input type="radio" name="q18" value="Senha"> Senha</label>
+    <label><input type="radio" name="q18" value="VPN"> VPN</label>
+
+    <p class="question-text">19) O que é SQL Injection?</p>
+    <label><input type="radio" name="q19" value="InjecaoSQL"> Inserção maliciosa de comandos SQL</label>
+    <label><input type="radio" name="q19" value="XSS"> Ataque XSS</label>
+    <label><input type="radio" name="q19" value="Firewall"> Bloqueio de firewall</label>
+    <label><input type="radio" name="q19" value="DNS"> DNS falso</label>
+
+    <p class="question-text">20) Qual a melhor prática para senhas?</p>
+    <label><input type="radio" name="q20" value="Complexa"> Senha longa, única e complexa</label>
+    <label><input type="radio" name="q20" value="1234"> Senha simples</label>
+    <label><input type="radio" name="q20" value="SenhaUnica"> Reusar mesma senha</label>
+    <label><input type="radio" name="q20" value="SenhaEsquecida"> Anotar em papel</label>
+
+    <button type="button" class="prev">Voltar</button>
+    <button type="button" id="finalizar">Finalizar</button>
+  </div>
+
+</form>
     <div id="resultado" style="display:none;">
       <h3 id="pontuacao"></h3>
 
@@ -124,10 +233,30 @@ document.addEventListener('DOMContentLoaded', () => {
   const status = document.getElementById('status');
 
   const gabarito = {
-    q1: "TLS",
-    q2: "IP",
-    q3: "Senha",
-    q4: "Reportar"
+    const gabarito = {
+  q1: "TLS",
+  q2: "IP",
+  q3: "EmailFalso",
+  q4: "SMTPS",
+  q5: "RedeVirtual",
+
+  q6: "Senha",
+  q7: "Bloquear",
+  q8: "Negacao",
+  q9: "MFA",
+  q10: "Criptografia",
+
+  q11: "Reportar",
+  q12: "Falha",
+  q13: "Manipulacao",
+  q14: "Ping",
+  q15: "SoftwareMalicioso",
+
+  q16: "MesmaChave",
+  q17: "ChavesDiferentes",
+  q18: "ProvaIdentidade",
+  q19: "InjecaoSQL",
+  q20: "Complexa"
   };
 
   let current = 0;
@@ -192,7 +321,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const email = document.getElementById('email').value;
     const pontos = coletarRespostas();
 
-    emailjs.send('service_h21ez1j', ' SEU_TEMPLATE_ID', {
+    emailjs.send('service_h21ez1j', '  template_v2qaj2p', {
       nome_usuario: nome,
       email_usuario: email,
       pontuacao_final: pontos
