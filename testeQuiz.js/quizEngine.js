@@ -1,11 +1,8 @@
 export const gabarito = {
   q1: "TLS",
   q2: "IP",
-  q3: "HTTP",
-  q4: "Senha",
-  q5: "RateLimit",
-  q6: "Nmap",
-  q7: "Reportar"
+  q3: "Senha",
+  q4: "Reportar"
 };
 
 export function calcularPontuacao(respostas) {
