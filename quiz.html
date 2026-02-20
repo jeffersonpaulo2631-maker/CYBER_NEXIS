@@ -5,22 +5,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Teste de Talento em Tecnologia | Cyber-Nexis</title>
 
-  <link rel="stylesheet" href="styles.css" />
-
-  <!-- EmailJS -->
+  <link rel="stylesheet" href="Styles.css" />
   <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
 </head>
 
 <body>
 
-  <header class="header">
-    <h1>Teste de Talento em Tecnologia</h1>
-    <p>Cyber-Nexis — Avaliação Técnica</p>
-  </header>
+<header>
+  <div class="container header-inner">
+    <div class="logo-cyber">
+      <img src="Imagem/Logotipo.jpg" alt="Logotipo Cyber-Nexis">
+    </div>
+  </div>
+</header>
 
-  <main class="container quiz-container">
+<main class="container quiz-container">
 
-    <!-- Barra de Progresso -->
+  <section class="section">
+
+    <h1 class="quiz-main-title">Teste seu talento em tecnologia</h1>
+
+    <!-- Barra -->
     <div class="progress-container">
       <div class="progress-bar" id="progress-bar"></div>
     </div>
@@ -30,121 +35,70 @@
       Tempo restante: <span id="time">--</span> segundos
     </div>
 
-    <!-- FORM DO QUIZ -->
     <form id="quiz-form">
 
-
       <!-- ETAPA 1 -->
-<div class="step" id="step1">
-  <h2>Etapa 1 — Fundamentos de Rede</h2>
+      <div class="step" id="step1">
+        <h2 class="quiz-step-title">ETAPA 01</h2>
 
-  <div class="question-block">
-    <p>1) Quando você acessa um site HTTPS, o que garante que os dados estejam criptografados?</p>
-    <label><input type="radio" name="q1" value="DNS"> DNS</label>
-    <label><input type="radio" name="q1" value="TLS"> Protocolo TLS + Certificado Digital</label>
-    <label><input type="radio" name="q1" value="Firewall"> Firewall local</label>
-    <label><input type="radio" name="q1" value="Roteador"> Roteador doméstico</label>
-  </div>
+        <div class="question-block">
+          <p class="quiz-question">1) Quando você acessa um site HTTPS, o que garante a criptografia?</p>
+          <label><input type="radio" name="q1" value="DNS"> DNS</label>
+          <label><input type="radio" name="q1" value="TLS"> TLS + Certificado Digital</label>
+          <label><input type="radio" name="q1" value="Firewall"> Firewall</label>
+          <label><input type="radio" name="q1" value="Roteador"> Roteador</label>
+        </div>
 
-  <div class="question-block">
-    <p>2) Ao digitar um domínio no navegador, qual é o primeiro processo que ocorre?</p>
-    <label><input type="radio" name="q2" value="IP"> Conversão do domínio em endereço IP (DNS)</label>
-    <label><input type="radio" name="q2" value="HTML"> Download do HTML</label>
-    <label><input type="radio" name="q2" value="Firewall"> Validação do firewall</label>
-    <label><input type="radio" name="q2" value="Ping"> Envio de ping automático</label>
-  </div>
+        <div class="question-block">
+          <p class="quiz-question">2) O que ocorre primeiro ao acessar um domínio?</p>
+          <label><input type="radio" name="q2" value="IP"> Resolução DNS</label>
+          <label><input type="radio" name="q2" value="HTML"> Download HTML</label>
+          <label><input type="radio" name="q2" value="Firewall"> Validação Firewall</label>
+          <label><input type="radio" name="q2" value="Ping"> Ping automático</label>
+        </div>
 
-  <button type="button" class="next-step">Próximo</button>
-</div>
-
-<!-- ETAPA 2 -->
-<div class="step" id="step2" style="display:none;">
-  <h2>Etapa 2 — Comportamento de Sistema</h2>
-
-  <div class="question-block">
-    <p>3) Se um servidor responde ao ping mas o site não abre, o problema mais provável está em:</p>
-    <label><input type="radio" name="q3" value="Fisica"> Camada física</label>
-    <label><input type="radio" name="q3" value="HTTP"> Serviço HTTP parado</label>
-    <label><input type="radio" name="q3" value="Cabo"> Cabo de rede</label>
-    <label><input type="radio" name="q3" value="Energia"> Fonte de energia</label>
-  </div>
-
-  <div class="question-block">
-    <p>4) O que caracteriza um ataque de força bruta?</p>
-    <label><input type="radio" name="q4" value="ZeroDay"> Exploração zero-day</label>
-    <label><input type="radio" name="q4" value="Senha"> Tentativa massiva de combinações de senha</label>
-    <label><input type="radio" name="q4" value="Fisico"> Ataque físico</label>
-    <label><input type="radio" name="q4" value="Malware"> Instalação automática de malware</label>
-  </div>
-
-  <button type="button" class="prev-step">Anterior</button>
-  <button type="button" class="next-step">Próximo</button>
-</div>
-
-<!-- ETAPA 3 -->
-<div class="step" id="step3" style="display:none;">
-  <h2>Etapa 3 — Segurança Aplicada</h2>
-
-  <div class="question-block">
-    <p>5) Qual prática reduz tentativas automatizadas de login?</p>
-    <label><input type="radio" name="q5" value="SenhaFraca"> Usar senha simples</label>
-    <label><input type="radio" name="q5" value="RateLimit"> Implementar rate limiting</label>
-    <label><input type="radio" name="q5" value="PortaAberta"> Expor portas desnecessárias</label>
-    <label><input type="radio" name="q5" value="LogsOff"> Desativar logs</label>
-  </div>
-
-  <div class="question-block">
-    <p>6) Qual ferramenta é usada para mapear portas abertas em um host?</p>
-    <label><input type="radio" name="q6" value="Wireshark"> Wireshark</label>
-    <label><input type="radio" name="q6" value="Nmap"> Nmap</label>
-    <label><input type="radio" name="q6" value="Excel"> Excel</label>
-    <label><input type="radio" name="q6" value="WordPress"> WordPress</label>
-  </div>
-
-  <button type="button" class="prev-step">Anterior</button>
-  <button type="button" class="next-step">Próximo</button>
-</div>
-
-<!-- ETAPA FINAL -->
-<div class="step" id="step4" style="display:none;">
-  <h2>Etapa Final — Ética Técnica</h2>
-
-  <div class="question-block">
-    <p>7) Ao encontrar uma vulnerabilidade que expõe dados, a atitude correta é:</p>
-    <label><input type="radio" name="q7" value="Explorar"> Explorar a falha</label>
-    <label><input type="radio" name="q7" value="Publicar"> Publicar online</label>
-    <label><input type="radio" name="q7" value="Reportar"> Reportar ao responsável</label>
-    <label><input type="radio" name="q7" value="Ignorar"> Ignorar</label>
-  </div>
-
-  <button type="button" class="prev-step">Anterior</button>
-  <button type="button" id="finalizar-btn">Finalizar Teste</button>
-</div>
+        <button type="button" class="quiz-btn next-step">Próximo</button>
       </div>
+
+      <!-- ETAPA 2 -->
+      <div class="step" id="step2" style="display:none;">
+        <h2 class="quiz-step-title">ETAPA 02</h2>
+
+        <div class="question-block">
+          <p class="quiz-question">3) O que caracteriza força bruta?</p>
+          <label><input type="radio" name="q3" value="ZeroDay"> Zero Day</label>
+          <label><input type="radio" name="q3" value="Senha"> Tentativas massivas de senha</label>
+          <label><input type="radio" name="q3" value="Fisico"> Ataque físico</label>
+          <label><input type="radio" name="q3" value="Malware"> Malware automático</label>
+        </div>
+
+        <button type="button" class="quiz-btn prev-step">Voltar</button>
+        <button type="button" class="quiz-btn next-step">Próximo</button>
+      </div>
+
+      <!-- ETAPA FINAL -->
+      <div class="step" id="step3" style="display:none;">
+        <h2 class="quiz-step-title">ETAPA FINAL</h2>
+
+        <div class="question-block">
+          <p class="quiz-question">4) Vulnerabilidade descoberta. Ação correta?</p>
+          <label><input type="radio" name="q4" value="Explorar"> Explorar</label>
+          <label><input type="radio" name="q4" value="Publicar"> Publicar</label>
+          <label><input type="radio" name="q4" value="Reportar"> Reportar responsável</label>
+          <label><input type="radio" name="q4" value="Ignorar"> Ignorar</label>
+        </div>
+
+        <button type="button" class="quiz-btn prev-step">Voltar</button>
+        <button type="button" class="quiz-btn" id="finalizar-btn">Finalizar</button>
+      </div>
+
     </form>
-  </main>
 
-  <!-- RESULTADO -->
-  <section id="resultado-envio" class="resultado" style="display:none;">
-    <h3>Resultado Final</h3>
-    <p id="pontuacao-final"></p>
-
-    <form id="form-envio-email">
-      <label>Seu Nome</label>
-      <input type="text" id="nome" required>
-
-      <label>Seu Email</label>
-      <input type="email" id="email" required>
-
-      <button type="submit">Enviar Resultado</button>
-    </form>
-
-    <div id="status-envio" class="status-message"></div>
-    <button id="reiniciar-btn">Refazer Teste</button>
   </section>
 
-  <!-- SCRIPT PRINCIPAL -->
-  <script type="module" src="js/Teste quiz.js"></script>
+</main>
+
+<script type="module" src="js/Teste quiz.js"></script>
 
 </body>
 </html>
