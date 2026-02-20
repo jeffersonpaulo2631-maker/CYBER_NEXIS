@@ -304,3 +304,47 @@ a:focus, button:focus, input:focus, textarea:focus{
   background: linear-gradient(90deg, #00ff88, #00ccff);
   transition: width 0.4s ease;
 }
+/* ===== QUIZ CUSTOM ===== */
+
+.quiz-main-title {
+  text-align: center;
+  color: var(--neon-green);
+  margin-bottom: 30px;
+  font-size: 2rem;
+}
+
+.quiz-step-title {
+  color: var(--neon-red);
+  text-shadow: 0 0 10px rgba(255,0,51,0.5);
+  margin-bottom: 20px;
+}
+
+.quiz-question {
+  color: var(--neon-green);
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.question-block label {
+  display: block;
+  margin-bottom: 6px;
+  cursor: pointer;
+}
+
+.quiz-btn {
+  background: var(--neon-red);
+  color: #000;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 15px;
+  margin-right: 10px;
+  transition: 0.3s;
+}
+
+.quiz-btn:hover {
+  background: #ff3355;
+  box-shadow: 0 0 12px rgba(255,0,51,0.6);
+}
