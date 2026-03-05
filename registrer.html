@@ -1,29 +1,64 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Cadastro - CyberNexis</title>
+  <title>Acesso Restrito — Cyber-Nexis</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="Styles.css">
 </head>
 <body>
 
-<h2>Criar Conta</h2>
+<main class="container">
+  <section class="section">
+    <h2>ACESSO RESTRITO</h2>
+    <p>Identificação necessária para prosseguir.</p>
 
-<input type="email" id="email" placeholder="Email">
-<input type="password" id="senha" placeholder="Senha">
-<button id="btnRegister">Registrar</button>
+    <input type="email" id="email" placeholder="Email operacional" required>
+    <input type="password" id="senha" placeholder="Código de acesso" required>
 
-<p id="feedback"></p>
+    <div class="form-actions">
+      <button id="btnLogin">Entrar</button>
+     <button onclick="window.location.href='registrer.html.html," class="secondary">
+  Registrar
+</button>
+    </div>
+
+    <p id="feedback"></p>
+  </section>
+</main>
 
 <script type="module">
-  import { register } from "./js/auth.js";
+  import { login, register } from "./js/site.js";
 
-  const btn = document.getElementById("btnRegister");
+  const btnLogin = document.getElementById("btnLogin");
+  const btnRegister = document.getElementById("btnRegister");
   const feedback = document.getElementById("feedback");
 
-  btn.addEventListener("click", async () => {
+  btnLogin.addEventListener("click", async () => {
     const email = document.getElementById("email").value;
     const senha = document.getElementById("senha").value;
+
+    if (!email || !senha) {
+      feedback.innerText = "Preencha todos os campos.";
+      return;
+    }
+
+    try {
+      await login(email, senha);
+      window.location.href = "index.html";
+    } catch (error) {
+      feedback.innerText = error.message;
+    }
+  });
+
+  btnRegister.addEventListener("click", async () => {
+    const email = document.getElementById("email").value;
+    const senha = document.getElementById("senha").value;
+
+    if (!email || !senha) {
+      feedback.innerText = "Preencha todos os campos.";
+      return;
+    }
 
     if (senha.length < 6) {
       feedback.innerText = "Senha deve ter no mínimo 6 caracteres.";
@@ -38,6 +73,5 @@
     }
   });
 </script>
-
 </body>
 </html>
