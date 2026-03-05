@@ -13,75 +13,61 @@
     <h2>ACESSO RESTRITO</h2>
     <p>Identificação necessária para prosseguir.</p>
 
-    <input type="email" id="email" placeholder="Email operacional">
-    <input type="password" id="senha" placeholder="Código de acesso">
+    <input type="email" id="email" placeholder="Email operacional" required>
+    <input type="password" id="senha" placeholder="Código de acesso" required>
 
     <div class="form-actions">
-      <button onclick="login()">Entrar</button>
-      <button onclick="registrar()" class="secondary">Registrar</button>
+      <button id="btnLogin">Entrar</button>
+      <button id="btnRegister" class="secondary">Registrar</button>
     </div>
 
     <p id="feedback"></p>
   </section>
 </main>
 
-<!-- ==================== FIREBASE SDK (MODULAR) ==================== -->
 <script type="module">
-  // Importações Firebase v9 (web)
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-  import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged } 
-    from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics.js";
+  import { login, register } from "./js/site.js";
 
-  // Configuração Firebase (a sua)
-  const firebaseConfig = {
-    apiKey: "AIzaSyBKUG6939mNuyHfj6rnGE6ua13uh-QnC4w",
-    authDomain: "cybernexislogin.firebaseapp.com",
-    projectId: "cybernexislogin",
-    storageBucket: "cybernexislogin.firebasestorage.app",
-    messagingSenderId: "1076315711474",
-    appId: "1:1076315711474:web:fa0d15932379b12ea32d6b",
-    measurementId: "G-0KC9817BW0"
-  };
+  const btnLogin = document.getElementById("btnLogin");
+  const btnRegister = document.getElementById("btnRegister");
+  const feedback = document.getElementById("feedback");
 
-  // Inicialização
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  getAnalytics(app);
-
-  // ===== FUNÇÕES GLOBAIS =====
-  window.login = function () {
+  btnLogin.addEventListener("click", async () => {
     const email = document.getElementById("email").value;
     const senha = document.getElementById("senha").value;
-    const feedback = document.getElementById("feedback");
 
-    signInWithEmailAndPassword(auth, email, senha)
-      .then(() => {
-        window.location.href = "index.html";
-      })
-      .catch(() => {
-        feedback.innerText = "Acesso negado. Credenciais inválidas.";
-      });
-  };
+    if (!email || !senha) {
+      feedback.innerText = "Preencha todos os campos.";
+      return;
+    }
 
-  window.registrar = function () {
-    const email = document.getElementById("email").value;
-    const senha = document.getElementById("senha").value;
-    const feedback = document.getElementById("feedback");
-
-    createUserWithEmailAndPassword(auth, email, senha)
-      .then(() => {
-        window.location.href = "index.html";
-      })
-      .catch(error => {
-        feedback.innerText = error.message;
-      });
-  };
-
-  // ===== EVITA USUÁRIO LOGADO VER LOGIN =====
-  onAuthStateChanged(auth, user => {
-    if (user) {
+    try {
+      await login(email, senha);
       window.location.href = "index.html";
+    } catch (error) {
+      feedback.innerText = error.message;
+    }
+  });
+
+  btnRegister.addEventListener("click", async () => {
+    const email = document.getElementById("email").value;
+    const senha = document.getElementById("senha").value;
+
+    if (!email || !senha) {
+      feedback.innerText = "Preencha todos os campos.";
+      return;
+    }
+
+    if (senha.length < 6) {
+      feedback.innerText = "Senha deve ter no mínimo 6 caracteres.";
+      return;
+    }
+
+    try {
+      await register(email, senha);
+      window.location.href = "index.html";
+    } catch (error) {
+      feedback.innerText = error.message;
     }
   });
 </script>
