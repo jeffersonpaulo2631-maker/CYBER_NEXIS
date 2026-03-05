@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Cadastro - CyberNexis</title>
+  <link rel="stylesheet" href="Styles.css">
+</head>
+<body>
+
+<h2>Criar Conta</h2>
+
+<input type="email" id="email" placeholder="Email">
+<input type="password" id="senha" placeholder="Senha">
+<button id="btnRegister">Registrar</button>
+
+<p id="feedback"></p>
+
+<script type="module">
+  import { register } from "./js/auth.js";
+
+  const btn = document.getElementById("btnRegister");
+  const feedback = document.getElementById("feedback");
+
+  btn.addEventListener("click", async () => {
+    const email = document.getElementById("email").value;
+    const senha = document.getElementById("senha").value;
+
+    if (senha.length < 6) {
+      feedback.innerText = "Senha deve ter no mínimo 6 caracteres.";
+      return;
+    }
+
+    try {
+      await register(email, senha);
+      window.location.href = "index.html";
+    } catch (error) {
+      feedback.innerText = error.message;
+    }
+  });
+</script>
+
+</body>
+</html>
