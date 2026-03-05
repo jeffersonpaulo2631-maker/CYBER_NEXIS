@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
@@ -18,9 +18,9 @@
 
     <div class="form-actions">
       <button id="btnLogin">Entrar</button>
-     <button onclick="window.location.href='registrer.html" class="secondary">
-  Registrar
-</button>
+      <button onclick="window.location.href='registrer.html'" class="secondary">
+        Registrar
+      </button>
     </div>
 
     <p id="feedback"></p>
@@ -28,10 +28,9 @@
 </main>
 
 <script type="module">
-  import { login, register } from "./js/site.js";
+  import { login } from "./js/site.js";
 
   const btnLogin = document.getElementById("btnLogin");
-  const btnRegister = document.getElementById("btnRegister");
   const feedback = document.getElementById("feedback");
 
   btnLogin.addEventListener("click", async () => {
@@ -45,28 +44,6 @@
 
     try {
       await login(email, senha);
-      window.location.href = "index.html";
-    } catch (error) {
-      feedback.innerText = error.message;
-    }
-  });
-
-  btnRegister.addEventListener("click", async () => {
-    const email = document.getElementById("email").value;
-    const senha = document.getElementById("senha").value;
-
-    if (!email || !senha) {
-      feedback.innerText = "Preencha todos os campos.";
-      return;
-    }
-
-    if (senha.length < 6) {
-      feedback.innerText = "Senha deve ter no mínimo 6 caracteres.";
-      return;
-    }
-
-    try {
-      await register(email, senha);
       window.location.href = "index.html";
     } catch (error) {
       feedback.innerText = error.message;
