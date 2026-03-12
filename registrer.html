@@ -1,42 +1,155 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Cadastro - CyberNexis</title>
-  <link rel="stylesheet" href="Styles.css">
+<meta charset="UTF-8">
+<title>Cadastro • CyberNexis</title>
+
+<style>
+
+body{
+    margin:0;
+    height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:Arial, Helvetica, sans-serif;
+    background:linear-gradient(270deg,#000000,#0a0a0a,#140000);
+    background-size:400% 400%;
+    animation:fundo 12s infinite alternate;
+    color:white;
+}
+
+@keyframes fundo{
+    0%{background-position:0% 50%}
+    100%{background-position:100% 50%}
+}
+
+.container{
+    background:rgba(15,15,15,0.95);
+    padding:40px;
+    border-radius:12px;
+    width:330px;
+    text-align:center;
+    box-shadow:0 0 30px rgba(255,0,0,0.25);
+    animation:entrada 0.8s ease;
+}
+
+@keyframes entrada{
+    from{
+        opacity:0;
+        transform:translateY(20px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+h2{
+    margin-bottom:25px;
+    color:#ff2e2e;
+}
+
+input{
+    width:100%;
+    padding:12px;
+    margin-bottom:15px;
+    border:none;
+    border-radius:6px;
+    background:#1a1a1a;
+    color:white;
+    outline:none;
+    transition:0.3s;
+}
+
+input:focus{
+    box-shadow:0 0 10px red;
+}
+
+button{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:6px;
+    background:#ff1a1a;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+button:hover{
+    transform:scale(1.05);
+    box-shadow:0 0 15px red;
+}
+
+#feedback{
+    margin-top:15px;
+    font-size:14px;
+}
+
+</style>
 </head>
+
 <body>
+
+<div class="container">
 
 <h2>Criar Conta</h2>
 
 <input type="email" id="email" placeholder="Email">
 <input type="password" id="senha" placeholder="Senha">
+
 <button id="btnRegister">Registrar</button>
 
 <p id="feedback"></p>
 
+</div>
+
 <script type="module">
-  import { register } from "./js/auth.js";
 
-  const btn = document.getElementById("btnRegister");
-  const feedback = document.getElementById("feedback");
+import { register } from "./js/site.js";
 
-  btn.addEventListener("click", async () => {
-    const email = document.getElementById("email").value;
-    const senha = document.getElementById("senha").value;
+const btn = document.getElementById("btnRegister");
+const feedback = document.getElementById("feedback");
 
-    if (senha.length < 6) {
-      feedback.innerText = "Senha deve ter no mínimo 6 caracteres.";
-      return;
-    }
+btn.addEventListener("click", async () => {
 
-    try {
-      await register(email, senha);
-      window.location.href = "index.html";
-    } catch (error) {
-      feedback.innerText = error.message;
-    }
-  });
+const email = document.getElementById("email").value.trim();
+const senha = document.getElementById("senha").value.trim();
+
+if(!email || !senha){
+feedback.style.color="orange";
+feedback.innerText="Preencha todos os campos.";
+return;
+}
+
+if(senha.length < 6){
+feedback.style.color="orange";
+feedback.innerText="Senha precisa ter 6 caracteres.";
+return;
+}
+
+try{
+
+await register(email, senha);
+
+feedback.style.color="#00ff9d";
+feedback.innerText="Conta criada com sucesso.";
+
+setTimeout(()=>{
+window.location.href="index.html";
+},1200);
+
+}catch(error){
+
+feedback.style.color="red";
+feedback.innerText="Erro: "+error.message;
+
+}
+
+});
+
 </script>
 
 </body>
