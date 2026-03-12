@@ -1,54 +1,41 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link rel="stylesheet" href="Styles.css" />
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" defer></script>
+<link rel="stylesheet" href="Styles.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css">
 
-  <script src="enigmas.js" defer></script>
-  <script src="onboarding.js" defer></script>
-  <script src="sombra-digital.js" defer></script>
-  <script src="mini_jogo.js" defer></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js" defer></script>
-  <script src="acesso-secreto.js" defer></script>
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" defer></script>
+<script src="enigmas.js" defer></script>
+<script src="onboarding.js" defer></script>
+<script src="sombra-digital.js" defer></script>
+<script src="mini_jogo.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js" defer></script>
+<script src="acesso-secreto.js" defer></script>
 
-  <title>Cyber-Nexis — Rede Discreta de Observação e Análise</title>
-  <meta name="description" content="A Cyber-Nexis é uma rede descentralizada de especialistas dedicada à observação ética e à intervenção controlada em falhas sistêmicas. Acesso restrito por verificação.">
-  
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-  import { getAuth, onAuthStateChanged } 
-    from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+<title>Cyber-Nexis — Rede Discreta de Observação e Análise</title>
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyBKUG6939mNuyHfj6rnGE6ua13uh-QnC4w",
-    authDomain: "cybernexislogin.firebaseapp.com",
-    projectId: "cybernexislogin",
-    storageBucket: "cybernexislogin.firebasestorage.app",
-    messagingSenderId: "1076315711474",
-    appId: "1:1076315711474:web:fa0d15932379b12ea32d6b"
-  };
+<meta name="description" content="A Cyber-Nexis é uma rede descentralizada de especialistas dedicada à observação ética e à intervenção controlada em falhas sistêmicas.">
 
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-
-  onAuthStateChanged(auth, user => {
-    if (!user) {
-      window.location.href = "login.html";
-    }
-  });
-</script> 
 </head>
+
+<body>
+
+<script type="module">
+import { protectPage } from "./js/site.js";
+protectPage("login.html");
+</script>
+
 <div id="onboarding" class="onboarding-overlay" style="display:none;">
   <img id="onboarding-img" alt="Onboarding Cyber-Nexis">
   <p id="onboarding-text"></p>
 
   <div class="form-actions">
     <button onclick="prevStep()">Voltar</button>
-    <button onclick="nextStep()">Avançar</button>  
+    <button onclick="nextStep()">Avançar</button>
   </div>
 </div>
 <body>   
