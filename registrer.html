@@ -142,48 +142,26 @@ Voltar para login
 
 <script type="module">
 
-import { register } from "./js/site.js";
+import { register } from "./site.js";
 
-const btn = document.getElementById("btnRegister");
-const feedback = document.getElementById("feedback");
-
-btn.addEventListener("click", async () => {
+btnRegister.addEventListener("click", async () => {
 
 const email = document.getElementById("email").value.trim();
 const senha = document.getElementById("senha").value.trim();
-
-if(!email || !senha){
-feedback.style.color="orange";
-feedback.innerText="Preencha todos os campos.";
-return;
-}
-
-if(senha.length < 6){
-feedback.style.color="orange";
-feedback.innerText="Senha precisa ter 6 caracteres.";
-return;
-}
 
 try{
 
 await register(email, senha);
 
-feedback.style.color="#00ff9d";
-feedback.innerText="Conta criada com sucesso.";
-
-setTimeout(()=>{
 window.location.href="index.html";
-},1000);
 
 }catch(error){
 
-feedback.style.color="red";
-feedback.innerText="Erro: "+error.message;
+feedback.innerText = error.message;
 
 }
 
 });
-
 </script>
 
 <script>
@@ -219,6 +197,5 @@ setInterval(gerarBinario,120);
 gerarBinario();
 
 </script>
-
 </body>
 </html>
