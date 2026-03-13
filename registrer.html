@@ -3,117 +3,53 @@
 <head>
 <meta charset="UTF-8">
 <title>Cadastro • CyberNexis</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
 
 body{
-  margin:0;
-  height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:black;
-  color:white;
-  font-family:Arial, Helvetica, sans-serif;
-  overflow:hidden;
+margin:0;
+height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+background:black;
+color:white;
+font-family:Arial;
 }
-
-/* fundo binário */
-
-.binary{
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  z-index:-1;
-  color:red;
-  font-size:14px;
-  opacity:0.25;
-  line-height:14px;
-  white-space:pre;
-  font-family:monospace;
-}
-
-/* container */
 
 .container{
-  background:rgba(10,10,10,0.95);
-  padding:40px;
-  border-radius:12px;
-  width:340px;
-  text-align:center;
-  box-shadow:0 0 30px rgba(255,0,0,0.35);
-  animation:fade 0.8s ease;
+background:#111;
+padding:40px;
+border-radius:10px;
+width:320px;
+text-align:center;
 }
-
-@keyframes fade{
-  from{
-    opacity:0;
-    transform:translateY(20px);
-  }
-  to{
-    opacity:1;
-    transform:translateY(0);
-  }
-}
-
-h2{
-  color:#ff2a2a;
-  margin-bottom:20px;
-}
-
-/* inputs */
 
 input{
-  width:100%;
-  padding:12px;
-  margin-bottom:15px;
-  border:none;
-  border-radius:6px;
-  background:#1a1a1a;
-  color:white;
-  outline:none;
-  transition:0.3s;
+width:100%;
+padding:12px;
+margin-top:10px;
+background:#222;
+border:none;
+color:white;
 }
-
-input:focus{
-  box-shadow:0 0 10px red;
-}
-
-/* botões */
 
 button{
-  width:100%;
-  padding:12px;
-  border:none;
-  border-radius:6px;
-  background:#ff1a1a;
-  color:white;
-  font-weight:bold;
-  cursor:pointer;
-  transition:0.3s;
-}
-
-button:hover{
-  transform:scale(1.05);
-  box-shadow:0 0 15px red;
+width:100%;
+padding:12px;
+margin-top:15px;
+background:red;
+border:none;
+color:white;
+cursor:pointer;
 }
 
 .secondary{
-  margin-top:10px;
-  background:#222;
-  color:#ff4d4d;
-}
-
-.secondary:hover{
-  background:#330000;
+background:#333;
 }
 
 #feedback{
-  margin-top:15px;
-  font-size:14px;
+margin-top:15px;
 }
 
 </style>
@@ -121,19 +57,17 @@ button:hover{
 
 <body>
 
-<div class="binary" id="binary"></div>
-
 <div class="container">
 
 <h2>Criar Conta</h2>
 
-<input type="email" id="email" placeholder="Email">
-<input type="password" id="senha" placeholder="Senha">
+<input id="email" type="email" placeholder="Email">
+<input id="senha" type="password" placeholder="Senha">
 
 <button id="btnRegister">Registrar</button>
 
 <button class="secondary" onclick="window.location.href='login.html'">
-Voltar para login
+Voltar
 </button>
 
 <p id="feedback"></p>
@@ -143,6 +77,9 @@ Voltar para login
 <script type="module">
 
 import { register } from "./site.js";
+
+const btnRegister = document.getElementById("btnRegister");
+const feedback = document.getElementById("feedback");
 
 btnRegister.addEventListener("click", async () => {
 
@@ -162,40 +99,8 @@ feedback.innerText = error.message;
 }
 
 });
-</script>
-
-<script>
-
-/* gerador de fundo binário */
-
-const binary = document.getElementById("binary");
-
-function gerarBinario(){
-
-let linhas = "";
-let largura = 120;
-
-for(let i=0;i<60;i++){
-
-let linha="";
-
-for(let j=0;j<largura;j++){
-
-linha += Math.random() > 0.5 ? "1" : "0";
-
-}
-
-linhas += linha + "\n";
-
-}
-
-binary.textContent = linhas;
-
-}
-
-setInterval(gerarBinario,120);
-gerarBinario();
 
 </script>
+
 </body>
 </html>
