@@ -131,6 +131,10 @@ button{
   font-size:14px;
 }
 
+document.addEventListener("keypress", e=>{
+if(e.key === "Enter") btnLogin.click();
+});
+
 </style>
 </head>
 
@@ -161,40 +165,24 @@ Registrar
 
 import { login } from "./site.js";
 
-const btnLogin = document.getElementById("btnLogin");
-const feedback = document.getElementById("feedback");
-
 btnLogin.addEventListener("click", async () => {
 
 const email = document.getElementById("email").value.trim();
 const senha = document.getElementById("senha").value.trim();
 
-if(!email || !senha){
-feedback.style.color="orange";
-feedback.innerText="Preencha todos os campos.";
-return;
-}
-
 try{
 
 await login(email, senha);
 
-feedback.style.color="#00ff9d";
-feedback.innerText="Acesso autorizado.";
-
-setTimeout(()=>{
 window.location.href="index.html";
-},800);
 
 }catch(error){
 
-feedback.style.color="red";
-feedback.innerText="Erro: "+error.message;
+feedback.innerText = error.message;
 
 }
 
 });
-
 </script>
 
 <script>
