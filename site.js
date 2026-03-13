@@ -50,7 +50,7 @@ export async function register(email, senha) {
 }
 
 
-// PROTEGER PÁGINA
+// PROTEGER PÁGINAS
 export function protectPage(redirect = "login.html") {
 
   onAuthStateChanged(auth, (user) => {
@@ -74,7 +74,7 @@ export async function logout() {
 }
 
 
-// BUSCAR USUÁRIO
+// BUSCAR DADOS DO USUÁRIO
 export async function getUserData(uid) {
 
   if (!uid) return null;
