@@ -3,167 +3,83 @@
 <head>
 <meta charset="UTF-8">
 <title>Acesso Restrito • CyberNexis</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
 
 body{
-  margin:0;
-  height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-family:Arial, Helvetica, sans-serif;
-  background:black;
-  overflow:hidden;
-  color:white;
+margin:0;
+height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+background:black;
+color:white;
+font-family:Arial;
 }
-
-/* fundo binário */
-
-.binary{
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  z-index:-1;
-  color:red;
-  font-size:14px;
-  opacity:0.25;
-  line-height:14px;
-  white-space:pre;
-  font-family:monospace;
-}
-
-/* container */
 
 .container{
-  background:rgba(10,10,10,0.95);
-  padding:40px;
-  border-radius:12px;
-  width:340px;
-  text-align:center;
-  box-shadow:0 0 30px rgba(255,0,0,0.35);
-  animation:fade 0.8s ease;
+background:#111;
+padding:40px;
+border-radius:10px;
+width:320px;
+text-align:center;
 }
-
-@keyframes fade{
-  from{
-    opacity:0;
-    transform:translateY(20px);
-  }
-  to{
-    opacity:1;
-    transform:translateY(0);
-  }
-}
-
-h2{
-  color:#ff2a2a;
-  margin-bottom:5px;
-}
-
-p{
-  color:#aaa;
-  font-size:14px;
-}
-
-/* inputs */
 
 input{
-  width:100%;
-  padding:12px;
-  margin-top:15px;
-  border:none;
-  border-radius:6px;
-  background:#1a1a1a;
-  color:white;
-  outline:none;
-  transition:0.3s;
-}
-
-input:focus{
-  box-shadow:0 0 10px red;
-}
-
-/* botões */
-
-.form-actions{
-  margin-top:20px;
-  display:flex;
-  gap:10px;
+width:100%;
+padding:12px;
+margin-top:10px;
+background:#222;
+border:none;
+color:white;
 }
 
 button{
-  flex:1;
-  padding:12px;
-  border:none;
-  border-radius:6px;
-  cursor:pointer;
-  font-weight:bold;
-  transition:0.3s;
-}
-
-#btnLogin{
-  background:#ff1a1a;
-  color:white;
-}
-
-#btnLogin:hover{
-  transform:scale(1.05);
-  box-shadow:0 0 15px red;
+width:100%;
+padding:12px;
+margin-top:15px;
+background:red;
+border:none;
+color:white;
+cursor:pointer;
 }
 
 .secondary{
-  background:#222;
-  color:#ff4d4d;
+background:#333;
 }
-
-.secondary:hover{
-  background:#330000;
-}
-
-/* feedback */
 
 #feedback{
-  margin-top:15px;
-  font-size:14px;
+margin-top:15px;
 }
-
-document.addEventListener("keypress", e=>{
-if(e.key === "Enter") btnLogin.click();
-});
 
 </style>
 </head>
 
 <body>
 
-<div class="binary" id="binary"></div>
+<div class="container">
 
-<main class="container">
+<h2>Acesso Restrito</h2>
 
-<h2>ACESSO RESTRITO</h2>
-<p>Identificação necessária para prosseguir</p>
+<input id="email" type="email" placeholder="Email">
+<input id="senha" type="password" placeholder="Senha">
 
-<input type="email" id="email" placeholder="Email operacional">
-<input type="password" id="senha" placeholder="Código de acesso">
-
-<div class="form-actions">
 <button id="btnLogin">Entrar</button>
-<button onclick="window.location.href='registrer.html'" class="secondary">
+
+<button class="secondary" onclick="window.location.href='registre.html'">
 Registrar
 </button>
-</div>
 
 <p id="feedback"></p>
 
-</main>
+</div>
 
 <script type="module">
 
 import { login } from "./site.js";
+
+const btnLogin = document.getElementById("btnLogin");
+const feedback = document.getElementById("feedback");
 
 btnLogin.addEventListener("click", async () => {
 
@@ -183,40 +99,10 @@ feedback.innerText = error.message;
 }
 
 });
-</script>
 
-<script>
-
-/* gerador de fundo binário */
-
-const binary = document.getElementById("binary");
-
-function gerarBinario(){
-
-let linhas = "";
-let largura = 120;
-
-for(let i=0;i<60;i++){
-
-let linha="";
-
-for(let j=0;j<largura;j++){
-
-linha += Math.random() > 0.5 ? "1" : "0";
-
-}
-
-linhas += linha + "\n";
-
-}
-
-binary.textContent = linhas;
-
-}
-
-setInterval(gerarBinario,120);
-
-gerarBinario();
+document.addEventListener("keypress", e=>{
+if(e.key === "Enter") btnLogin.click();
+});
 
 </script>
 
