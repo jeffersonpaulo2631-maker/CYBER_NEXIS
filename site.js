@@ -1,4 +1,4 @@
-import { auth } from "./firebase-config.js";
+import { auth, db } from "./firebase-config.js";
 
 import {
   signInWithEmailAndPassword,
@@ -8,13 +8,10 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-auth.js";
 
 import {
-  getFirestore,
   doc,
   setDoc,
   getDoc
 } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-firestore.js";
-
-const db = getFirestore();
 
 
 // LOGIN
@@ -24,44 +21,31 @@ export async function login(email, senha) {
     throw new Error("Email e senha são obrigatórios.");
   }
 
-  try {
-    const userCredential = await signInWithEmailAndPassword(auth, email, senha);
-    return userCredential;
+  const userCredential = await signInWithEmailAndPassword(auth, email, senha);
 
-  } catch (error) {
-    console.error("Erro no login:", error);
-    throw error;
-  }
+  return userCredential;
 
 }
 
 
-// REGISTRO + CRIAÇÃO NO FIRESTORE
+// REGISTRO
 export async function register(email, senha) {
 
   if (!email || !senha) {
     throw new Error("Email e senha são obrigatórios.");
   }
 
-  try {
+  const userCredential = await createUserWithEmailAndPassword(auth, email, senha);
 
-    const userCredential = await createUserWithEmailAndPassword(auth, email, senha);
-    const user = userCredential.user;
+  const user = userCredential.user;
 
-    await setDoc(doc(db, "users", user.uid), {
-      email: user.email,
-      role: "user",
-      createdAt: Date.now()
-    });
+  await setDoc(doc(db, "users", user.uid), {
+    email: user.email,
+    role: "user",
+    createdAt: Date.now()
+  });
 
-    return userCredential;
-
-  } catch (error) {
-
-    console.error("Erro ao registrar:", error);
-    throw error;
-
-  }
+  return userCredential;
 
 }
 
@@ -83,43 +67,32 @@ export function protectPage(redirect = "login.html") {
 // LOGOUT
 export async function logout() {
 
-  try {
-    await signOut(auth);
-    window.location.href = "login.html";
-  } catch (error) {
-    console.error("Erro ao sair:", error);
-  }
+  await signOut(auth);
+
+  window.location.href = "login.html";
 
 }
 
 
-// BUSCAR DADOS DO USUÁRIO
+// BUSCAR USUÁRIO
 export async function getUserData(uid) {
 
   if (!uid) return null;
 
-  try {
+  const userRef = doc(db, "users", uid);
 
-    const userRef = doc(db, "users", uid);
-    const snapshot = await getDoc(userRef);
+  const snapshot = await getDoc(userRef);
 
-    if (snapshot.exists()) {
-      return snapshot.data();
-    }
-
-    return null;
-
-  } catch (error) {
-
-    console.error("Erro ao buscar usuário:", error);
-    return null;
-
+  if (snapshot.exists()) {
+    return snapshot.data();
   }
+
+  return null;
 
 }
 
 
-// PEGAR USUÁRIO ATUAL
+// USUÁRIO ATUAL
 export function getCurrentUser(callback) {
 
   onAuthStateChanged(auth, (user) => {
