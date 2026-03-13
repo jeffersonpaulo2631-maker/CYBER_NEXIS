@@ -59,6 +59,7 @@ protectPage("login.html");
           <option value="pt-BR">Português</option>
           <option value="en-US">English</option>
           <option value="es-ES">Español</option>
+          <button id="logout">Sair</button>
         </select>
       </nav>
     </div>    
@@ -537,13 +538,19 @@ A capacidade de interromper uma operação é considerada mais importante do que
       showStep(currentStep);  
     }  
   }  
-  
+
   // Inicialização segura (DOM 100% pronto)  
   document.addEventListener("DOMContentLoaded", () => {  
     const completed = localStorage.getItem("onboardingCompleted");  
     if (completed !== "true") {  
       showStep(currentStep);  
-    }  
+    } 
+        }
+    import { logout } from "./js/site.js";
+
+document.getElementById("logout")
+.addEventListener("click", logout);
+  }
   });  
 </script>  
 </body>
