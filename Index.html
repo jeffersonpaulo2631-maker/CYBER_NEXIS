@@ -16,6 +16,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js" defer></script>
 <script src="acesso-secreto.js" defer></script>
 
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
 <title>Cyber-Nexis — Rede Discreta de Observação e Análise</title>
 
 <meta name="description" content="A Cyber-Nexis é uma rede descentralizada de especialistas dedicada à observação ética e à intervenção controlada em falhas sistêmicas.">
@@ -23,7 +25,7 @@
 </head>
 
 <body>
-
+<div id="particles-js"></div>
 <script type="module">
 import { protectPage } from "./site.js";
 protectPage("login.html");
@@ -36,8 +38,7 @@ protectPage("login.html");
   <div class="form-actions">
     <button onclick="prevStep()">Voltar</button>
     <button onclick="nextStep()">Avançar</button>
-  </div>
-</body>  
+  </div> 
 </div>
   <header>
     <div class="container header-inner">
@@ -58,7 +59,6 @@ protectPage("login.html");
   <option value="pt-BR">Português</option>
   <option value="en-US">English</option>
   <option value="es-ES">Español</option>
-</select>
 
 <button id="logout">Sair</button>      
         </select>
@@ -439,5 +439,10 @@ A capacidade de interromper uma operação é considerada mais importante do que
     <footer>  
       <p>&copy; 2025 Cyber-Nexis. Operação por protocolo — Acesso por verificação.</p>  
     </footer>  
+  <script>
+<div id="particles-js"></div>
+
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<script src="particles-config.js"></script>
 </body>
 </html>
