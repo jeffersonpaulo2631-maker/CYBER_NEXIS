@@ -1,74 +1,74 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link rel="stylesheet" href="Styles.css">
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css">
+  <title>Cyber-Nexis — Rede Discreta de Observação e Análise</title>
+  <meta name="description" content="A Cyber-Nexis é uma rede descentralizada de especialistas dedicada à observação ética e à intervenção controlada em falhas sistêmicas.">
 
-<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" defer></script>
-<script src="enigmas.js" defer></script>
-<script src="onboarding.js" defer></script>
-<script src="sombra-digital.js" defer></script>
-<script src="mini_jogo.js" defer></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js" defer></script>
-<script src="acesso-secreto.js" defer></script>
+  <!-- CSS -->
+  <link rel="stylesheet" href="Styles.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css">
 
-<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+  <!-- Scripts externos -->
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js" defer></script>
 
-<title>Cyber-Nexis — Rede Discreta de Observação e Análise</title>
-
-<meta name="description" content="A Cyber-Nexis é uma rede descentralizada de especialistas dedicada à observação ética e à intervenção controlada em falhas sistêmicas.">
+  <!-- Scripts internos -->
+  <script src="enigmas.js" defer></script>
+  <script src="onboarding.js" defer></script>
+  <script src="sombra-digital.js" defer></script>
+  <script src="mini_jogo.js" defer></script>
+  <script src="acesso-secreto.js" defer></script>
+  <script src="particles-config.js" defer></script>
 
 </head>
 
 <body>
-<div id="particles-js"></div>
+
+<!-- Proteção de acesso -->
 <script type="module">
-import { protectPage } from "./site.js";
-protectPage("login.html");
+  import { protectPage } from "./site.js";
+  protectPage("login.html");
 </script>
 
-<div id="onboarding" class="onboarding-overlay" style="display:none;">
-  <img id="onboarding-img" alt="Onboarding Cyber-Nexis">
-  <p id="onboarding-text"></p>
+<!-- Background partículas -->
+<div id="particles-js"></div>
 
-  <div class="form-actions">
-    <button onclick="prevStep()">Voltar</button>
-    <button onclick="nextStep()">Avançar</button>
-  </div> 
-</div>
-  <header>
-    <div class="container header-inner">
-      <div class="logo-cyber">
-        <img src="Imagem/Logotipo.jpg" alt="Logotipo Cyber-Nexis">
+<header>
+  <div class="container header-inner">
+
+    <div class="logo-cyber">
+      <img src="Imagem/Logotipo.jpg" alt="Logotipo Cyber-Nexis">
+    </div>
+
+    <nav class="nav-links-container">
+      <div class="nav-links">
+        <a href="recrutamento.html">Recrutamento</a>
+        <a href="quiz.html">Teste</a>
+        <a href="contato.html">Contato</a>
+        <a href="manual.html">Manual</a>
+        <a href="chat.html">Chat</a>
+        <a href="Regras.html">Regras</a>
       </div>
 
-      <nav class="nav-links-container">
-        <div class="nav-links">
- <a href="recrutamento.html">Recrutamento</a>
-          <a href="quiz.html">Teste</a>
-          <a href="contato.html">Contato</a>
-          <a href="manual.html">Manual</a>
-          <a href="chat.html">Chat</a>
-          <a href="Regras.html">Regras</a>
-        </div>
- <select class="lang-select" onchange="changeLanguage(this.value)">
-  <option value="pt-BR">Português</option>
-  <option value="en-US">English</option>
-  <option value="es-ES">Español</option>
+      <select class="lang-select" onchange="changeLanguage(this.value)">
+        <option value="pt-BR">Português</option>
+        <option value="en-US">English</option>
+        <option value="es-ES">Español</option>
+      </select>
 
-<button id="logout">Sair</button>      
-        </select>
-      </nav>
-    </div>    
-  </header>
-  <main class="container">  
-  
-    <!-- ==================== ACESSO RECONHECIDO ==================== -->  
-  <section class="section">  
+      <button id="logout">Sair</button>
+    </nav>
+
+  </div>
+</header>
+
+<main class="container">
+
+<section class="section">  
  <h2>DECLARAÇÃO DE ESTADO</h2>  
       <p>Se você chegou até aqui por acidente, encerre esta sessão.
 Curiosidade sem disciplina é ruído.
@@ -95,7 +95,19 @@ Prossiga apenas se entende que silêncio é superior a visibilidade
 e que controle começa pela própria mente.</p>  
 <img src="Imagem/1747513933874.jpg" width="1024" height="1024" alt="Mapa e estrutura de núcleos Cyber-Nexis" class="gallery-image">  
 </section>  
-    <!-- ==================== SOBRE A CYBER-NEXIS ==================== -->  
+ 
+    <section id="desafio-osint" class="section">  
+      <h2>PROVE QUE É DIGNO</h2>  
+      <img src="Imagem/1747513926755.jpg" width="1024" height="1024" alt="Desafio OSINT" class="gallery-image">  
+      <p>Encontre a <strong>senha</strong> oculta nos sinais da rede. Dica: procure onde a maioria não olha.</p>  
+      <p class="hint">(Talvez os <em>metadados</em> ou comentários HTML conheçam a resposta...)</p>  
+  
+      <div class="form-actions">  
+        <input type="text" id="senha-osint" placeholder="Digite a senha encontrada" aria-label="Campo para senha OSINT">  
+        <button id="validar-osint" class="btn secondary">Validar</button>  
+      </div>  
+</section> 
+
   <section class="section">  
   <h2>SOBRE</h2>  
   
@@ -126,9 +138,8 @@ Sem ruído.</p>
         <img src="Imagem/Imagem09.jpg" alt="Rede descentralizada da Cyber-Nexis" class="gallery-image">  
       </div>  
     </section>  
-      
-    <!-- ==================== MISSÃO ==================== -->  
-    <section class="section">  
+
+<section class="section">  
       <h2>MISSÃO</h2>  
    <p>O Método precede identidade.
 Identidade é descartável. Método não.
@@ -142,9 +153,23 @@ Integridade é prioridade.
 Operações são transitórias.</p>  
       <img src="Imagem/Grupo 01.png" alt="Missão operacional da Cyber-Nexis" width="1024" height="1024" class="gallery-image">  
     </section>  
-  
-    <!-- ==================== VISÃO ==================== -->  
-    <section class="section">  
+
+<section id="recrutamento" class="section">  
+      <h2>RECRUTAMENTO</h2>  
+      <p>  
+        Não há inscrição aberta.  
+Convites não são solicitados. São estendidos.  
+Avaliação ocorre antes do contato direto.  
+Capacidade técnica é pressuposto. Discrição é requisito.  
+Tentativas de acesso não autorizadas são registradas e ignoradas.  
+Integração é progressiva. Confiança é cumulativa.</p>  
+      <div class="form-actions">  
+        <button class="btn" onclick="location.href='recrutamento.html'">Solicitar Indicação</button>  
+      </div>  
+    </section>
+    
+    
+<section class="section">  
       <h2>VISÃO</h2>  
   <p>Ambientes mudam quando sabem que podem ser verificados.
 A previsibilidade nasce do medo de auditoria constante.
@@ -156,10 +181,9 @@ Estabilidade não é promessa.
 Quanto maior a dependência de inconsistência,
 maior o custo quando ela é revelada.</p>  
       <img src="Imagem/Garoto.jpeg" width="1024" height="1024" alt="Visão estratégica Cyber-Nexis" class="gallery-image">  
-    </section>  
-  
-    <!-- ==================== HIERARQUIA OCULTA ==================== -->  
-    <section class="section">  
+    </section>
+    
+      <section class="section">  
       <h2>HIERARQUIA</h2>  
   <p>Compartimentação.
 Acesso por necessidade.
@@ -169,10 +193,21 @@ Nenhuma liderança é pública.
 Coordenação ocorre por validação cruzada.
 Confiança é matemática, não emocional.</p>  
       <img src="Imagem/0383d8de-1c26-4738-98d3-ed37ff655ba2.png" alt="Diagrama de estrutura descentralizada" class="gallery-image">  
-    </section>  
+    </section>
+    
+<section id="desafio-osint" class="section">  
+      <h2>PROVE QUE É DIGNO</h2>  
+      <img src="Imagem/1747513926755.jpg" width="1024" height="1024" alt="Desafio OSINT" class="gallery-image">  
+      <p>Encontre a <strong>senha</strong> oculta nos sinais da rede. Dica: procure onde a maioria não olha.</p>  
+      <p class="hint">(Talvez os <em>metadados</em> ou comentários HTML conheçam a resposta...)</p>  
   
-    <!-- ==================== NOSSA CAUSA ==================== -->  
-    <section class="section">  
+      <div class="form-actions">  
+        <input type="text" id="senha-osint" placeholder="Digite a senha encontrada" aria-label="Campo para senha OSINT">  
+        <button id="validar-osint" class="btn secondary">Validar</button>  
+      </div>  
+</section>  
+
+<section class="section">  
       <h2>CAUSA</h2>  
       <p>Reduzir a vantagem da invisibilidade estrutural.
 Onde decisões dependem de ausência de rastros,
@@ -184,9 +219,23 @@ Correção pode ser pública.
 Ou pode ser silenciosa.</p>  
       <img src="Imagem/Grupo 02.png" width="1024" height="1024" alt="Causa da Cyber-Nexis" class="gallery-image">  
     </section>  
-      
-    <!-- ==================== PROTOCOLOS DE AÇÃO ==================== -->  
-    <section class="section">  
+    
+    <section class="section enigma-section">    
+      <h2>🔎ENIGMAS</h2>    
+      <img src="Imagem/Game over.jpeg" alt="Enigma de segurança" class="gallery-image">    
+        
+      <p class="pergunta-enigma">Eu protejo dados, mas quando sou fraco, tudo pode ser roubado. Quem sou eu?</p>    
+        
+   <div class="form-actions">  
+        <input type="text" class="resposta-criptografia" placeholder="Digite a resposta" aria-label="Resposta para enigma">  
+        <button class="btn verificar-resposta">Verificar</button>    
+      </div>  
+        
+      <p class="timer">Tempo restante: 20 segundos</p>    
+      <p class="feedback-resposta feedback"></p>    
+    </section>
+    
+<section class="section">  
       <h2>PROTOCOLOS</h2>  
       <p>Informação é fracionada.
 Comunicação é contingente.
@@ -199,7 +248,7 @@ Erro é analisado.
 Erro repetido é exclusão.</p>  
       <img src="Imagem/86773513-ca70-4338-b0c2-d56f1c6292c2.jpeg" width="1024" height="1024" alt="Protocolos e fluxos de decisão Cyber-Nexis" class="gallery-image">  
     </section>  
-  
+    
 <section class="section">  
   <h2>TESTE DE OBSERVAÇÃO</h2>  
 <p id="pergunta-mini-jogo"></p>  
@@ -212,86 +261,10 @@ Erro repetido é exclusão.</p>
   id="acesso-oculto"  
   style="display:none; margin-top:20px;"  
 >  
+
   Acessar Arquivo Restrito  
 </button>  
-      
-    <!-- ==================== DESAFIO SOCIAL ENGINEERING ==================== -->  
-    <section id="desafio-osint" class="section">  
-      <h2>PROVE QUE É DIGNO</h2>  
-      <img src="Imagem/1747513926755.jpg" width="1024" height="1024" alt="Desafio OSINT" class="gallery-image">  
-      <p>Encontre a <strong>senha</strong> oculta nos sinais da rede. Dica: procure onde a maioria não olha.</p>  
-      <p class="hint">(Talvez os <em>metadados</em> ou comentários HTML conheçam a resposta...)</p>  
-  
-      <div class="form-actions">  
-        <input type="text" id="senha-osint" placeholder="Digite a senha encontrada" aria-label="Campo para senha OSINT">  
-        <button id="validar-osint" class="btn secondary">Validar</button>  
-      </div>  
-</section>  
-    <!-- ==================== ZONA DE SOMBRA (Operações Sigilosas) ==================== -->  
-    <section class="section">  
-      <h2>ZONA DE SOMBRA</h2>  
-      <p>Ela surge quando rastros se tornam ameaça.
-Identidade é transitória.
-Conexão é contingente.
-Operações não possuem padrão repetível.
-Acesso não é direito.
-É tolerância temporária.
-Disciplina sustenta permanência.
-Informação não circula.
-É segmentada.
-Erro não é advertido.
-É removido.
-A Zona de Sombra não protege indivíduos.
-Preserva estrutura.</p>  
-      <img src="Imagem/Hacker.jpg" width="1024" height="1024"alt="Ambiente de operação sigilosa" class="gallery-image">  
-    </section>  
-      
-  <!-- ==================== RECRUTAMENTO / TRIAGEM ==================== -->  
-    <section id="recrutamento" class="section">  
-      <h2>RECRUTAMENTO</h2>  
-      <p>  
-        Não há inscrição aberta.  
-Convites não são solicitados. São estendidos.  
-Avaliação ocorre antes do contato direto.  
-Capacidade técnica é pressuposto. Discrição é requisito.  
-Tentativas de acesso não autorizadas são registradas e ignoradas.  
-Integração é progressiva. Confiança é cumulativa.</p>  
-      <div class="form-actions">  
-        <button class="btn" onclick="location.href='recrutamento.html'">Solicitar Indicação</button>  
-      </div>  
-    </section>  
-  
-    <!-- ==================== TESTES OPERACIONAIS ==================== -->  
-    <section id="testes-operacionais" class="section">  
-      <h2>TESTES OPERACIONAIS</h2>  
-      <p>  
-        Avaliamos capacidades técnicas e critério ético por meio de exercícios sem risco real. Os testes verificam raciocínio lógico, auditoria de dados e comportamento sob stress controlado.  
-      </p>  
-      <p>  
-        Todos os exercícios são simulados e monitorados por avaliadores. Resultados são registrados e utilizados unicamente para fins de seleção e desenvolvimento.  
-      </p>  
-      <div class="form-actions">  
-        <button class="btn" onclick="location.href='quiz.html'">Iniciar Avaliação Simulada</button>  
-      </div>  
-    </section>  
-        <!-- ==================== ENIGMA 1 ==================== -->  
-    <section class="section enigma-section">    
-      <h2>🔎 Desvende os Enigmas</h2>    
-      <img src="Imagem/Game over.jpeg" alt="Enigma de segurança" class="gallery-image">    
-        
-      <p class="pergunta-enigma">Eu protejo dados, mas quando sou fraco, tudo pode ser roubado. Quem sou eu?</p>    
-        
-   <div class="form-actions">  
-        <input type="text" class="resposta-criptografia" placeholder="Digite a resposta" aria-label="Resposta para enigma">  
-        <button class="btn verificar-resposta">Verificar</button>    
-      </div>  
-        
-      <p class="timer">Tempo restante: 20 segundos</p>    
-      <p class="feedback-resposta feedback"></p>    
-    </section>  
-  
-    <!-- ==================== CÓDIGO DE CONDUTA & ÉTICA ==================== -->  
-    <section id="codigo-etica" class="section">  
+<section id="codigo-etica" class="section">  
       <h2>CÓDIGO DE CONDUTA</h2>  
       <p>  
         O Código de Conduta da Cyber-Nexis não foi concebido como declaração moral.  
@@ -321,128 +294,29 @@ A capacidade de interromper uma operação é considerada mais importante do que
   
       <img src="Imagem/Hackers profissionais.jpeg" alt="Equipe atuando sob protocolos" class="gallery-image">  
     </section>  
-  
-    <!-- ==================== MURAL DOS RECRUTAS ==================== -->  
-    <section id="mural-recrutas" class="section">  
-      <h2>MURAL DOS RECRUTAS</h2>  
-      <p>Registre seu pseudônimo para participar das atividades públicas da rede. Observações públicas não garantem acesso a áreas restritas.</p>  
-  
-      <form id="recruta-form" class="form-actions">  
-        <input type="text" id="pseudo" placeholder="Seu Pseudônimo" required aria-label="Seu pseudônimo">  
-        <input type="text" id="juramento" placeholder="Breve declaração de compromisso" required aria-label="Seu juramento">  
-        <button type="submit" class="btn">Registrar Pseudônimo</button>  
-      </form>  
-  
-      <div id="mural-list" class="mural-list" aria-live="polite"></div>  
-    </section>  
-  
-    <!-- ==================== SOMBRA DIGITAL (Mensagens cifradas) ==================== -->  
-    <section id="sombra-digital" class="section">  
-      <h2>SOMBRA DIGITAL</h2>  
-      <p>Espaço para mensagens públicas cifradas e anotações transitórias. Mensagens postadas aqui são enfileiradas e exibidas de forma assinada para preservar autoria relativa sem expor identidades.</p>  
-   
-      <div id="messages" aria-live="polite"></div>  
-      <textarea id="message-input" rows="3" placeholder="Mensagem pública (respeite o código de conduta)" aria-label="Mensagem cifrada"></textarea>  
-  
+    
+<section id="testes-operacionais" class="section">  
+      <h2>TESTES OPERACIONAIS</h2>  
+      <p>  
+        Avaliamos capacidades técnicas e critério ético por meio de exercícios sem risco real. Os testes verificam raciocínio lógico, auditoria de dados e comportamento sob stress controlado.  
+      </p>  
+      <p>  
+        Todos os exercícios são simulados e monitorados por avaliadores. Resultados são registrados e utilizados unicamente para fins de seleção e desenvolvimento.  
+      </p>  
       <div class="form-actions">  
-        <button id="encrypt-btn" class="btn">Cifrar & Publicar</button>  
-        <button id="clear-btn" class="btn secondary">Limpar Campo</button>  
+        <button class="btn" onclick="location.href='quiz.html'">Iniciar Avaliação Simulada</button>  
       </div>  
+    </section>     
   
-      <p class="hint">Mensagens públicas enviadas: <span id="secret-count">0</span></p>  
-    </section>  
-  
-    <!-- ==================== LINHA DO TEMPO ==================== -->  
-    <section id="timeline" class="section">  
-      <h2>LINHA DO TEMPO</h2>  
-      <div class="timeline" aria-hidden="false">  
-        <div class="evento">  
-          <h3>2023</h3>  
-          <p>Formação inicial: protocolos experimentais e constituição de células fundadoras.</p>  
-        </div>  
-        <div class="evento">  
-          <h3>2024</h3>  
-          <p>Implementação de procedimentos de validação e criação de Núcleos Operacionais.</p>  
-        </div>  
-        <div class="evento">  
-          <h3>2025</h3>  
-          <p>Expansão global de colaboração e consolidação de padrões de preservação de evidências.</p>  
-        </div>  
-      </div>  
-    </section>  
-  
-    <!-- ==================== PUZZLE GAME (Desafio final) ==================== -->  
-    <section id="puzzle-game" class="section">  
-      <h2>DESAFIO FINAL — ACESSO CONTROLADO</h2>  
-      <p>  
-        Um exercício de raciocínio que integra observação, dedução e validação. As pistas contidas aqui são parte de um teste simulado — não executem procedimentos reais fora do ambiente de avaliação.  
-      </p>  
-  
-      <!-- Fase 1 -->  
-      <div id="fase1">  
-        <h3>Fase 1: Decodifique o binário</h3>  
-        <pre>01000011 01111001 01100010 01100101 01110010 00101101 01001110 01100101 01111000 01101001 01110011</pre>  
-        <input type="text" id="resposta1" placeholder="Resposta" aria-label="Resposta fase 1">  
-        <button onclick="verificarFase1()" class="btn">Verificar</button>  
-        <div id="resposta-fase1" role="status"></div>  
-      </div>  
-  
-      <!-- Fase 2 -->  
-      <div id="fase2" style="display: none;">  
-        <h3>Fase 2: Lógica de equipe</h3>  
-        <p>  
-          - Sigma sempre fala a verdade.<br>  
-          - Omega afirma: “Sigma é o agente duplo.”<br>  
-          - Delta afirma: “Omega está mentindo.”<br>  
-          Quem é o agente duplo?  
-        </p>  
-        <input type="text" id="resposta2" placeholder="Codinome" aria-label="Resposta fase 2">  
-        <button onclick="verificarFase2()" class="btn">Verificar</button>  
-        <div id="resposta-fase2" role="status"></div>  
-      </div>  
-  
-      <!-- Fase 3 -->  
-      <div id="fase3" style="display: none;">  
-        <h3>Fase 3: Cifra simples</h3>  
-        <p>Mensagem cifrada:</p>  
-        <pre>Clguba vf gur frperg</pre>  
-        <input type="text" id="resposta3" placeholder="Mensagem clara" aria-label="Resposta fase 3">  
-        <button onclick="verificarFase3()" class="btn">Verificar</button>  
-        <div id="resposta-fase3" role="status"></div>  
-      </div>  
-    </section>  
-  
-    <!-- ==================== SINAIS NAS SOMBRAS DIGITAIS ==================== -->  
-    <section id="sinais-sombras" class="section">  
-      <h2>SINAIS NAS SOMBRAS DIGITAIS</h2>  
-      <div class="image-row" role="img" aria-label="Ícones de plataformas disfarçadas">  
-        <img src="Imagem/facebook.png" alt="Plataforma 1 disfarçada" class="gallery-image">  
-        <img src="Imagem/Instagram.jpeg" alt="Plataforma 2 disfarçada" class="gallery-image">  
-        <img src="Imagem/images.png" alt="Plataforma 3 disfarçada" class="gallery-image">  
-      </div>  
-      <p>  
-        Alguns canais públicos contêm artefatos e sinais destinados àqueles que praticam a leitura cuidadosa de padrões.  
-        Nosso foco não é a audiência — é a precisão da evidência contida nesses pontos de contato.  
-      </p>  
-      <p><strong>Interpretação consciente importa mais do que alcance.</strong></p>  
-    </section>  
-  
-    <!-- ==================== CITAÇÃO / ENCERRAMENTO ==================== -->  
-    <section id="final" class="section">  
-      <blockquote class="quote-final">  
-        “Precisão acima da exposição. Discrição acima do brilho público.”<br>  
-        <cite>— Diretriz Operacional, Cyber-Nexis</cite>  
-      </blockquote>  
-    </section>  
-  
-    <!-- ==================== RODAPÉ ==================== -->  
-    <footer>  
-      <p>&copy; 2025 Cyber-Nexis. Operação por protocolo — Acesso por verificação.</p>  
-    </footer>  
-  <script>
-<div id="particles-js"></div>
+<footer>
+  <p>&copy; 2025 Cyber-Nexis</p>
+</footer>
 
-<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-<script src="particles-config.js"></script>
+<!-- JS organizado -->
+<script>
+  document.getElementById("logout")?.addEventListener("click", () => {
+    console.log("Logout acionado");
+  });
+</script>
 </body>
 </html>
