@@ -1,130 +1,210 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const feedbackResposta = document.querySelector('.feedback-resposta');
-  const timersDisplay = document.querySelector('.timer');
-  const perguntasEnigma = document.querySelector('.pergunta-enigma');
-  const respostasUsuario = document.querySelector('.resposta-criptografia');
-  const botaoVerificar = document.querySelector('.verificar-resposta');
+  const feedback = document.querySelector('.feedback-resposta');
+  const pergunta = document.querySelector('.pergunta-enigma');
+  const input = document.querySelector('.resposta-criptografia');
+  const botao = document.querySelector('.verificar-resposta');
+  const timerDisplay = document.querySelector('.timer');
 
   let enigmaAtual = 0;
-  let tempoRestante = 20;
+  let tempo = 20;
   let timer;
+  let codigoSecreto = [];
 
-  const enigmas = [
-    {
-      pergunta: '🧠 Eu protejo dados, mas quando sou fraco, tudo pode ser roubado. Quem sou eu?',
-      resposta: 'senha',
-      dica: 'É uma sequência de caracteres usada para autenticação.',
-      redireciona: true // Somente ESTE enigma dá acesso
-    },
-    {
-      pergunta: '🌐 O que significa a sigla VPN?',
-      resposta: 'rede privada virtual',
-      dica: 'Usada para proteger a privacidade na internet.',
-      redireciona: false
-    },
-    {
-      pergunta: '🔌 Em que porta padrão o protocolo HTTP opera?',
-      resposta: '80',
-      dica: 'É uma porta muito utilizada para navegação na web.',
-      redireciona: false
-    },
-    {
-      pergunta: '☠️ Sou o pesadelo dos sistemas: exploro vulnerabilidades. Quem sou eu?',
-      resposta: 'malware',
-      dica: 'É um tipo de software malicioso.',
-      redireciona: false
-    },
-    {
-      pergunta: '📁 Qual comando Linux é usado para listar arquivos?',
-      resposta: 'ls',
-      dica: 'É um comando básico para navegação no terminal.',
-      redireciona: false
-    }
+  // 👁️ monitoramento
+  let erros = 0;
+  let respostasRapidas = 0;
+  let tempoTotal = 0;
+  let tempoInicioPergunta;
+
+  const hora = new Date().getHours();
+
+  // 🌑 enigmas sombrios
+  const enigmasSombrio = [
+    { pergunta: '🌑 Eu existo na ausência de luz... o que sou?', resposta: 'sombra', palavraChave: 'umbra' },
+    { pergunta: '👁️ Eu observo sem olhos... quem sou?', resposta: 'sistema', palavraChave: 'watch' },
+    { pergunta: '⏳ Nunca paro... o que sou?', resposta: 'tempo', palavraChave: 'flow' }
   ];
 
-  function exibirEnigma() {
-    const atual = enigmas[enigmaAtual];
-    perguntasEnigma.textContent = atual.pergunta;
-    respostasUsuario.value = '';
-    feedbackResposta.textContent = '';
-    feedbackResposta.style.color = '';
-    desbloquearInput();
-    tempoRestante = 20;
-    atualizarTimer();
-    iniciarTimer();
+  function getEnigmas() {
+    if (hora < 6) return enigmasSombrio;
+
+    if (hora < 18) {
+      return [
+        { pergunta: '☀️ Eu protejo dados... Quem sou eu?', resposta: 'senha', palavraChave: 'red' },
+        { pergunta: '🌐 O que significa VPN?', resposta: 'rede privada virtual', palavraChave: 'sec' },
+        { pergunta: '🔌 Porta do HTTP?', resposta: '80', palavraChave: 'ret' }
+      ];
+    }
+
+    return [
+      { pergunta: '🌆 O que protege sistemas?', resposta: 'firewall', palavraChave: 'sun' },
+      { pergunta: '💻 Quem invade sistemas?', resposta: 'hacker', palavraChave: 'set' },
+      { pergunta: '🔐 O que nunca deve ser compartilhado?', resposta: 'senha', palavraChave: 'key' }
+    ];
+  }
+
+  const enigmas = getEnigmas();
+
+  const caminhos = {
+    'admin': 'final-tecnico.html',
+    'root': 'final-tecnico.html',
+    '1234': 'final-caos.html',
+    'hack': 'final-caos.html'
+  };
+
+  function normalizar(txt) {
+    return txt.toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .trim();
   }
 
   function iniciarTimer() {
     clearInterval(timer);
+    tempoInicioPergunta = Date.now();
+
     timer = setInterval(() => {
-      tempoRestante--;
-      atualizarTimer();
-      if (tempoRestante <= 0) {
+      tempo--;
+      timerDisplay.textContent = `⏱️ ${tempo}s`;
+
+      if (tempo <= 0) {
         clearInterval(timer);
-        feedbackResposta.textContent = '⏳ Tempo esgotado!';
-        feedbackResposta.style.color = 'red';
-        bloquearInput();
-        setTimeout(proximoEnigma, 3000);
+        erros++;
+        feedback.textContent = '⏳ Tempo esgotado... você hesitou.';
+        bloquear();
+        setTimeout(proximo, 2000);
       }
     }, 1000);
   }
 
-  function atualizarTimer() {
-    timersDisplay.textContent = `⏱️ Tempo restante: ${tempoRestante} segundos`;
+  function bloquear() {
+    input.disabled = true;
+    botao.disabled = true;
   }
 
-  function bloquearInput() {
-    respostasUsuario.disabled = true;
-    botaoVerificar.disabled = true;
+  function desbloquear() {
+    input.disabled = false;
+    botao.disabled = false;
   }
 
-  function desbloquearInput() {
-    respostasUsuario.disabled = false;
-    botaoVerificar.disabled = false;
-  }
-
-  function verificarResposta() {
+  function mostrarEnigma() {
     const atual = enigmas[enigmaAtual];
-    const respostaCorreta = atual.resposta.toLowerCase().trim();
-    const respostaDigitada = respostasUsuario.value.toLowerCase().trim();
-
-    if (respostaDigitada === respostaCorreta) {
-      clearInterval(timer);
-      bloquearInput();
-      feedbackResposta.textContent = '✅ Resposta correta! Acesso concedido.';
-      feedbackResposta.style.color = 'lime';
-
-      if (atual.redireciona) {
-        setTimeout(() => {
-          window.location.href = ' 'pagina-secreta.bkp (1).html';
-        }, 1500);
-      } else {
-        setTimeout(proximoEnigma, 2500);
-      }
-    } else {
-      feedbackResposta.textContent = `❌ Resposta incorreta. Dica: ${atual.dica}`;
-      feedbackResposta.style.color = 'orange';
-    }
+    pergunta.textContent = atual.pergunta;
+    input.value = '';
+    feedback.textContent = '';
+    tempo = 20;
+    desbloquear();
+    iniciarTimer();
   }
 
-  function proximoEnigma() {
-    enigmaAtual++;
-    if (enigmaAtual >= enigmas.length) {
-      feedbackResposta.textContent = '🎯 Você concluiu todos os enigmas. Mas apenas um dava acesso direto...';
-      feedbackResposta.style.color = 'aqua';
-      bloquearInput();
+  function verificar() {
+    const resposta = normalizar(input.value);
+    const atual = enigmas[enigmaAtual];
+
+    const tempoResposta = (Date.now() - tempoInicioPergunta) / 1000;
+    tempoTotal += tempoResposta;
+
+    if (tempoResposta < 3) respostasRapidas++;
+    if (resposta !== normalizar(atual.resposta)) erros++;
+
+    // 🔴 atalhos secretos
+    if (caminhos[resposta]) {
+      window.location.href = caminhos[resposta];
       return;
     }
-    exibirEnigma();
+
+    if (resposta === normalizar(atual.resposta)) {
+      codigoSecreto.push(atual.palavraChave);
+
+      clearInterval(timer);
+      bloquear();
+
+      feedback.textContent = '✅ Correto... continuando análise.';
+      feedback.style.color = 'lime';
+
+      setTimeout(proximo, 1200);
+    } else {
+      feedback.textContent = tempoResposta > 8 
+        ? '❌ Demorou... ficou com dúvida?' 
+        : '❌ Errado... ou observado.';
+      feedback.style.color = 'orange';
+    }
   }
 
-  // Suporte ao botão e tecla Enter
-  botaoVerificar.addEventListener('click', verificarResposta);
-  respostasUsuario.addEventListener('keydown', e => {
-    if (e.key === 'Enter') {
-      verificarResposta();
+  function proximo() {
+    enigmaAtual++;
+
+    if (enigmaAtual >= enigmas.length) {
+      iniciarEnigmaFinal();
+      return;
     }
+
+    mostrarEnigma();
+  }
+
+  // 🌀 ENIGMA FINAL VIVO
+  function iniciarEnigmaFinal() {
+    pergunta.textContent = '';
+    input.value = '';
+    feedback.textContent = '';
+    desbloquear();
+
+    const fases = [
+      "👁️ Eu nunca mudo. Confie.",
+      "👁️ Eu quase nunca mudo.",
+      "👁️ Eu mudo às vezes.",
+      "👁️ Eu sempre mudo.",
+      "👁️ Eu já mudei enquanto você lia.",
+      "👁️ Você percebeu tarde demais."
+    ];
+
+    let estado = 0;
+
+    const intervalo = setInterval(() => {
+      estado++;
+      if (estado >= fases.length) estado = fases.length - 1;
+
+      pergunta.textContent = fases[estado] + " ⏳ " + new Date().toLocaleTimeString();
+    }, 2500);
+
+    botao.onclick = () => {
+      clearInterval(intervalo);
+
+      const resposta = normalizar(input.value);
+      finalizar(resposta);
+    };
+  }
+
+  function finalizar(respostaFinal = '') {
+    const codigo = codigoSecreto.join('');
+
+    // 🟣 final secreto
+    if (codigo === 'redsecret' || codigo === 'umbrawatchflow' || respostaFinal === 'tempo') {
+      window.location.href = 'final-secreto.html';
+      return;
+    }
+
+    // 👁️ observado
+    if (respostasRapidas >= 2 && erros === 0) {
+      window.location.href = 'manual.html';
+      return;
+    }
+
+    // 🔵 técnico
+    if (erros <= 1) {
+      window.location.href = 'serviços.html';
+      return;
+    }
+
+    // 🔴 caos
+    window.location.href = 'final-caos.html';
+  }
+
+  botao.addEventListener('click', verificar);
+
+  input.addEventListener('keydown', e => {
+    if (e.key === 'Enter') verificar();
   });
 
-  exibirEnigma();
+  mostrarEnigma();
 });
