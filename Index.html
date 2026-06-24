@@ -1,322 +1,246 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Cyber-Nexis — Rede Discreta de Observação e Análise</title>
-  <meta name="description" content="A Cyber-Nexis é uma rede descentralizada de especialistas dedicada à observação ética e à intervenção controlada em falhas sistêmicas.">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- CSS -->
-  <link rel="stylesheet" href="Styles.css">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css">
+<title>Manual Operacional — Cyber-Nexis</title>
 
-  <!-- Scripts externos -->
-  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" defer></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js" defer></script>
-  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js" defer></script>
+<meta name="description" content="Documento interno. Distribuição por nível de acesso.">
+<meta name="theme-color" content="#000000">
 
-  <!-- Scripts internos -->
-  <script src="enigmas.js" defer></script>
-  <script src="onboarding.js" defer></script>
-  <script src="sombra-digital.js" defer></script>
-  <script src="mini_jogo.js" defer></script>
-  <script src="acesso-secreto.js" defer></script>
-  <script src="particles-config.js" defer></script>
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<script src="particles-config.js" defer></script>
 
+<style>
+
+#particles-js{
+position:fixed;
+width:100%;
+height:100%;
+top:0;
+left:0;
+z-index:-1;
+}
+
+body{
+background-color:#000;
+color:#fff;
+font-family:"Courier New", Courier, monospace;
+margin:0;
+padding:40px 20px;
+overflow-x:hidden;
+}
+
+main{
+max-width:850px;
+margin:auto;
+border:2px solid red;
+padding:40px;
+background-color:#000;
+animation:fadeIn 1.5s ease-in-out;
+}
+
+h1,h2{
+color:red;
+text-transform:uppercase;
+letter-spacing:1px;
+}
+
+.logo{
+display:block;
+margin:0 auto 25px;
+width:180px;
+}
+
+.intro{
+border-left:4px solid red;
+padding-left:20px;
+margin-bottom:40px;
+font-style:italic;
+}
+
+section{
+margin-bottom:45px;
+opacity:0;
+transform:translateY(25px);
+transition:opacity .8s ease, transform .8s ease;
+}
+
+section.visible{
+opacity:1;
+transform:translateY(0);
+}
+
+ul{
+margin-top:15px;
+padding-left:20px;
+}
+
+li{
+margin-bottom:10px;
+}
+
+.divider{
+border:none;
+border-top:1px solid red;
+margin:50px 0;
+}
+
+footer{
+margin-top:60px;
+padding-top:20px;
+border-top:2px solid red;
+font-size:.9em;
+color:red;
+text-align:center;
+}
+
+@keyframes fadeIn{
+from{opacity:0; transform:translateY(40px);}
+to{opacity:1; transform:translateY(0);}
+}
+
+</style>
 </head>
 
 <body>
 
-<!-- Proteção de acesso -->
-<script type="module">
-  import { protectPage } from "./site.js";
-  protectPage("login.html");
-</script>
-
-<!-- Background partículas -->
 <div id="particles-js"></div>
 
-<header>
-  <div class="container header-inner">
+<main>
 
-    <div class="logo-cyber">
-      <img src="Imagem/Logotipo.jpg" alt="Logotipo Cyber-Nexis">
-    </div>
+<img src="Imagem/Logotipo.jpg" alt="Logotipo Cyber-Nexis" class="logo">
 
-    <nav class="nav-links-container">
-      <div class="nav-links">
-        <a href="recrutamento.html">Recrutamento</a>
-        <a href="quiz.html">Teste</a>
-        <a href="contato.html">Contato</a>
-        <a href="manual.html">Manual</a>
-        <a href="chat.html">Chat</a>
-        <a href="Regras.html">Regras</a>
-      </div>
+<h1>Manual Operacional — Cyber-Nexis</h1>
 
-      <select class="lang-select" onchange="changeLanguage(this.value)">
-        <option value="pt-BR">Português</option>
-        <option value="en-US">English</option>
-        <option value="es-ES">Español</option>
-      </select>
+<div class="intro">
+Documento restrito por nível de acesso.  
+Cada leitor visualiza apenas uma fração do sistema.
+</div>
 
-      <button id="logout">Sair</button>
-    </nav>
+<hr class="divider">
 
-  </div>
-</header>
+<section>
+<h2>Status do Sistema</h2>
+<p>
+A Cyber-Nexis opera como uma estrutura distribuída em camadas funcionais.
+A visão total do sistema não é acessível a nenhum indivíduo isolado.
+</p>
+</section>
 
-<main class="container">
+<hr class="divider">
 
-<section class="section">  
- <h2>DECLARAÇÃO DE ESTADO</h2>  
-      <p>Se você chegou até aqui por acidente, encerre esta sessão.
-Curiosidade sem disciplina é ruído.
-Aqui não há identidade.
-Não há reputação.
-Não há aplausos.
-Existe apenas capacidade.
-Este não é um grupo.
-Não é um coletivo.
-Não é uma causa.
-É um critério.
-Você não será convidado.
-Você será observado.
-Se busca pertencimento, está no lugar errado.
-Se busca reconhecimento, está no século errado.
-Se busca poder sem compreender responsabilidade, está condenado ao erro.
-Segurança não é ferramenta.
-É comportamento.
-Confiança não é dada.
-É calculada.
-Erro não é corrigido.
-É arquivado.
-Prossiga apenas se entende que silêncio é superior a visibilidade
-e que controle começa pela própria mente.</p>  
-<img src="Imagem/1747513933874.jpg" width="1024" height="1024" alt="Mapa e estrutura de núcleos Cyber-Nexis" class="gallery-image">  
-</section>  
- 
-    <section id="desafio-osint" class="section">  
-      <h2>PROVE QUE É DIGNO</h2>  
-      <img src="Imagem/1747513926755.jpg" width="1024" height="1024" alt="Desafio OSINT" class="gallery-image">  
-      <p>Encontre a <strong>senha</strong> oculta nos sinais da rede. Dica: procure onde a maioria não olha.</p>  
-      <p class="hint">(Talvez os <em>metadados</em> ou comentários HTML conheçam a resposta...)</p>  
-  
-      <div class="form-actions">  
-        <input type="text" id="senha-osint" placeholder="Digite a senha encontrada" aria-label="Campo para senha OSINT">  
-        <button id="validar-osint" class="btn secondary">Validar</button>  
-      </div>  
-</section> 
+<section>
+<h2>Estrutura Operacional</h2>
+<p>
+A organização é dividida em três níveis funcionais:
+</p>
 
-  <section class="section">  
-  <h2>SOBRE</h2>  
-  
-<p>Esta estrutura não possui designação pública.
-Não há cargos.
-Não há hierarquia visível.
-Não há representação externa.
-O que existe é critério.
-Atuamos onde a narrativa oficial colapsa sob análise técnica.
-Onde dados contradizem versões.
-Onde silêncio é mais revelador que declarações.
-Não buscamos validação.
-Não anunciamos ações.
-Não registramos autoria.
-Resultado não é publicidade.
-É consequência.
-Participação não é aberta.
-É verificada.
-Se você procura símbolo, encerre aqui.
-Se procura grupo, encerre aqui.
-Se compreende que responsabilidade precede capacidade
-e que capacidade precede ação, prossiga.
-Sem assinatura.
-Sem bandeira.
-Sem ruído.</p>  
-  
-      <div class="image-gallery">  
-        <img src="Imagem/Imagem09.jpg" alt="Rede descentralizada da Cyber-Nexis" class="gallery-image">  
-      </div>  
-    </section>  
+<ul>
+<li><b>Nível I — Coordenação Estratégica:</b> define diretrizes e valida acessos.</li>
+<li><b>Nível II — Operações Técnicas:</b> executa tarefas e análises.</li>
+<li><b>Nível III — Observação:</b> triagem e análise de comportamento externo.</li>
+</ul>
 
-<section class="section">  
-      <h2>MISSÃO</h2>  
-   <p>O Método precede identidade.
-Identidade é descartável. Método não.
-Critérios não são públicos.
-Validação externa é irrelevante.
-Intervenção ocorre quando variáveis ultrapassam o limiar interno.
-Divulgação é ferramenta, não objetivo.
-Exposição é custo calculado.
-Desvios internos são risco estrutural.
-Integridade é prioridade.
-Operações são transitórias.</p>  
-      <img src="Imagem/Grupo 01.png" alt="Missão operacional da Cyber-Nexis" width="1024" height="1024" class="gallery-image">  
-    </section>  
+<p>
+Nenhum nível possui acesso completo ao sistema.
+A fragmentação é um mecanismo de segurança.
+</p>
+</section>
 
-<section id="recrutamento" class="section">  
-      <h2>RECRUTAMENTO</h2>  
-      <p>  
-        Não há inscrição aberta.  
-Convites não são solicitados. São estendidos.  
-Avaliação ocorre antes do contato direto.  
-Capacidade técnica é pressuposto. Discrição é requisito.  
-Tentativas de acesso não autorizadas são registradas e ignoradas.  
-Integração é progressiva. Confiança é cumulativa.</p>  
-      <div class="form-actions">  
-        <button class="btn" onclick="location.href='recrutamento.html'">Solicitar Indicação</button>  
-      </div>  
-    </section>
-    
-    
-<section class="section">  
-      <h2>VISÃO</h2>  
-  <p>Ambientes mudam quando sabem que podem ser verificados.
-A previsibilidade nasce do medo de auditoria constante.
-Opacidade confortável é vulnerabilidade adiada.
-Descentralização não é discurso.
-É redundância estratégica.
-Estabilidade não é promessa.
-É consequência estatística.
-Quanto maior a dependência de inconsistência,
-maior o custo quando ela é revelada.</p>  
-      <img src="Imagem/Garoto.jpeg" width="1024" height="1024" alt="Visão estratégica Cyber-Nexis" class="gallery-image">  
-    </section>
-    
-      <section class="section">  
-      <h2>HIERARQUIA</h2>  
-  <p>Compartimentação.
-Acesso por necessidade.
-Conhecimento por função.
-Nenhuma unidade possui visão total.
-Nenhuma liderança é pública.
-Coordenação ocorre por validação cruzada.
-Confiança é matemática, não emocional.</p>  
-      <img src="Imagem/0383d8de-1c26-4738-98d3-ed37ff655ba2.png" alt="Diagrama de estrutura descentralizada" class="gallery-image">  
-    </section>
-    
-<section id="desafio-osint" class="section">  
-      <h2>PROVE QUE É DIGNO</h2>  
-      <img src="Imagem/1747513926755.jpg" width="1024" height="1024" alt="Desafio OSINT" class="gallery-image">  
-      <p>Encontre a <strong>senha</strong> oculta nos sinais da rede. Dica: procure onde a maioria não olha.</p>  
-      <p class="hint">(Talvez os <em>metadados</em> ou comentários HTML conheçam a resposta...)</p>  
-  
-      <div class="form-actions">  
-        <input type="text" id="senha-osint" placeholder="Digite a senha encontrada" aria-label="Campo para senha OSINT">  
-        <button id="validar-osint" class="btn secondary">Validar</button>  
-      </div>  
-</section>  
+<hr class="divider">
 
-<section class="section">  
-      <h2>CAUSA</h2>  
-      <p>Reduzir a vantagem da invisibilidade estrutural.
-Onde decisões dependem de ausência de rastros,
-introduzimos possibilidade de rastreamento.
-Reconhecimento é ruído.
-Consenso é irrelevante.
-Atuamos quando inconsistências ultrapassam o limite definido.
-Correção pode ser pública.
-Ou pode ser silenciosa.</p>  
-      <img src="Imagem/Grupo 02.png" width="1024" height="1024" alt="Causa da Cyber-Nexis" class="gallery-image">  
-    </section>  
-    
-    <section class="section enigma-section">    
-      <h2>🔎ENIGMAS</h2>    
-      <img src="Imagem/Game over.jpeg" alt="Enigma de segurança" class="gallery-image">    
-        
-      <p class="pergunta-enigma">Eu protejo dados, mas quando sou fraco, tudo pode ser roubado. Quem sou eu?</p>    
-        
-   <div class="form-actions">  
-        <input type="text" class="resposta-criptografia" placeholder="Digite a resposta" aria-label="Resposta para enigma">  
-        <button class="btn verificar-resposta">Verificar</button>    
-      </div>  
-        
-      <p class="timer">Tempo restante: 20 segundos</p>    
-      <p class="feedback-resposta feedback"></p>    
-    </section>
-    
-<section class="section">  
-      <h2>PROTOCOLOS</h2>  
-      <p>Informação é fracionada.
-Comunicação é contingente.
-Persistência é risco.
-Exposição individual é falha sistêmica.
-Nenhuma ação ocorre sem cálculo de impacto e risco.
-Operações são descartáveis.
-Identidades não.
-Erro é analisado.
-Erro repetido é exclusão.</p>  
-      <img src="Imagem/86773513-ca70-4338-b0c2-d56f1c6292c2.jpeg" width="1024" height="1024" alt="Protocolos e fluxos de decisão Cyber-Nexis" class="gallery-image">  
-    </section>  
-    
-<section class="section">  
-  <h2>TESTE DE OBSERVAÇÃO</h2>  
-<p id="pergunta-mini-jogo"></p>  
-<img id="imagem-mini-jogo" style="max-width:100%">  
-<div id="opcoes-mini-jogo"></div>  
-<p id="feedback-mini-jogo"></p>  
-<p id="progresso-mini-jogo"></p>  
-</section>  
-<button  
-  id="acesso-oculto"  
-  style="display:none; margin-top:20px;"  
->  
+<section>
+<h2>Processo de Integração</h2>
+<ul>
+<li>Observação de comportamento em ambiente externo</li>
+<li>Simulações controladas de decisão</li>
+<li>Validação progressiva por múltiplas camadas</li>
+</ul>
 
-  Acessar Arquivo Restrito  
-</button>  
-<section id="codigo-etica" class="section">  
-      <h2>CÓDIGO DE CONDUTA</h2>  
-      <p>  
-        O Código de Conduta da Cyber-Nexis não foi concebido como declaração moral.  
-Ele existe para limitar dano sistêmico e garantir a integridade do método fundador.  
-Qualquer operador que atue fora destes limites compromete o sistema como um todo e é tratado como vetor de risco.  
-      </p>  
-  
-      <h3>1. Responsabilidade</h3>  
-      <p>Toda ação deve ser justificável com base em critérios técnicos verificáveis.  
-Intenção pessoal, convicção ideológica ou urgência percebida não constituem justificativa válida.  
-O operador é responsável não apenas pelo que faz, mas pelo impacto indireto gerado por sua ação ou omissão.</p>  
-  
-      <h3>2. Proporcionalidade</h3>  
-      <p>Intervenções devem ser sempre a menor resposta possível capaz de preservar evidência, conter dano ou encerrar um ciclo operacional.  
-Ações excessivas são classificadas como falhas, independentemente do resultado obtido.</p>  
-  
-      <h3>3. Confidencialidade</h3>  
-      <p>Informações sensíveis são acessadas exclusivamente sob necessidade comprovada.  
-Curiosidade é tratada como desvio.  
-A exposição não autorizada de dados, métodos ou identidades resulta em desligamento imediato do vetor operacional.  
-      </p>  
-  
-      <h3>4. Revisão e Fiscalização</h3>  
-      <p>Nenhuma ação crítica é considerada válida sem revisão cruzada independente.  
-Operadores não revisam suas próprias decisões.  
-A capacidade de interromper uma operação é considerada mais importante do que a capacidade de iniciá-la.</p>  
-  
-      <img src="Imagem/Hackers profissionais.jpeg" alt="Equipe atuando sob protocolos" class="gallery-image">  
-    </section>  
-    
-<section id="testes-operacionais" class="section">  
-      <h2>TESTES OPERACIONAIS</h2>  
-      <p>  
-        Avaliamos capacidades técnicas e critério ético por meio de exercícios sem risco real. Os testes verificam raciocínio lógico, auditoria de dados e comportamento sob stress controlado.  
-      </p>  
-      <p>  
-        Todos os exercícios são simulados e monitorados por avaliadores. Resultados são registrados e utilizados unicamente para fins de seleção e desenvolvimento.  
-      </p>  
-      <div class="form-actions">  
-        <button class="btn" onclick="location.href='quiz.html'">Iniciar Avaliação Simulada</button>  
-      </div>  
-    </section>     
-  
+<p>
+A entrada não é solicitada. Ela é determinada.
+</p>
+</section>
+
+<hr class="divider">
+
+<section>
+<h2>Princípios Operacionais</h2>
+<ul>
+<li>Necessidade funcional acima de intenção pessoal</li>
+<li>Informação distribuída por escopo limitado</li>
+<li>Validação cruzada obrigatória em ações críticas</li>
+<li>Isolamento de falhas por design estrutural</li>
+</ul>
+</section>
+
+<hr class="divider">
+
+<section>
+<h2>Segurança Interna</h2>
+<p>
+A estrutura opera sob compartimentação rígida.
+Nenhuma unidade possui visão completa do sistema.
+</p>
+
+<p>
+Tentativas de acesso fora de escopo são registradas e isoladas.
+</p>
+</section>
+
+<hr class="divider">
+
+<section>
+<h2>Monitoramento</h2>
+<p>
+Interações podem ser analisadas para identificação de padrões.
+Nenhuma interação é considerada neutra por padrão.
+</p>
+
+<ul>
+<li>irrelevante</li>
+<li>observacional</li>
+<li>crítica</li>
+</ul>
+</section>
+
+<hr class="divider">
+
+<section>
+<h2>Integridade do Sistema</h2>
+<p>
+Qualquer tentativa de contornar o fluxo de acesso não interrompe o sistema.
+Apenas altera sua classificação interna.
+</p>
+</section>
+
 <footer>
-  <p>&copy; 2025 Cyber-Nexis</p>
+Documento espelhado.  
+Versões paralelas podem existir dentro da rede.
 </footer>
 
-<!-- JS organizado -->
+</main>
+
 <script>
-  document.getElementById("logout")?.addEventListener("click", () => {
-    console.log("Logout acionado");
-  });
+
+const sections=document.querySelectorAll("section");
+
+const observer=new IntersectionObserver(entries=>{
+entries.forEach(entry=>{
+if(entry.isIntersecting){
+entry.target.classList.add("visible");
+}
+});
+},{threshold:0.2});
+
+sections.forEach(section=>observer.observe(section));
+
+console.info("[CNX] manual loaded | access layer: partial view");
+
 </script>
+
 </body>
 </html>
