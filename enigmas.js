@@ -46,10 +46,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const enigmas = getEnigmas();
 
   const caminhos = {
-    'admin': 'final-tecnico.html',
-    'root': 'final-tecnico.html',
-    '1234': 'final-caos.html',
-    'hack': 'final-caos.html'
+    'admin': 'pagina-secreta.bkp (1).html ',
+    'root': 'pagina-secreta.bkp (1).html',
+    '1234': 'pagina-secreta.bkp (1).html ',
+    'hack': 'pagina-secreta.bkp (1).html'
   };
 
   function normalizar(txt) {
