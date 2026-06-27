@@ -197,7 +197,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // 🔴 caos
-    window.location.href = 'final-caos.html';
+    window.location.href = 'pagina-secreta.bkp (1).html';
   }
 
   botao.addEventListener('click', verificar);
