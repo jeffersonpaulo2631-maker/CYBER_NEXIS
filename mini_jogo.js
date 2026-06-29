@@ -234,7 +234,7 @@ function avaliarAcessoFinal() {
 
       // REDIRECIONAMENTO
       setTimeout(() => {
-        window.location.href = "/ pagina-secreta.bkp (1).html";
+        window.location.href = "pagina-secreta.bkp (1).html";
       }, 1200);
 
     } else {
