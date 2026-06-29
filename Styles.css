@@ -348,3 +348,155 @@ a:focus, button:focus, input:focus, textarea:focus{
   background: #ff3355;
   box-shadow: 0 0 12px rgba(255,0,51,0.6);
 }
+
+/* =====================================================
+   🧠 CYBER-NEXIS — MÓDULO ENIGMAS / IA SENTINEL
+   ===================================================== */
+
+/* =========================
+   👁 IA SENTINEL
+   ========================= */
+
+.ia-guardia {
+  width: 120px;
+  height: 120px;
+  margin: 20px auto;
+  border-radius: 50%;
+  background: radial-gradient(circle, #111, #000);
+  border: 2px solid rgba(255,0,51,0.25);
+  box-shadow: 0 0 18px rgba(255,0,51,0.15);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+/* estado normal pulsante */
+.ia-guardia::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle, transparent 40%, rgba(255,0,51,0.08));
+  animation: iaPulse 2.2s infinite;
+}
+
+@keyframes iaPulse {
+  0% { transform: scale(1); opacity: 0.4; }
+  50% { transform: scale(1.15); opacity: 0.1; }
+  100% { transform: scale(1); opacity: 0.4; }
+}
+
+/* ACERTO */
+.ia-guardia.acerto {
+  border-color: #00ff88;
+  box-shadow: 0 0 25px #00ff88;
+  transform: scale(1.08);
+}
+
+/* ERRO */
+.ia-guardia.erro {
+  border-color: #ff0033;
+  box-shadow: 0 0 25px #ff0033;
+  transform: scale(0.92) rotate(-2deg);
+}
+
+/* =========================
+   📡 TERMINAL LOG
+   ========================= */
+
+.terminal-log {
+  background: #050505;
+  border: 1px solid rgba(255,0,51,0.18);
+  padding: 12px;
+  height: 140px;
+  overflow-y: auto;
+  font-size: 0.85rem;
+  color: #00ff88;
+  font-family: var(--mono);
+  box-shadow: inset 0 0 12px rgba(0,0,0,0.9);
+}
+
+.terminal-log p {
+  margin: 0;
+  padding: 2px 0;
+  opacity: 0.85;
+}
+
+/* =========================
+   ⏱ BARRA DE TEMPO ENIGMA
+   ========================= */
+
+.tempo-restante {
+  width: 100%;
+  height: 6px;
+  background: #ff0033;
+  border-radius: 4px;
+  transition: width 0.2s linear, background 0.3s ease;
+  box-shadow: 0 0 10px rgba(255,0,51,0.25);
+}
+
+/* =========================
+   🧠 PROGRESSO DOS ENIGMAS
+   ========================= */
+
+.circulo {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #222;
+  border: 1px solid rgba(255,0,51,0.25);
+  display: inline-block;
+  margin-right: 6px;
+  transition: all 0.3s ease;
+}
+
+.circulo.ativo {
+  background: #00ff88;
+  box-shadow: 0 0 10px #00ff88;
+  transform: scale(1.25);
+}
+
+/* =========================
+   💬 PERGUNTA DO ENIGMA
+   ========================= */
+
+.pergunta-enigma {
+  color: #00ff88;
+  font-weight: bold;
+  text-shadow: 0 0 8px rgba(0,255,0,0.15);
+  min-height: 40px;
+  transition: all 0.2s ease;
+}
+
+/* =========================
+   🧾 INPUT DO ENIGMA
+   ========================= */
+
+.resposta-criptografia {
+  letter-spacing: 1px;
+  text-transform: lowercase;
+  box-shadow: 0 0 10px rgba(0,255,0,0.05);
+}
+
+/* =========================
+   ⚡ FEEDBACK ENIGMA
+   ========================= */
+
+.feedback-resposta {
+  margin-top: 10px;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+/* =========================
+   🔥 EFEITO DE ALERTA (OPCIONAL)
+   ========================= */
+
+@keyframes alertaFlash {
+  0% { background: rgba(255,0,0,0.05); }
+  50% { background: rgba(255,0,0,0.15); }
+  100% { background: rgba(255,0,0,0.05); }
+}
+
+.enigma-alerta {
+  animation: alertaFlash 0.6s infinite;
+}
