@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Cyber-Nexis — Rede Discreta de Observação e Análise</title>
+  <meta name="description" content="A Cyber-Nexis é uma rede descentralizada de especialistas dedicada à observação ética e à intervenção controlada em falhas sistêmicas.">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="Styles.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css">
+
+  <!-- Scripts externos -->
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js" defer></script>
+
+  <!-- Scripts internos -->
+  <script src="onboarding.js" defer></script>
+  <script src="sombra-digital.js" defer></script>
+  <script src="mini_jogo.js" defer></script>
+  <script src="particles-config.js" defer></script>
+</head>
+
+<body>
+  <!-- Proteção de acesso -->
+  <script type="module">
+    import { protectPage } from "./site.js";
+    protectPage("login.html");
+  </script>
+
+  <!-- Background partículas -->
+  <div id="particles-js"></div>
+
+  <header>
+    <div class="container header-inner">
+      <div class="logo-cyber">
+        <img src="Imagem/Logotipo.png" alt="Logotipo.png">
+      </div>
+
+      <nav class="nav-links-container" aria-label="Navegação principal">
+        <div class="nav-links">
+          <a href="recrutamento.html">Recrutamento</a>
+          <a href="quiz.html">Teste</a>
+          <a href="manual.html">Manual</a>
+          <a href="Regras.html">Regras</a>
+        </div>
+
+        <select class="lang-select" onchange="changeLanguage(this.value)" aria-label="Selecionar idioma">
+          <option value="pt-BR">Português</option>
+          <option value="en-US">English</option>
+          <option value="es-ES">Español</option>
+        </select>
+
+        <button id="logout" type="button">Sair</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="section">
+      <h2>SOBRE A ORGANIZAÇÃO</h2>
+      <p>A Cyber-Nexis é uma organização independente de pesquisa e operações em segurança digital. Sua estrutura é deliberadamente não pública. A existência de uma hierarquia funcional é parte essencial do seu modelo operacional, garantindo coordenação, segurança e isolamento de informação. A liderança é centralizada em nível estratégico, enquanto as operações são distribuídas em camadas técnicas. O sistema não é aberto ao público. O acesso é restrito e progressivo.</p>
+      <img src="Imagem/1747513933874.jpg" width="1024" height="1024" alt="Mapa e estrutura de núcleos Cyber-Nexis" class="gallery-image">
+    </section>
+
+    <section id="desafio-osint" class="section">
+      <h2>PROVE QUE É DIGNO</h2>
+      <img src="Imagem/1747513926755.jpg" width="1024" height="1024" alt="Desafio OSINT" class="gallery-image">
+      <p>Encontre a <strong>senha</strong> oculta nos sinais da rede. Dica: procure onde a maioria não olha.</p>
+      <p class="hint">(Talvez os <em>metadados</em> ou comentários HTML conheçam a resposta...)</p>
+
+      <!-- senha: nexis -->
+      <div class="form-actions">
+        <input type="text" id="senha-osint" placeholder="Digite a senha encontrada" aria-label="Campo para senha OSINT">
+        <button id="validar-osint" class="btn secondary" type="button">Validar</button>
+      </div>
+      <p id="feedback-osint" aria-live="polite"></p>
+    </section>
+
+    <section class="section">
+      <h2>ESTRUTURA INTERNA</h2>
+      <p>A organização é composta por três camadas funcionais: Camada Estratégica, Camada Operacional e Camada de Avaliação. Nenhuma camada possui acesso completo ao sistema. A separação de informação é um mecanismo de segurança.</p>
+      <div class="image-gallery">
+        <img src="Imagem/Imagem09.jpg" alt="Rede descentralizada da Cyber-Nexis" class="gallery-image">
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>MISSÃO</h2>
+      <p>A Cyber-Nexis atua em análise e resposta a vulnerabilidades estruturais em ambientes digitais. O objetivo não é exposição pública. É correção técnica de falhas sistêmicas. Intervenções são raras, precisas e calculadas.</p>
+      <img src="Imagem/Grupo 01.png" alt="Missão operacional da Cyber-Nexis" width="1024" height="1024" class="gallery-image">
+    </section>
+
+    <section id="recrutamento" class="section">
+      <h2>RECRUTAMENTO</h2>
+      <p>Não há inscrição aberta. Convites não são solicitados. São estendidos. Avaliação ocorre antes do contato direto. Capacidade técnica é pressuposto. Discrição é requisito. Tentativas de acesso não autorizadas são registradas e ignoradas. Integração é progressiva. Confiança é cumulativa.</p>
+      <div class="form-actions">
+        <button class="btn" type="button" onclick="location.href='recrutamento.html'">Solicitar Indicação</button>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>VISÃO</h2>
+      <p>Sistemas digitais tornam-se instáveis quando crescem sem auditoria. A função da Cyber-Nexis é atuar como mecanismo de equilíbrio técnico. Isso envolve observação, análise e intervenção controlada quando necessário.</p>
+      <img src="Imagem/Garoto.jpeg" width="1024" height="1024" alt="Visão estratégica Cyber-Nexis" class="gallery-image">
+    </section>
+
+    <section class="section">
+      <h2>HIERARQUIA</h2>
+      <p>Compartimentação. Acesso por necessidade. Conhecimento por função. Nenhuma unidade possui visão total. Nenhuma liderança é pública. Coordenação ocorre por validação cruzada. Confiança é matemática, não emocional.</p>
+      <img src="Imagem/0383d8de-1c26-4738-98d3-ed37ff655ba2.png" alt="Diagrama de estrutura descentralizada" class="gallery-image">
+    </section>
+
+    <section class="section">
+      <h2>CAUSA</h2>
+      <p>A organização existe para reduzir vulnerabilidades estruturais em sistemas digitais e sociais. A abordagem é técnica, não ideológica. A ação é baseada em análise, não opinião.</p>
+      <img src="Imagem/Grupo 02.png" width="1024" height="1024" alt="Causa da Cyber-Nexis" class="gallery-image">
+    </section>
+
+    <!-- TERMINAL PRINCIPAL -->
+    <section class="terminal-cybernexis">
+      <div class="terminal-header">
+        <h2>CYBERNEXIS ACCESS TERMINAL</h2>
+        <span class="status">● ONLINE</span>
+      </div>
+
+      <div class="painel">
+        <div class="ia-area">
+          <img src="Imagem/sentinel.gif" class="ia-guardia" alt="Sentinela digital Cyber-Nexis">
+        </div>
+
+        <div class="terminal">
+          <div class="terminal-log">
+            <p>&gt; Sistema iniciado...</p>
+            <p>&gt; Protocolo CNX-7 carregado...</p>
+            <p>&gt; Aguardando autenticação...</p>
+          </div>
+
+          <div class="progresso" aria-hidden="true">
+            <span class="circulo ativo"></span>
+            <span class="circulo"></span>
+            <span class="circulo"></span>
+          </div>
+
+          <div class="pergunta-box">
+            <p class="pergunta-enigma"></p>
+          </div>
+
+          <div class="entrada">
+            <input class="resposta-criptografia" type="text" aria-label="Resposta do enigma">
+            <button class="verificar-resposta" type="button">VALIDAR ACESSO</button>
+          </div>
+
+          <div class="barra-tempo">
+            <div class="tempo-restante"></div>
+          </div>
+
+          <p class="timer">20s</p>
+          <p class="feedback-resposta"></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>PROTOCOLOS</h2>
+      <p>Informação é fracionada. Comunicação é contingente. Persistência é risco. Exposição individual é falha sistêmica. Nenhuma ação ocorre sem cálculo de impacto e risco. Operações são descartáveis. Identidades não. Erro é analisado. Erro repetido é exclusão.</p>
+      <img src="Imagem/86773513-ca70-4338-b0c2-d56f1c6292c2.jpeg" width="1024" height="1024" alt="Protocolos e fluxos de decisão Cyber-Nexis" class="gallery-image">
+    </section>
+
+    <section class="section">
+      <h2>TESTE DE OBSERVAÇÃO</h2>
+      <p id="pergunta-mini-jogo"></p>
+      <img id="imagem-mini-jogo" style="max-width:100%" alt="Imagem do mini jogo">
+      <div id="opcoes-mini-jogo"></div>
+      <p id="feedback-mini-jogo"></p>
+      <p id="progresso-mini-jogo"></p>
+    </section>
+
+    <button id="acesso-oculto" style="display:none; margin-top:20px;" type="button">
+      Acessar Arquivo Restrito
+    </button>
+
+    <section id="codigo-etica" class="section">
+      <h2>CÓDIGO DE CONDUTA</h2>
+      <p>O código existe para garantir segurança operacional e consistência interna.</p>
+
+      <h3>1. Responsabilidade</h3>
+      <p>Toda ação é vinculada ao seu impacto direto e indireto dentro do sistema.</p>
+
+      <h3>2. Proporcionalidade</h3>
+      <p>Qualquer intervenção deve ser limitada ao necessário para atingir o objetivo definido.</p>
+
+      <h3>3. Confidencialidade</h3>
+      <p>Informações são distribuídas apenas por nível de acesso.</p>
+
+      <h3>4. Disciplina Operacional</h3>
+      <p>Desvios repetidos de protocolo resultam em exclusão do sistema.</p>
+
+      <img src="Imagem/Hackers profissionais.jpeg" alt="Equipe atuando sob protocolos" class="gallery-image">
+    </section>
+
+    <section id="testes-operacionais" class="section">
+      <h2>TESTES OPERACIONAIS</h2>
+      <p>Avaliamos capacidades técnicas e critério ético por meio de exercícios sem risco real. Os testes verificam raciocínio lógico, auditoria de dados e comportamento sob stress controlado.</p>
+      <p>Todos os exercícios são simulados e monitorados por avaliadores. Resultados são registrados e utilizados unicamente para fins de seleção e desenvolvimento.</p>
+      <div class="form-actions">
+        <button class="btn" type="button" onclick="location.href='quiz.html'">Iniciar Avaliação Simulada</button>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Cyber-Nexis</p>
+  </footer>
+
+  <!-- JS final da página -->
+  <script>
+    // Logout visual/local
+    document.getElementById("logout")?.addEventListener("click", () => {
+      console.log("Logout acionado");
+    });
+
+    // Validação OSINT simples
+    document.getElementById("validar-osint")?.addEventListener("click", () => {
+      const senha = document.getElementById("senha-osint")?.value.trim().toLowerCase();
+      const feedback = document.getElementById("feedback-osint");
+
+      if (senha === "nexis") {
+        feedback.textContent = "Acesso parcial validado. Continue observando.";
+        document.getElementById("acesso-oculto").style.display = "block";
+      } else {
+        feedback.textContent = "Senha incorreta. Observe melhor os sinais.";
+      }
+    });
+
+    // Botão oculto
+    document.getElementById("acesso-oculto")?.addEventListener("click", () => {
+      window.location.href = "cyber_nexis_comando_real.html";
+    });
+
+    // Caminho secreto: digite NEXIS em qualquer lugar da página
+    const codigoSecreto = "nexis";
+    let bufferSecreto = "";
+
+    document.addEventListener("keydown", (evento) => {
+      const tecla = evento.key.toLowerCase();
+      if (tecla.length !== 1) return;
+
+      bufferSecreto += tecla;
+      bufferSecreto = bufferSecreto.slice(-codigoSecreto.length);
+
+      if (bufferSecreto === codigoSecreto) {
+        ativarAcessoSecreto();
+      }
+    });
+
+    function ativarAcessoSecreto() {
+      const aviso = document.createElement("div");
+      aviso.innerHTML = `
+        <div style="
+          position:fixed;
+          inset:0;
+          background:rgba(0,0,0,0.94);
+          color:#00ff88;
+          z-index:9999;
+          display:flex;
+          justify-content:center;
+          align-items:center;
+          font-family:monospace;
+          text-align:center;
+        ">
+          <div style="
+            border:1px solid #00ff88;
+            padding:30px;
+            box-shadow:0 0 25px #00ff88;
+          ">
+            <h2>ACESSO OCULTO DETECTADO</h2>
+            <p>Protocolo Cyber-Nexis liberado...</p>
+            <p>Redirecionando para o sistema restrito.</p>
+          </div>
+        </div>
+      `;
+
+      document.body.appendChild(aviso);
+
+      setTimeout(() => {
+        window.location.href = "cyber_nexis_comando_real.html";
+      }, 2200);
+    }
+  </script>
+</body>
+</html>
