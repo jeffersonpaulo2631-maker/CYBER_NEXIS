@@ -1,95 +1,67 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Entre em contato com a Cyber-Nexis">
-  <meta name="keywords" content="contato, Cyber-Nexis, suporte, ajuda, feedback">
-  <meta name="robots" content="index, follow">
-  <meta name="author" content="Cyber-Nexis">
-  <title>Contato - Cyber-Nexis</title>
-  <link rel="stylesheet" href="Styles.css">
-  <style>
-    .alert {
-      margin-top: 15px;
-      padding: 12px;
-      border-radius: 5px;
-      font-weight: bold;
-      text-align: center;
-    }
-    .alert-sucesso { background-color: #28a745; color: white; }
-    .alert-erro { background-color: #dc3545; color: white; }
-    .loading { color: #0f0; font-weight: bold; animation: blink 1s infinite; }
-    @keyframes blink { 50% { opacity: 0.3; } }
-      
-  </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Contato | Cyber-Nexis</title>
+  <meta name="description" content="Entre em contato com a Cyber-Nexis.">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js" defer></script>
+  <script src="particles-config.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" defer></script>
+  <script type="module">
+    import { bindLogoutButton } from "./site.js";
+    bindLogoutButton("logout");
+  </script>
 </head>
 <body>
-  <header>
-    <div class="container">
-      <img src="Imagem/Logotipo.png alt="Logotipo da Cyber-Nexis" class="logo">
-      <h1>Cyber-Nexis</h1>
-      <p>Protegendo a Liberdade Digital</p>
-      <nav class="nav-links-container">
-        <div class="nav-links">
-          <a href="Index (1).html">Página Inicial</a> 
-          <a href="recrutamento.html">Recrutamento</a>
-          <a href="quiz.html">Teste Quiz</a>
-          <a href="contato.html" class="active">Contatos</a>
-          <a href="regras.html">Regras da Organização</a>
-        </div>
-        <select onchange="changeLanguage(this.value)">
-          <option value="pt-BR">Português</option>
-          <option value="en-US">English</option>
-          <option value="es-ES">Español</option>
-        </select>
+  <div id="particles-js" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html">
+        <span class="brand-mark">CN</span>
+        <span><span class="brand-name">Cyber-Nexis</span><span class="brand-subtitle">Contato</span></span>
+      </a>
+      <nav class="nav-links" aria-label="Navegação principal">
+        <a href="index.html">Início</a>
+        <a href="chat.html">Chat</a>
+        <a href="manual.html">Manual</a>
+        <a href="contato.html" aria-current="page">Contato</a>
+        <button id="logout" type="button">Sair</button>
       </nav>
     </div>
   </header>
 
- <main class="container section">
- <h2>Entre em contato</h2>
- <img src="Imagem/CNX03.jpeg"alt="CNX09.jpeg" width="960" height="660" class="gallery-image" />
-    <p>Preencha o formulário abaixo para falar com a equipe Cyber-Nexis.</p>
-    <form id="contact-form" class="contact-form">
-      <div class="form-group">
-        <label for="nome">Nome:</label>
-        <input type="text" id="nome" name="nome" placeholder="Seu Nome" required>
-        <span id="nome-erro" class="error-message"></span>
-      </div>
-      <div class="form-group">
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" placeholder="Seu Email" required>
-        <span id="email-erro" class="error-message"></span>
-      </div>
-      <div class="form-group">
-        <label for="mensagem">Mensagem:</label>
-        <textarea id="mensagem" name="mensagem" placeholder="Sua Mensagem" rows="5" required></textarea>
-        <span id="mensagem-erro" class="error-message"></span>
-      </div>
+  <main class="container section contact-grid">
+    <section class="panel">
+      <span class="kicker">Canal oficial</span>
+      <h1>Contato</h1>
+      <p>Use este formulário para dúvidas, feedback ou solicitação de acesso. O envio via EmailJS exige configurar suas chaves em <code>contato.js</code>.</p>
+    </section>
 
-      <!-- Honeypot contra SPAM -->
-      <input type="text" id="hp-field" name="hp-field" style="display:none;">
-
-      <button type="submit" class="form-button">Enviar Mensagem</button>
-      <div id="resposta"></div>
-    </form>
+    <section class="panel" aria-labelledby="contact-title">
+      <h2 id="contact-title">Enviar mensagem</h2>
+      <form id="contact-form" class="form" novalidate>
+        <div class="field">
+          <label for="nome">Nome</label>
+          <input id="nome" name="nome" type="text" required minlength="3" placeholder="Seu nome">
+        </div>
+        <div class="field">
+          <label for="email">E-mail</label>
+          <input id="email" name="email" type="email" required placeholder="voce@email.com">
+        </div>
+        <div class="field">
+          <label for="mensagem">Mensagem</label>
+          <textarea id="mensagem" name="mensagem" required minlength="10" placeholder="Digite sua mensagem"></textarea>
+        </div>
+        <input id="hp-field" name="hp-field" type="text" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px">
+        <button class="btn" type="submit">Enviar mensagem</button>
+        <div id="resposta" class="status-message" role="status" aria-live="polite"></div>
+      </form>
+    </section>
   </main>
 
-  <section class="container section">
-    <h2>Sinais nas Sombras Digitais</h2>
-    <div class="image-row">
-      <a href="#"><img src="Imagem/facebook.png" alt="Facebook"></a>
-      <a href="#"><img src="Imagem/twitter.png" alt="Twitter"></a>
-      <a href="#"><img src="Imagem/Instagram.jpeg" alt="Instagram"></a>
-    </div>
-  </section>
-
-  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
-  <script src="contato.js"></script>
-<div id="particles-js"></div>
-
-<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-<script src="particles-config.js"></script>  
+  <script src="contato.js" defer></script>
 </body>
 </html>
