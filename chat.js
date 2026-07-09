@@ -1,370 +1,301 @@
-/* =====================================================
-   ✅ REFERÊNCIAS DO FIREBASE (VINDO DE firebase.js)
-=====================================================*/
-const db = window.firebaseDB;
-const col = window.firebaseCollection;
-const addDB = window.firebaseAddDoc;
-const q = window.firebaseQuery;
-const ord = window.firebaseOrderBy;
-const listen = window.firebaseOnSnapshot;
+// ============================================================
+// Cyber-Nexis | Chat com Firebase e renderização segura
+// ============================================================
 
-/* =====================================================
-   ✅ VARIÁVEIS GLOBAIS
-=====================================================*/
-let currentRoom = "publica";
-let roomPassword = "";
-let secretKey = null;    // chave AES da sala
-let userID = null;
-let unsubscribe = null;
+import { auth, db } from "./firebase-config.js";
+import { onUserReady } from "./site.js";
+import {
+  addDoc,
+  collection,
+  onSnapshot,
+  orderBy,
+  query,
+  serverTimestamp,
+} from "https://www.gstatic.com/firebasejs/10.12.1/firebase-firestore.js";
 
-/* =====================================================
-   ✅ ELEMENTOS HTML
-=====================================================*/
 const messagesEl = document.getElementById("messages");
-const msgInput = document.getElementById("msg-input");
+const form = document.getElementById("message-form");
+const msgInput = document.getElementById("message-input");
 const codinomeEl = document.getElementById("codinome");
-const avatarSel = document.getElementById("avatar-select");
-
-const sendPublicBtn = document.getElementById("send-public");
-const sendSecretBtn = document.getElementById("send-secret");
-const attachBtn = document.getElementById("attach-btn");
+const avatarSelect = document.getElementById("avatar-select");
+const attachButton = document.getElementById("attach-button");
 const fileInput = document.getElementById("file-input");
-
-const themeSelect = document.getElementById("theme");
-const lastAction = document.getElementById("last-action");
-const convoCountEl = document.getElementById("convo-count");
-const peopleCountEl = document.getElementById("people-count");
-const roomTag = document.getElementById("room-tag");
-
-// Salas privadas
 const roomPassEl = document.getElementById("room-pass");
-const enterRoomBtn = document.getElementById("enter-room");
+const enterRoomButton = document.getElementById("enter-room");
+const roomTag = document.getElementById("room-tag");
+const chatStatus = document.getElementById("chat-status");
+const messageCount = document.getElementById("message-count");
+const participantCount = document.getElementById("participant-count");
 
-/* =====================================================
-   ✅ LOGIN ANÔNIMO DO FIREBASE
-=====================================================*/
-window.firebaseAuth.onAuthStateChanged(user => {
-  if (user) {
-    userID = user.uid;
-    initChat();
-  }
-});
+let currentUser = null;
+let currentRoom = "publica";
+let roomLabel = "pública";
+let roomKey = null;
+let unsubscribe = null;
+let renderedIds = new Set();
 
-/* =====================================================
-   ✅ INICIAR SISTEMA DE CHAT
-=====================================================*/
-function initChat() {
-  generateKey("default");   // chave da sala pública
-  startRoom("publica");
-  setupListeners();
+const encoder = new TextEncoder();
+const decoder = new TextDecoder();
+
+function setStatus(message, type = "") {
+  chatStatus.textContent = message;
+  chatStatus.className = `status-message ${type}`.trim();
 }
 
-/* =====================================================
-   ✅ TROCAR ENTRE SALA PÚBLICA E PRIVADA
-=====================================================*/
-enterRoomBtn.addEventListener("click", () => {
-  const pass = roomPassEl.value.trim();
-
-  if (pass.length === 0) {
-    // voltar para sala pública
-    currentRoom = "publica";
-    roomTag.textContent = "Sala: pública";
-    generateKey("default");
-    startRoom("publica");
-    return;
-  }
-
-  // sala privada com senha
-  currentRoom = "privada-" + pass;
-  roomPassword = pass;
-  roomTag.textContent = "Sala privada";
-
-  generateKey(pass);
-  startRoom(currentRoom);
-});
-
-/* =====================================================
-   ✅ INICIAR OUVIDOR DA SALA
-=====================================================*/
-function startRoom(roomName) {
-
-  // cancela ouvinte anterior
-  if (unsubscribe) unsubscribe();
-
-  messagesEl.innerHTML = "";
-
-  const ref = col(db, "salas", roomName, "mensagens");
-  const queryRoom = q(ref, ord("timestamp"));
-
-  unsubscribe = listen(queryRoom, snap => {
-    snap.docChanges().forEach(change => {
-      if (change.type === "added") {
-        renderMessage(change.doc.data());
-      }
-    });
-
-    convoCountEl.textContent = "Conversas: " + snap.size;
-  });
-
-  // contagem de pessoas fictícia
-  peopleCountEl.textContent = "Pessoas: ~1";
+function safeName(value) {
+  return (value || "Anônimo").trim().slice(0, 30) || "Anônimo";
 }
 
-/* =====================================================
-   ✅ LISTENERS DE BOTÕES
-=====================================================*/
-function setupListeners() {
-  sendPublicBtn.addEventListener("click", () => trySend(false));
-  sendSecretBtn.addEventListener("click", () => trySend(true));
-
-  msgInput.addEventListener("keydown", e => {
-    if (e.key === "Enter") trySend(false);
-  });
-
-  attachBtn.addEventListener("click", () => fileInput.click());
-  fileInput.addEventListener("change", handleImageUpload);
-
-  themeSelect.addEventListener("change", () => {
-    document.body.setAttribute("data-theme", themeSelect.value);
-  });
+function bytesToBase64(bytes) {
+  let binary = "";
+  for (const byte of bytes) binary += String.fromCharCode(byte);
+  return btoa(binary);
 }
 
-/* =====================================================
-   ✅ ENVIAR MENSAGEM (PÚBLICA OU SECRETA)
-=====================================================*/
-async function trySend(isSecret) {
-  const text = msgInput.value.trim();
-  if (text.length === 0) return;
-
-  const codinome = codinomeEl.value.trim() || "Anônimo";
-  const avatar = avatarSel.value;
-
-  const encrypted = await encryptText(text);
-
-  await addDB(col(db, "salas", currentRoom, "mensagens"), {
-    uid: userID,
-    codinome,
-    avatar,
-    text: encrypted,
-    secret: isSecret,
-    type: "text",
-    timestamp: Date.now()
-  });
-
-  msgInput.value = "";
-  playUserSound();
-  registerAction("Enviou uma mensagem");
-
-  botAutoResponse(text, isSecret, codinome);
+function base64ToBytes(base64) {
+  const binary = atob(base64);
+  return Uint8Array.from(binary, (char) => char.charCodeAt(0));
 }
 
-/* =====================================================
-   ✅ ENVIO DE IMAGENS
-=====================================================*/
-async function handleImageUpload() {
-  const file = fileInput.files[0];
-  if (!file) return;
-
-  if (!file.type.startsWith("image/")) {
-    alert("Apenas imagens!");
-    return;
-  }
-
-  if (file.size > 2 * 1024 * 1024) {
-    alert("Máximo permitido: 2MB");
-    return;
-  }
-
-  const reader = new FileReader();
-  reader.onload = async () => {
-    const base64 = reader.result;
-
-    const encrypted = await encryptText(base64);
-    const codinome = codinomeEl.value.trim() || "Anônimo";
-    const avatar = avatarSel.value;
-
-    await addDB(col(db, "salas", currentRoom, "mensagens"), {
-      uid: userID,
-      codinome,
-      avatar,
-      text: encrypted,
-      secret: true,
-      type: "img",
-      timestamp: Date.now()
-    });
-
-    playUserSound();
-  };
-
-  reader.readAsDataURL(file);
+async function sha256Hex(text) {
+  const hash = await crypto.subtle.digest("SHA-256", encoder.encode(text));
+  return [...new Uint8Array(hash)].map((b) => b.toString(16).padStart(2, "0")).join("");
 }
 
-/* =====================================================
-   ✅ CRIPTOGRAFIA AES-GCM
-=====================================================*/
-async function generateKey(pass) {
-  const enc = new TextEncoder();
-  const hash = await crypto.subtle.digest("SHA-256", enc.encode(pass));
-
-  secretKey = await crypto.subtle.importKey(
+async function deriveRoomKey(passphrase) {
+  const salt = encoder.encode("cyber-nexis-chat-v1");
+  const baseKey = await crypto.subtle.importKey(
     "raw",
-    hash,
-    { name: "AES-GCM" },
+    encoder.encode(passphrase),
+    "PBKDF2",
+    false,
+    ["deriveKey"]
+  );
+
+  return crypto.subtle.deriveKey(
+    { name: "PBKDF2", salt, iterations: 160000, hash: "SHA-256" },
+    baseKey,
+    { name: "AES-GCM", length: 256 },
     false,
     ["encrypt", "decrypt"]
   );
 }
 
-async function encryptText(text) {
-  const iv = crypto.getRandomValues(new Uint8Array(12));
-  const data = new TextEncoder().encode(text);
+async function configureRoom(passphrase = "") {
+  if (!passphrase.trim()) {
+    currentRoom = "publica";
+    roomLabel = "pública";
+    roomKey = await deriveRoomKey("cyber-nexis-public-room");
+  } else {
+    const roomHash = await sha256Hex(`room:${passphrase.trim()}`);
+    currentRoom = `privada-${roomHash.slice(0, 32)}`;
+    roomLabel = "privada";
+    roomKey = await deriveRoomKey(`key:${passphrase.trim()}`);
+  }
 
-  const encrypted = await crypto.subtle.encrypt(
-    { name: "AES-GCM", iv },
-    secretKey,
-    data
-  );
-
-  return btoa(
-    String.fromCharCode(...iv, ...new Uint8Array(encrypted))
-  );
+  roomTag.textContent = `Sala: ${roomLabel}`;
+  startListener();
 }
 
-async function decryptText(encoded) {
+async function encryptPayload(text) {
+  const iv = crypto.getRandomValues(new Uint8Array(12));
+  const encrypted = await crypto.subtle.encrypt(
+    { name: "AES-GCM", iv },
+    roomKey,
+    encoder.encode(text)
+  );
+
+  const output = new Uint8Array(iv.length + encrypted.byteLength);
+  output.set(iv, 0);
+  output.set(new Uint8Array(encrypted), iv.length);
+  return bytesToBase64(output);
+}
+
+async function decryptPayload(payload) {
   try {
-    const bytes = Uint8Array.from(atob(encoded), c => c.charCodeAt(0));
+    const bytes = base64ToBytes(payload);
     const iv = bytes.slice(0, 12);
     const content = bytes.slice(12);
-
-    const decrypted = await crypto.subtle.decrypt(
-      { name: "AES-GCM", iv },
-      secretKey,
-      content
-    );
-
-    return new TextDecoder().decode(decrypted);
-
-  } catch (e) {
-    return "[Falha ao descriptografar]";
+    const decrypted = await crypto.subtle.decrypt({ name: "AES-GCM", iv }, roomKey, content);
+    return decoder.decode(decrypted);
+  } catch (error) {
+    return "[mensagem não pôde ser descriptografada nesta sala]";
   }
 }
 
-/* =====================================================
-   ✅ RENDERIZAÇÃO DAS MENSAGENS
-=====================================================*/
-async function renderMessage(msg) {
-  const div = document.createElement("div");
-  div.classList.add("msg");
+function clearMessages() {
+  renderedIds = new Set();
+  messagesEl.innerHTML = "";
+  const empty = document.createElement("div");
+  empty.className = "empty-state";
+  empty.textContent = "Nenhuma transmissão ainda. O canal está em silêncio.";
+  messagesEl.appendChild(empty);
+}
 
-  if (msg.uid === "BOT") div.classList.add("bot");
-  else div.classList.add("user");
+function removeEmptyState() {
+  const empty = messagesEl.querySelector(".empty-state");
+  if (empty) empty.remove();
+}
 
-  if (msg.secret) div.classList.add("secret");
+function formatTime(timestamp) {
+  const date = timestamp?.toDate ? timestamp.toDate() : new Date();
+  return date.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" });
+}
 
-  const avatarImg = getAvatar(msg.avatar);
-  const text = await decryptText(msg.text);
+async function renderMessage(doc) {
+  if (renderedIds.has(doc.id)) return;
+  renderedIds.add(doc.id);
+  removeEmptyState();
 
-  div.innerHTML = `
-    <div class="avatar"><img src="${avatarImg}"></div>
-    <div class="bubble">
-      <div class="meta">${msg.codinome}</div>
-      ${
-        msg.type === "img"
-        ? `<img src="${text}" class="img-msg">`
-        : `<div class="text">${text}</div>`
-      }
-    </div>
-  `;
+  const data = doc.data();
+  const decrypted = await decryptPayload(data.payload || "");
+  const isMine = data.uid && currentUser && data.uid === currentUser.uid;
 
-  messagesEl.appendChild(div);
+  const row = document.createElement("article");
+  row.className = `message ${isMine ? "mine" : ""}`.trim();
+
+  const avatar = document.createElement("div");
+  avatar.className = "avatar";
+  avatar.textContent = (data.avatar || "CN").slice(0, 2);
+
+  const bubble = document.createElement("div");
+  bubble.className = "bubble";
+
+  const meta = document.createElement("div");
+  meta.className = "message-meta";
+
+  const name = document.createElement("span");
+  name.textContent = safeName(data.codinome);
+
+  const time = document.createElement("time");
+  time.textContent = formatTime(data.timestamp);
+
+  meta.append(name, time);
+  bubble.appendChild(meta);
+
+  if (data.type === "image" && decrypted.startsWith("data:image/")) {
+    const image = document.createElement("img");
+    image.className = "message-image";
+    image.alt = "Imagem enviada no chat";
+    image.src = decrypted;
+    bubble.appendChild(image);
+  } else {
+    const text = document.createElement("div");
+    text.className = "message-text";
+    text.textContent = decrypted;
+    bubble.appendChild(text);
+  }
+
+  row.append(avatar, bubble);
+  messagesEl.appendChild(row);
   messagesEl.scrollTop = messagesEl.scrollHeight;
 }
 
-/* =====================================================
-   ✅ AVATARES
-=====================================================*/
-function getAvatar(code) {
-  switch (code) {
-    case "hacker1": return "https://i.imgur.com/Qf6bH4y.png";
-    case "hacker2": return "https://i.imgur.com/ZmZx0sU.png";
-    case "hood":    return "https://i.imgur.com/n36UodL.png";
-    default:        return "https://i.imgur.com/8Qf2QYK.png";
-  }
+function roomCollection() {
+  return collection(db, "salas", currentRoom, "mensagens");
 }
 
-/* =====================================================
-   ✅ BOT AGENTE-X
-=====================================================*/
-async function botAutoResponse(text, isSecret, codinome) {
+function startListener() {
+  if (unsubscribe) unsubscribe();
+  clearMessages();
+  setStatus("Sincronizando sala...");
 
-  let resp = "Mensagem recebida.";
+  const q = query(roomCollection(), orderBy("timestamp", "asc"));
+  unsubscribe = onSnapshot(q, (snapshot) => {
+    snapshot.docChanges().forEach((change) => {
+      if (change.type === "added") renderMessage(change.doc);
+    });
+    messageCount.textContent = `Mensagens: ${snapshot.size}`;
+    participantCount.textContent = "Pessoas: 1+";
+    setStatus("Conectado.", "ok");
+  }, (error) => {
+    console.error(error);
+    setStatus("Erro ao ouvir mensagens. Confira regras do Firestore.", "error");
+  });
+}
 
-  const t = text.toLowerCase();
+async function sendText() {
+  const text = msgInput.value.trim();
+  if (!text || !currentUser) return;
 
-  if (t.includes("oi") || t.includes("ola")) resp = "Saudações, agente.";
-  else if (t.includes("ajuda")) resp = "Envie o código da missão.";
-  else if (t.includes("missão")) resp = "Processando sua solicitação...";
-  else if (t.includes("quem sou eu")) resp = `Você é ${codinome}.`;
-
-  const encrypted = await encryptText(resp);
-
-  await addDB(col(db, "salas", currentRoom, "mensagens"), {
-    uid: "BOT",
-    codinome: "Agente-X",
-    avatar: "hacker2",
-    text: encrypted,
-    secret: isSecret,
+  const payload = await encryptPayload(text);
+  await addDoc(roomCollection(), {
+    uid: currentUser.uid,
+    codinome: safeName(codinomeEl.value || currentUser.displayName),
+    avatar: avatarSelect.value,
     type: "text",
-    timestamp: Date.now()
+    payload,
+    timestamp: serverTimestamp(),
   });
 
-  playBotSound();
+  msgInput.value = "";
+  msgInput.focus();
 }
 
-/* =====================================================
-   ✅ LOG DE AÇÃO
-=====================================================*/
-function registerAction(action) {
-  lastAction.textContent =
-    action + " (" + new Date().toLocaleTimeString() + ")";
-}
+async function sendImage(file) {
+  if (!file) return;
+  if (!file.type.startsWith("image/")) {
+    setStatus("Envie apenas imagens.", "error");
+    return;
+  }
+  if (file.size > 900 * 1024) {
+    setStatus("Imagem muito grande. Use até 900 KB para não pesar o Firestore.", "error");
+    return;
+  }
 
-/* =====================================================
-   ✅ EXPORTAR CONVERSAS
-=====================================================*/
-window.exportPublic = () => exportChat(false);
-window.exportSecret = () => exportChat(true);
-
-function exportChat(isSecret) {
-  const lines = [];
-
-  messagesEl.querySelectorAll(".msg").forEach(el => {
-    if (isSecret && !el.classList.contains("secret")) return;
-    lines.push(el.innerText.replace(/\n+/g, " "));
+  const dataUrl = await new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
   });
 
-  const blob = new Blob([lines.join("\n")], { type: "text/plain" });
-  const url = URL.createObjectURL(blob);
+  const payload = await encryptPayload(dataUrl);
+  await addDoc(roomCollection(), {
+    uid: currentUser.uid,
+    codinome: safeName(codinomeEl.value || currentUser.displayName),
+    avatar: avatarSelect.value,
+    type: "image",
+    payload,
+    timestamp: serverTimestamp(),
+  });
 
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = isSecret ? "chat_secreto.txt" : "chat_publico.txt";
-  a.click();
-
-  URL.revokeObjectURL(url);
+  fileInput.value = "";
 }
 
-/* =====================================================
-   ✅ SONS
-=====================================================*/
-function playUserSound() {
-  const snd = document.getElementById("snd-user");
-  snd.src = "https://actions.google.com/sounds/v1/cartoon/wood_plank_flicks.ogg";
-  snd.play();
-}
+form.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  try {
+    await sendText();
+  } catch (error) {
+    console.error(error);
+    setStatus("Falha ao enviar mensagem.", "error");
+  }
+});
 
-function playBotSound() {
-  const snd = document.getElementById("snd-bot");
-  snd.src = "https://actions.google.com/sounds/v1/cartoon/clang_and_wobble.ogg";
-  snd.play();
-}
+msgInput.addEventListener("keydown", (event) => {
+  if (event.key === "Enter" && !event.shiftKey) {
+    event.preventDefault();
+    form.requestSubmit();
+  }
+});
+
+attachButton.addEventListener("click", () => fileInput.click());
+fileInput.addEventListener("change", () => sendImage(fileInput.files[0]).catch((error) => {
+  console.error(error);
+  setStatus("Falha ao enviar imagem.", "error");
+}));
+
+enterRoomButton.addEventListener("click", () => {
+  configureRoom(roomPassEl.value).catch((error) => {
+    console.error(error);
+    setStatus("Não foi possível trocar de sala.", "error");
+  });
+});
+
+onUserReady(async (user) => {
+  if (!user) return;
+  currentUser = user;
+  codinomeEl.value = user.displayName || "Operador";
+  await configureRoom("");
+});
