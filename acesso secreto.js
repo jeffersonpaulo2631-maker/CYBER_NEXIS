@@ -1,54 +1,57 @@
-// ===== ACESSO SECRETO CYBER-NEXIS =====
-
+// Easter egg visual. Não use isso como segurança real.
 const codigoSecreto = "nexis";
 let bufferSecreto = "";
 
-document.addEventListener("keydown", (e) => {
-  bufferSecreto += e.key.toLowerCase();
+window.addEventListener("keydown", (event) => {
+  if (event.ctrlKey || event.metaKey || event.altKey) return;
 
-  if (bufferSecreto.length > codigoSecreto.length) {
-    bufferSecreto = bufferSecreto.slice(-codigoSecreto.length);
-  }
+  bufferSecreto += event.key.toLowerCase();
+  bufferSecreto = bufferSecreto.slice(-codigoSecreto.length);
 
-  if (bufferSecreto === codigoSecreto) {
-    ativarAcessoSecreto();
-  }
+  if (bufferSecreto === codigoSecreto) ativarAcessoSecreto();
 });
 
 function ativarAcessoSecreto() {
-  document.body.style.transition = "0.5s";
-  document.body.style.background = "#001a0d";
+  if (document.querySelector(".secret-overlay")) return;
 
-  const aviso = document.createElement("div");
-
-  aviso.innerHTML = `
-    <div style="
-      position:fixed;
-      inset:0;
-      background:rgba(0,0,0,0.92);
-      color:#00ff88;
-      z-index:9999;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      font-family:monospace;
-      text-align:center;
-    ">
-      <div style="
-        border:1px solid #00ff88;
-        padding:30px;
-        box-shadow:0 0 25px #00ff88;
-      ">
-        <h2>ACESSO OCULTO DETECTADO</h2>
-        <p>Protocolo Cyber-Nexis liberado...</p>
-        <p>Redirecionando para o sistema restrito.</p>
-      </div>
-    </div>
+  const overlay = document.createElement("div");
+  overlay.className = "secret-overlay";
+  overlay.setAttribute("role", "dialog");
+  overlay.setAttribute("aria-live", "polite");
+  overlay.style.cssText = `
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: grid;
+    place-items: center;
+    padding: 24px;
+    background: rgba(0,0,0,.92);
+    color: #00ff88;
+    font-family: monospace;
+    text-align: center;
   `;
 
-  document.body.appendChild(aviso);
+  const card = document.createElement("div");
+  card.style.cssText = `
+    max-width: 520px;
+    padding: 28px;
+    border: 1px solid #00ff88;
+    border-radius: 18px;
+    box-shadow: 0 0 28px rgba(0,255,136,.38);
+    background: rgba(0,20,10,.72);
+  `;
+
+  const title = document.createElement("h2");
+  title.textContent = "ACESSO OCULTO DETECTADO";
+
+  const text = document.createElement("p");
+  text.textContent = "Protocolo Cyber-Nexis liberado. Redirecionando para o painel simbólico.";
+
+  card.append(title, text);
+  overlay.append(card);
+  document.body.appendChild(overlay);
 
   setTimeout(() => {
-    window.location.href = "cyber_nexis_comando_real.html";
-  }, 2500);
+    window.location.href = "cyber-nexis-comando.html";
+  }, 1800);
 }
