@@ -1,0 +1,516 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cyber-Nexis | Rede Discreta de Observação e Análise</title>
+  <meta name="description" content="Cyber-Nexis é uma rede independente de estudo, análise e segurança digital com acesso controlado, estrutura em camadas e foco em ética técnica.">
+  <meta name="author" content="Cyber-Nexis">
+  <meta name="robots" content="index, follow">
+
+  <link rel="stylesheet" href="styles.css">
+
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js" defer></script>
+  <script src="particles-config.js" defer></script>
+  <script src="acesso-secreto.js" defer></script>
+
+  <script type="module">
+    import { protectPage, bindLogoutButton } from "./site.js";
+
+    protectPage("login.html");
+
+    document.addEventListener("DOMContentLoaded", () => {
+      bindLogoutButton("logout");
+    });
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+  <div id="particles-js" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="Cyber-Nexis página inicial">
+        <span class="brand-mark">CN</span>
+        <span>
+          <span class="brand-name">Cyber-Nexis</span>
+          <span class="brand-subtitle">Observação • Análise • Defesa</span>
+        </span>
+      </a>
+
+      <nav class="nav-links" aria-label="Navegação principal">
+        <a href="index.html" aria-current="page">Início</a>
+        <a href="chat.html">Chat</a>
+        <a href="recrutamento.html">Recrutamento</a>
+        <a href="manual.html">Manual</a>
+        <a href="regras.html">Regras</a>
+        <a href="contato.html">Contato</a>
+        <button id="logout" type="button">Sair</button>
+      </nav>
+    </div>
+  </header>
+
+  <main id="conteudo">
+    <section class="hero" aria-labelledby="titulo-principal">
+      <div class="container hero-grid">
+        <div>
+          <span class="kicker">Cyber-Nexis // Núcleo de Observação</span>
+          <h1 id="titulo-principal">Rede discreta de observação e análise digital</h1>
+          <p class="hero-copy">
+            A Cyber-Nexis é uma organização independente de pesquisa e operações em segurança digital.
+            Sua estrutura é controlada, segmentada e orientada por disciplina técnica. Menos ruído. Mais controle.
+          </p>
+          <div class="hero-actions">
+            <a class="btn" href="#protocolo-sentinel">Acessar Protocolo Sentinel</a>
+            <a class="btn secondary" href="chat.html">Abrir chat restrito</a>
+          </div>
+        </div>
+
+        <div class="visual-card" aria-label="Símbolo visual da Cyber-Nexis">
+          <div class="orb"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="sobre-organizacao">
+      <div class="container panel">
+        <span class="kicker">Camada institucional</span>
+        <h2 id="sobre-organizacao">Sobre a organização</h2>
+        <p>
+          A Cyber-Nexis é uma organização independente de pesquisa e operações em segurança digital.
+          Sua estrutura é deliberadamente não pública. A existência de uma hierarquia funcional é parte essencial
+          do seu modelo operacional, garantindo coordenação, segurança e isolamento de informação.
+          A liderança é centralizada em nível estratégico, enquanto as operações são distribuídas em camadas técnicas.
+          O sistema não é aberto ao público. O acesso é restrito e progressivo.
+        </p>
+        <img src="Imagem/CNX06.jpg" width="1024" height="1024" alt="Mapa e estrutura de núcleos Cyber-Nexis" class="gallery-image">
+      </div>
+    </section>
+
+    <section id="protocolo-sentinel" class="section" aria-labelledby="sentinel-title">
+      <div class="container panel">
+        <div class="grid-2">
+          <div>
+            <span class="kicker">Cyber-Nexis // Triagem</span>
+            <h2 id="sentinel-title">Protocolo Sentinel</h2>
+            <p>
+              Acesso restrito por janela temporal. Observe. Decodifique. Responda.
+            </p>
+            <p>
+              A verdadeira triagem não mede força, mede observação. A pergunta muda pela hora.
+            </p>
+          </div>
+
+          <div class="card">
+            <h3>HORA LOCAL</h3>
+            <p><strong id="sentinel-clock">00:00:00</strong></p>
+            <p id="sentinel-window">Janela: analisando...</p>
+          </div>
+        </div>
+
+        <form id="sentinel-form" class="form" autocomplete="off">
+          <label for="sentinel-answer">Resposta do Protocolo Sentinel</label>
+          <input id="sentinel-answer" type="text" placeholder="digite sua resposta..." spellcheck="false" autocomplete="off">
+          <button id="sentinel-button" class="btn" type="submit">Verificar acesso</button>
+          <p id="sentinel-status" class="status-message" aria-live="polite">Status: aguardando operador...</p>
+        </form>
+
+        <div class="grid-3" aria-label="Indicadores do Protocolo Sentinel">
+          <article class="card">
+            <h3>Tentativas</h3>
+            <p><strong id="sentinel-attempts">0</strong></p>
+          </article>
+          <article class="card">
+            <h3>Camada</h3>
+            <p><strong id="sentinel-layer">Pública</strong></p>
+          </article>
+          <article class="card">
+            <h3>Estado</h3>
+            <p><strong id="sentinel-state">Em observação</strong></p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="estrutura-interna">
+      <div class="container panel">
+        <span class="kicker">Arquitetura interna</span>
+        <h2 id="estrutura-interna">Estrutura interna</h2>
+        <p>
+          A organização é composta por três camadas funcionais: Camada Estratégica, Camada Operacional e Camada de Avaliação.
+          Nenhuma camada possui acesso completo ao sistema. A separação de informação é um mecanismo de segurança.
+        </p>
+        <img src="Imagem/CNX07.jpg" alt="Rede descentralizada da Cyber-Nexis" class="gallery-image">
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="missao">
+      <div class="container grid-2">
+        <article class="card">
+          <span class="kicker">Diretriz central</span>
+          <h2 id="missao">Missão</h2>
+          <p>
+            A Cyber-Nexis atua em análise e resposta a vulnerabilidades estruturais em ambientes digitais.
+            O objetivo não é exposição pública. É correção técnica de falhas sistêmicas.
+            Intervenções são raras, precisas e calculadas.
+          </p>
+        </article>
+
+        <article class="card">
+          <img src="Imagem/Grupo 01.png" alt="Missão operacional da Cyber-Nexis" width="1024" height="1024" class="gallery-image">
+        </article>
+      </div>
+    </section>
+
+    <section id="recrutamento" class="section" aria-labelledby="recrutamento-title">
+      <div class="container panel">
+        <span class="kicker">Acesso progressivo</span>
+        <h2 id="recrutamento-title">Recrutamento</h2>
+        <p>
+          Não há inscrição aberta. Convites não são solicitados. São estendidos. Avaliação ocorre antes do contato direto.
+          Capacidade técnica é pressuposto. Discrição é requisito. Tentativas de acesso não autorizadas são registradas e ignoradas.
+          Integração é progressiva. Confiança é cumulativa.
+        </p>
+        <div class="hero-actions">
+          <a class="btn" href="recrutamento.html">Solicitar indicação</a>
+          <a class="btn secondary" href="manual.html">Ler manual</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="visao">
+      <div class="container panel">
+        <span class="kicker">Direção estratégica</span>
+        <h2 id="visao">Visão</h2>
+        <p>
+          Sistemas digitais tornam-se instáveis quando crescem sem auditoria. A função da Cyber-Nexis é atuar como mecanismo
+          de equilíbrio técnico. Isso envolve observação, análise e intervenção controlada quando necessário.
+        </p>
+        <img src="Imagem/Garoto.jpeg" width="1024" height="1024" alt="Visão estratégica Cyber-Nexis" class="gallery-image">
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="hierarquia">
+      <div class="container panel">
+        <span class="kicker">Compartimentação</span>
+        <h2 id="hierarquia">Hierarquia</h2>
+        <p>
+          Compartimentação. Acesso por necessidade. Conhecimento por função. Nenhuma unidade possui visão total.
+          Nenhuma liderança é pública. Coordenação ocorre por validação cruzada. Confiança é matemática, não emocional.
+        </p>
+        <img src="Imagem/CNX09.png" alt="Diagrama de estrutura descentralizada" class="gallery-image">
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="causa">
+      <div class="container panel">
+        <span class="kicker">Finalidade</span>
+        <h2 id="causa">Causa</h2>
+        <p>
+          A organização existe para reduzir vulnerabilidades estruturais em sistemas digitais e sociais.
+          A abordagem é técnica, não ideológica. A ação é baseada em análise, não opinião.
+        </p>
+        <img src="Imagem/Grupo 02.png" width="1024" height="1024" alt="Causa da Cyber-Nexis" class="gallery-image">
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="protocolos">
+      <div class="container panel">
+        <span class="kicker">Normas operacionais</span>
+        <h2 id="protocolos">Protocolos</h2>
+        <p>
+          Informação é fracionada. Comunicação é contingente. Persistência é risco. Exposição individual é falha sistêmica.
+          Nenhuma ação ocorre sem cálculo de impacto e risco. Operações são descartáveis. Identidades não.
+          Erro é analisado. Erro repetido é exclusão.
+        </p>
+        <img src="Imagem/86773513-ca70-4338-b0c2-d56f1c6292c2.jpeg" width="1024" height="1024" alt="Protocolos e fluxos de decisão Cyber-Nexis" class="gallery-image">
+      </div>
+    </section>
+
+    <section id="teste-observacao" class="section" aria-labelledby="observacao-title">
+      <div class="container panel">
+        <div class="grid-2">
+          <div>
+            <span class="kicker">Cyber-Nexis // Camada N0</span>
+            <h2 id="observacao-title">Teste de observação</h2>
+            <p>
+              Não procure força. Procure detalhe. O sistema registra cada escolha.
+            </p>
+            <p>
+              O teste não substitui estudo técnico. Ele apenas mede atenção, leitura e paciência operacional.
+            </p>
+          </div>
+
+          <div class="card">
+            <h3>SCAN LOCAL</h3>
+            <p><strong id="obs-clock">00:00:00</strong></p>
+            <p>Integridade: <strong id="obs-integrity">AGUARDANDO</strong></p>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <article class="card">
+            <h3>Visor // Ruído controlado</h3>
+            <img id="imagem-mini-jogo" src="Imagem/CNX03.jpeg" alt="Imagem do mini jogo de observação" class="gallery-image">
+            <p id="obs-round-tag">N0-01</p>
+          </article>
+
+          <article class="card">
+            <h3 id="pergunta-mini-jogo">Qual detalhe aparece como símbolo central da Cyber-Nexis?</h3>
+            <div id="opcoes-mini-jogo" class="hero-actions" aria-label="Opções do teste de observação"></div>
+            <p id="feedback-mini-jogo" class="status-message" aria-live="polite"></p>
+            <p id="progresso-mini-jogo">Progresso: 0/3</p>
+            <p>&gt; calibrando ruído visual...</p>
+            <p>&gt; injetando falso padrão...</p>
+            <p>&gt; aguardando operador atento...</p>
+          </article>
+        </div>
+
+        <button id="acesso-oculto" class="btn secondary" style="display:none;" type="button">
+          Acessar Arquivo Restrito
+        </button>
+      </div>
+    </section>
+
+    <section id="codigo-etica" class="section" aria-labelledby="conduta">
+      <div class="container panel">
+        <span class="kicker">Código interno</span>
+        <h2 id="conduta">Código de conduta</h2>
+        <p>O código existe para garantir segurança operacional e consistência interna.</p>
+
+        <div class="grid-2">
+          <article class="card">
+            <h3>1. Responsabilidade</h3>
+            <p>Toda ação é vinculada ao seu impacto direto e indireto dentro do sistema.</p>
+          </article>
+
+          <article class="card">
+            <h3>2. Proporcionalidade</h3>
+            <p>Qualquer intervenção deve ser limitada ao necessário para atingir o objetivo definido.</p>
+          </article>
+
+          <article class="card">
+            <h3>3. Confidencialidade</h3>
+            <p>Informações são distribuídas apenas por nível de acesso.</p>
+          </article>
+
+          <article class="card">
+            <h3>4. Disciplina operacional</h3>
+            <p>Desvios repetidos de protocolo resultam em exclusão do sistema.</p>
+          </article>
+        </div>
+
+        <img src="Imagem/Hackers profissionais.jpeg" alt="Equipe atuando sob protocolos" class="gallery-image">
+      </div>
+    </section>
+
+    <section id="testes-operacionais" class="section" aria-labelledby="testes-title">
+      <div class="container panel">
+        <span class="kicker">Triagem dinâmica</span>
+        <h2 id="testes-title">Testes operacionais</h2>
+        <p>
+          O antigo quiz foi substituído pelo Protocolo Sentinel: uma triagem dinâmica que muda conforme a hora local
+          e conduz o visitante por camadas diferentes.
+        </p>
+        <p>
+          Apenas uma janela temporal possui a chave correta para o núcleo restrito.
+          As demais respostas conduzem a camadas públicas de orientação.
+        </p>
+        <div class="hero-actions">
+          <a class="btn" href="#protocolo-sentinel">Acessar Protocolo Sentinel</a>
+          <a class="btn secondary" href="quiz.html">Abrir quiz</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      Cyber-Nexis © <span id="year"></span> • Arquitetura atualizada
+    </div>
+  </footer>
+
+  <script>
+    const yearEl = document.getElementById("year");
+    if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+    const sentinelClock = document.getElementById("sentinel-clock");
+    const sentinelWindow = document.getElementById("sentinel-window");
+    const obsClock = document.getElementById("obs-clock");
+
+    function updateClocks() {
+      const now = new Date();
+      const time = now.toLocaleTimeString("pt-BR", {
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit"
+      });
+
+      if (sentinelClock) sentinelClock.textContent = time;
+      if (obsClock) obsClock.textContent = time;
+
+      const hour = now.getHours();
+      let windowLabel = "Janela: observação pública";
+
+      if (hour >= 0 && hour < 6) windowLabel = "Janela: silêncio operacional";
+      if (hour >= 6 && hour < 12) windowLabel = "Janela: análise inicial";
+      if (hour >= 12 && hour < 18) windowLabel = "Janela: validação técnica";
+      if (hour >= 18) windowLabel = "Janela: revisão estratégica";
+
+      if (sentinelWindow) sentinelWindow.textContent = windowLabel;
+    }
+
+    updateClocks();
+    setInterval(updateClocks, 1000);
+
+    const sentinelForm = document.getElementById("sentinel-form");
+    const sentinelAnswer = document.getElementById("sentinel-answer");
+    const sentinelStatus = document.getElementById("sentinel-status");
+    const sentinelAttempts = document.getElementById("sentinel-attempts");
+    const sentinelLayer = document.getElementById("sentinel-layer");
+    const sentinelState = document.getElementById("sentinel-state");
+    const acessoOculto = document.getElementById("acesso-oculto");
+    let attempts = 0;
+
+    function normalizeText(value) {
+      return value
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .trim();
+    }
+
+    if (sentinelForm) {
+      sentinelForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        attempts += 1;
+        if (sentinelAttempts) sentinelAttempts.textContent = String(attempts);
+
+        const answer = normalizeText(sentinelAnswer?.value || "");
+        const accepted = ["observacao", "disciplina", "etica", "analise", "controle"];
+
+        if (accepted.includes(answer)) {
+          if (sentinelStatus) {
+            sentinelStatus.textContent = "Status: assinatura aceita. Camada restrita liberada.";
+            sentinelStatus.className = "status-message ok";
+          }
+          if (sentinelLayer) sentinelLayer.textContent = "Restrita";
+          if (sentinelState) sentinelState.textContent = "Liberado";
+          if (acessoOculto) acessoOculto.style.display = "inline-flex";
+          return;
+        }
+
+        if (sentinelStatus) {
+          sentinelStatus.textContent = "Status: resposta recusada. Observe melhor antes de avançar.";
+          sentinelStatus.className = "status-message error";
+        }
+        if (sentinelLayer) sentinelLayer.textContent = "Pública";
+        if (sentinelState) sentinelState.textContent = "Bloqueado";
+      });
+    }
+
+    if (acessoOculto) {
+      acessoOculto.addEventListener("click", () => {
+        window.location.href = "cyber-nexis-comando.html";
+      });
+    }
+
+    const obsQuestions = [
+      {
+        image: "Imagem/CNX03.jpeg",
+        question: "Qual princípio sustenta o sistema Cyber-Nexis?",
+        options: ["Exposição", "Observação", "Impulso"],
+        answer: "Observação"
+      },
+      {
+        image: "Imagem/CNX07.jpg",
+        question: "Qual camada impede que uma unidade enxergue tudo?",
+        options: ["Compartimentação", "Ruído", "Vaidade"],
+        answer: "Compartimentação"
+      },
+      {
+        image: "Imagem/Grupo 01.png",
+        question: "Qual base orienta uma intervenção correta?",
+        options: ["Opinião", "Pressa", "Análise"],
+        answer: "Análise"
+      }
+    ];
+
+    const obsImage = document.getElementById("imagem-mini-jogo");
+    const obsQuestion = document.getElementById("pergunta-mini-jogo");
+    const obsOptions = document.getElementById("opcoes-mini-jogo");
+    const obsFeedback = document.getElementById("feedback-mini-jogo");
+    const obsProgress = document.getElementById("progresso-mini-jogo");
+    const obsRoundTag = document.getElementById("obs-round-tag");
+    const obsIntegrity = document.getElementById("obs-integrity");
+    let obsIndex = 0;
+    let obsScore = 0;
+
+    function renderObservationQuestion() {
+      const current = obsQuestions[obsIndex];
+      if (!current || !obsOptions) return;
+
+      if (obsImage) obsImage.src = current.image;
+      if (obsQuestion) obsQuestion.textContent = current.question;
+      if (obsRoundTag) obsRoundTag.textContent = `N0-0${obsIndex + 1}`;
+      if (obsProgress) obsProgress.textContent = `Progresso: ${obsIndex}/${obsQuestions.length}`;
+      if (obsIntegrity) obsIntegrity.textContent = "AGUARDANDO";
+      if (obsFeedback) {
+        obsFeedback.textContent = "";
+        obsFeedback.className = "status-message";
+      }
+
+      obsOptions.textContent = "";
+      current.options.forEach((option) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "btn secondary";
+        button.textContent = option;
+        button.addEventListener("click", () => checkObservationAnswer(option));
+        obsOptions.appendChild(button);
+      });
+    }
+
+    function checkObservationAnswer(option) {
+      const current = obsQuestions[obsIndex];
+      const correct = option === current.answer;
+
+      if (correct) {
+        obsScore += 1;
+        if (obsFeedback) {
+          obsFeedback.textContent = "Resposta aceita. Atenção confirmada.";
+          obsFeedback.className = "status-message ok";
+        }
+        if (obsIntegrity) obsIntegrity.textContent = "ESTÁVEL";
+      } else {
+        if (obsFeedback) {
+          obsFeedback.textContent = "Resposta recusada. O detalhe escapou.";
+          obsFeedback.className = "status-message error";
+        }
+        if (obsIntegrity) obsIntegrity.textContent = "INSTÁVEL";
+      }
+
+      obsIndex += 1;
+
+      setTimeout(() => {
+        if (obsIndex >= obsQuestions.length) {
+          if (obsOptions) obsOptions.textContent = "";
+          if (obsQuestion) obsQuestion.textContent = "Teste encerrado.";
+          if (obsProgress) obsProgress.textContent = `Resultado: ${obsScore}/${obsQuestions.length}`;
+          if (obsFeedback) {
+            obsFeedback.textContent = obsScore >= 2
+              ? "Operador aprovado na camada de observação."
+              : "Operador mantido na camada pública para reavaliação.";
+            obsFeedback.className = obsScore >= 2 ? "status-message ok" : "status-message error";
+          }
+          return;
+        }
+
+        renderObservationQuestion();
+      }, 850);
+    }
+
+    renderObservationQuestion();
+  </script>
+</body>
+</html>
