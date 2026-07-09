@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Manual Operacional — Cyber-Nexis</title>
+
+<meta name="description" content="Documento interno. Distribuição por nível de acesso.">
+<meta name="theme-color" content="#000000">
+
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<script src="particles-config.js" defer></script>
+
+<style>
+
+#particles-js{
+position:fixed;
+width:100%;
+height:100%;
+top:0;
+left:0;
+z-index:-1;
+}
+
+body{
+background-color:#000;
+color:#fff;
+font-family:"Courier New", Courier, monospace;
+margin:0;
+padding:40px 20px;
+overflow-x:hidden;
+}
+
+main{
+max-width:850px;
+margin:auto;
+border:2px solid red;
+padding:40px;
+background-color:#000;
+animation:fadeIn 1.5s ease-in-out;
+}
+
+h1,h2{
+color:red;
+text-transform:uppercase;
+letter-spacing:1px;
+}
+
+.logo{
+display:block;
+margin:0 auto 25px;
+width:180px;
+}
+
+.intro{
+border-left:4px solid red;
+padding-left:20px;
+margin-bottom:40px;
+font-style:italic;
+}
+
+section{
+margin-bottom:45px;
+opacity:0;
+transform:translateY(25px);
+transition:opacity .8s ease, transform .8s ease;
+}
+
+section.visible{
+opacity:1;
+transform:translateY(0);
+}
+
+ul{
+margin-top:15px;
+padding-left:20px;
+}
+
+li{
+margin-bottom:10px;
+}
+
+.divider{
+border:none;
+border-top:1px solid red;
+margin:50px 0;
+}
+
+footer{
+margin-top:60px;
+padding-top:20px;
+border-top:2px solid red;
+font-size:.9em;
+color:red;
+text-align:center;
+}
+
+@keyframes fadeIn{
+from{opacity:0; transform:translateY(40px);}
+to{opacity:1; transform:translateY(0);}
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="particles-js"></div>
+
+<main>
+
+<img src="Imagem/Logotipo.png" alt="Logotipo Cyber-Nexis" class="logo">
+
+<h1>Manual Operacional — Cyber-Nexis</h1>
+
+<div class="intro">
+Documento restrito por nível de acesso.  
+Cada leitor visualiza apenas uma fração do sistema.
+</div>
+
+<hr class="divider">
+
+<section>
+<h2>Status do Sistema</h2>
+<p>
+A Cyber-Nexis opera como uma estrutura distribuída em camadas funcionais.
+A visão total do sistema não é acessível a nenhum indivíduo isolado.
+</p>
+</section>
+
+<hr class="divider">
+
+<section>
+<h2>Estrutura Operacional</h2>
+<p>
+A organização é dividida em três níveis funcionais:
+</p>
+
+<ul>
+<li><b>Nível I — Coordenação Estratégica:</b> define diretrizes e valida acessos.</li>
+<li><b>Nível II — Operações Técnicas:</b> executa tarefas e análises.</li>
+<li><b>Nível III — Observação:</b> triagem e análise de comportamento externo.</li>
+</ul>
+
+<p>
+Nenhum nível possui acesso completo ao sistema.
+A fragmentação é um mecanismo de segurança.
+</p>
+</section>
+
+<hr class="divider">
+
+<section>
+<h2>Processo de Integração</h2>
+<ul>
+<li>Observação de comportamento em ambiente externo</li>
+<li>Simulações controladas de decisão</li>
+<li>Validação progressiva por múltiplas camadas</li>
+</ul>
+
+<p>
+A entrada não é solicitada. Ela é determinada.
+</p>
+</section>
+
+<hr class="divider">
+
+<section>
+<h2>Princípios Operacionais</h2>
+<ul>
+<li>Necessidade funcional acima de intenção pessoal</li>
+<li>Informação distribuída por escopo limitado</li>
+<li>Validação cruzada obrigatória em ações críticas</li>
+<li>Isolamento de falhas por design estrutural</li>
+</ul>
+</section>
+
+<hr class="divider">
+
+<section>
+<h2>Segurança Interna</h2>
+<p>
+A estrutura opera sob compartimentação rígida.
+Nenhuma unidade possui visão completa do sistema.
+</p>
+
+<p>
+Tentativas de acesso fora de escopo são registradas e isoladas.
+</p>
+</section>
+
+<hr class="divider">
+
+<section>
+<h2>Monitoramento</h2>
+<p>
+Interações podem ser analisadas para identificação de padrões.
+Nenhuma interação é considerada neutra por padrão.
+</p>
+
+<ul>
+<li>irrelevante</li>
+<li>observacional</li>
+<li>crítica</li>
+</ul>
+</section>
+
+<hr class="divider">
+
+<section>
+<h2>Integridade do Sistema</h2>
+<p>
+Qualquer tentativa de contornar o fluxo de acesso não interrompe o sistema.
+Apenas altera sua classificação interna.
+</p>
+</section>
+
+<footer>
+Documento espelhado.  
+Versões paralelas podem existir dentro da rede.
+</footer>
+
+</main>
+
+<script>
+
+const sections=document.querySelectorAll("section");
+
+const observer=new IntersectionObserver(entries=>{
+entries.forEach(entry=>{
+if(entry.isIntersecting){
+entry.target.classList.add("visible");
+}
+});
+},{threshold:0.2});
+
+sections.forEach(section=>observer.observe(section));
+
+console.info("[CNX] manual loaded | access layer: partial view");
+
+</script>
+</body>
+</html>

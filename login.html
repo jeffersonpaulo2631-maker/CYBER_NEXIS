@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Acesso Restrito • Cyber-Nexis</title>
+  <meta name="description" content="Tela de login restrita da Cyber-Nexis.">
+
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js" defer></script>
+  <script src="particles-config.js" defer></script>
+
+  <style>
+    :root {
+      --bg: #000;
+      --panel: rgba(10, 0, 4, 0.88);
+      --panel-2: rgba(18, 0, 7, 0.92);
+      --accent: #ff1744;
+      --accent-dark: #8a0019;
+      --accent-soft: rgba(255, 23, 68, 0.18);
+      --text-high: #fff;
+      --text-medium: rgba(255,255,255,0.72);
+      --text-low: rgba(255,255,255,0.48);
+      --ok: #00ff88;
+      --danger: #ff3858;
+      --radius: 22px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      min-height: 100%;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      overflow: hidden;
+      color: var(--text-high);
+      font-family: "Segoe UI", "Courier New", monospace;
+      background:
+        radial-gradient(circle at top, rgba(255, 23, 68, 0.18), transparent 34%),
+        linear-gradient(180deg, #030000 0%, #050003 45%, #000 100%);
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 36px 36px;
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent 82%);
+      z-index: 0;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        repeating-linear-gradient(
+          to bottom,
+          rgba(255,255,255,0.025) 0,
+          rgba(255,255,255,0.025) 1px,
+          transparent 1px,
+          transparent 5px
+        );
+      opacity: 0.35;
+      z-index: 1;
+    }
+
+    #particles-js {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+    }
+
+    .auth-shell {
+      position: relative;
+      z-index: 2;
+      width: min(100%, 430px);
+    }
+
+    .auth-card {
+      position: relative;
+      padding: clamp(28px, 6vw, 42px);
+      border-radius: var(--radius);
+      border: 1px solid rgba(255, 23, 68, 0.28);
+      background:
+        radial-gradient(circle at top left, rgba(255, 23, 68, 0.18), transparent 38%),
+        linear-gradient(135deg, var(--panel), var(--panel-2));
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,0.03),
+        0 30px 80px rgba(0,0,0,0.72),
+        0 0 38px rgba(255, 23, 68, 0.16),
+        inset 0 0 44px rgba(255, 23, 68, 0.045);
+      overflow: hidden;
+    }
+
+    .auth-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      pointer-events: none;
+      background:
+        linear-gradient(90deg, transparent, rgba(255, 23, 68, 0.16), transparent);
+      transform: translateX(-100%);
+      animation: scan 5s linear infinite;
+    }
+
+    @keyframes scan {
+      0% { transform: translateX(-120%); opacity: 0; }
+      18% { opacity: 1; }
+      45% { transform: translateX(120%); opacity: 0; }
+      100% { transform: translateX(120%); opacity: 0; }
+    }
+
+    .auth-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 14px;
+      color: var(--accent);
+      font-size: 0.74rem;
+      font-weight: 900;
+      letter-spacing: 2.2px;
+      text-transform: uppercase;
+    }
+
+    .auth-kicker::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 18px var(--accent);
+    }
+
+    h1 {
+      margin: 0;
+      color: #fff;
+      font-size: clamp(2rem, 8vw, 3.2rem);
+      line-height: 1;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      text-shadow:
+        0 0 18px rgba(255, 23, 68, 0.48),
+        0 0 44px rgba(255, 23, 68, 0.16);
+    }
+
+    .subtitle {
+      margin: 14px 0 28px;
+      color: var(--text-medium);
+      font-size: 0.98rem;
+      line-height: 1.7;
+    }
+
+    form {
+      display: grid;
+      gap: 14px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 7px;
+      color: var(--text-low);
+      font-size: 0.78rem;
+      font-weight: 900;
+      letter-spacing: 1.7px;
+      text-transform: uppercase;
+    }
+
+    .input-wrap {
+      position: relative;
+    }
+
+    input {
+      width: 100%;
+      min-height: 48px;
+      padding: 13px 14px;
+      border-radius: 13px;
+      border: 1px solid rgba(255, 23, 68, 0.28);
+      background: rgba(0, 0, 0, 0.58);
+      color: #fff;
+      font: inherit;
+      outline: none;
+      transition: 0.22s ease;
+      box-shadow: inset 0 0 18px rgba(255, 23, 68, 0.035);
+    }
+
+    input::placeholder {
+      color: rgba(255,255,255,0.34);
+    }
+
+    input:focus {
+      border-color: rgba(0, 255, 136, 0.75);
+      box-shadow:
+        0 0 0 3px rgba(0, 255, 136, 0.12),
+        inset 0 0 18px rgba(0, 255, 136, 0.035);
+    }
+
+    .password-field input {
+      padding-right: 52px;
+    }
+
+    .toggle-password {
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      width: 38px;
+      height: 38px;
+      transform: translateY(-50%);
+      border: 0;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.06);
+      color: rgba(255,255,255,0.78);
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    .actions {
+      display: grid;
+      gap: 12px;
+      margin-top: 4px;
+    }
+
+    button,
+    .secondary-link {
+      min-height: 48px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.14);
+      cursor: pointer;
+      font: inherit;
+      font-weight: 950;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: 0.24s ease;
+    }
+
+    .primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+      color: #fff;
+      box-shadow:
+        0 0 22px rgba(255, 23, 68, 0.42),
+        inset 0 0 14px rgba(255,255,255,0.08);
+    }
+
+    .primary:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow:
+        0 0 32px rgba(255, 23, 68, 0.58),
+        inset 0 0 14px rgba(255,255,255,0.12);
+    }
+
+    .secondary-link {
+      background: rgba(255,255,255,0.045);
+      color: var(--text-medium);
+      border-color: rgba(255, 23, 68, 0.24);
+    }
+
+    .secondary-link:hover {
+      color: #fff;
+      border-color: rgba(255, 23, 68, 0.62);
+      background: rgba(255, 23, 68, 0.11);
+    }
+
+    button:disabled {
+      cursor: wait;
+      opacity: 0.68;
+    }
+
+    .feedback {
+      min-height: 24px;
+      margin: 18px 0 0;
+      color: var(--danger);
+      font-size: 0.92rem;
+      line-height: 1.5;
+      text-align: center;
+    }
+
+    .feedback.ok {
+      color: var(--ok);
+    }
+
+    .system-note {
+      margin-top: 22px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(255, 23, 68, 0.16);
+      color: var(--text-low);
+      font-size: 0.78rem;
+      line-height: 1.7;
+      text-align: center;
+    }
+
+    .system-note strong {
+      color: var(--accent);
+    }
+
+    a:focus-visible,
+    button:focus-visible,
+    input:focus-visible {
+      outline: 2px solid var(--ok);
+      outline-offset: 4px;
+    }
+
+    @media (max-width: 460px) {
+      body {
+        padding: 18px;
+        overflow: auto;
+      }
+
+      .auth-card {
+        border-radius: 18px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="particles-js" aria-hidden="true"></div>
+
+  <main class="auth-shell">
+    <section class="auth-card" aria-labelledby="login-title">
+      <span class="auth-kicker">Cyber-Nexis // Gateway</span>
+
+      <h1 id="login-title">Acesso Restrito</h1>
+
+      <p class="subtitle">
+        Insira suas credenciais para atravessar a primeira camada do sistema.
+      </p>
+
+      <form id="loginForm" autocomplete="on">
+        <div>
+          <label for="email">Email operacional</label>
+          <div class="input-wrap">
+            <input
+              id="email"
+              name="email"
+              type="email"
+              placeholder="operador@email.com"
+              autocomplete="email"
+              required
+            >
+          </div>
+        </div>
+
+        <div>
+          <label for="senha">Senha</label>
+          <div class="input-wrap password-field">
+            <input
+              id="senha"
+              name="senha"
+              type="password"
+              placeholder="••••••••"
+              autocomplete="current-password"
+              minlength="6"
+              required
+            >
+            <button class="toggle-password" type="button" aria-label="Mostrar senha">◉</button>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button id="btnLogin" class="primary" type="submit">Entrar</button>
+          <a class="secondary-link" href="register.html">Criar nova conta</a>
+        </div>
+
+        <p id="feedback" class="feedback" aria-live="polite"></p>
+      </form>
+
+      <p class="system-note">
+        <strong>Status:</strong> autenticação via Firebase. Use servidor local ou hospedagem, não caminho file://.
+      </p>
+    </section>
+  </main>
+
+  <script type="module">
+    import { login, getCurrentUser } from "./site.js";
+
+    const HOME_PAGE = "Index.html";
+
+    const form = document.getElementById("loginForm");
+    const btnLogin = document.getElementById("btnLogin");
+    const feedback = document.getElementById("feedback");
+    const emailInput = document.getElementById("email");
+    const senhaInput = document.getElementById("senha");
+    const togglePassword = document.querySelector(".toggle-password");
+
+    function setFeedback(message, type = "error") {
+      feedback.textContent = message;
+      feedback.classList.toggle("ok", type === "ok");
+    }
+
+    function traduzirErroFirebase(error) {
+      const code = error?.code || "";
+
+      const mensagens = {
+        "auth/invalid-email": "Email inválido. Verifique e tente novamente.",
+        "auth/user-disabled": "Esta conta foi desativada.",
+        "auth/user-not-found": "Email ou senha incorretos.",
+        "auth/wrong-password": "Email ou senha incorretos.",
+        "auth/invalid-credential": "Email ou senha incorretos.",
+        "auth/too-many-requests": "Muitas tentativas. Aguarde alguns minutos antes de tentar novamente.",
+        "auth/network-request-failed": "Falha de conexão. Verifique sua internet."
+      };
+
+      return mensagens[code] || error?.message || "Falha ao autenticar operador.";
+    }
+
+    function setLoading(isLoading) {
+      btnLogin.disabled = isLoading;
+      btnLogin.textContent = isLoading ? "Verificando..." : "Entrar";
+    }
+
+    togglePassword.addEventListener("click", () => {
+      const isPassword = senhaInput.type === "password";
+      senhaInput.type = isPassword ? "text" : "password";
+      togglePassword.setAttribute("aria-label", isPassword ? "Ocultar senha" : "Mostrar senha");
+      togglePassword.textContent = isPassword ? "◎" : "◉";
+      senhaInput.focus();
+    });
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      const email = emailInput.value.trim();
+      const senha = senhaInput.value.trim();
+
+      if (!email || !senha) {
+        setFeedback("Preencha todos os campos.");
+        return;
+      }
+
+      try {
+        setLoading(true);
+        setFeedback("Validando assinatura de acesso...", "ok");
+
+        await login(email, senha);
+
+        setFeedback("Acesso liberado. Redirecionando...", "ok");
+        window.location.href = HOME_PAGE;
+      } catch (error) {
+        setFeedback(traduzirErroFirebase(error));
+        setLoading(false);
+      }
+    });
+
+    getCurrentUser((user) => {
+      if (user) {
+        window.location.href = HOME_PAGE;
+      }
+    });
+  </script>
+</body>
+</html>

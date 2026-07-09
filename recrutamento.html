@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Cyber-Nexis - Recrutamento Secreto</title>
+
+<link rel="stylesheet" href="Styles.css">
+
+<!-- EMAILJS -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+
+<div id="particles-js"></div>
+
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<script src="particles-config.js"></script>
+<script>
+(function(){
+    emailjs.init("_wMmR0Rqn5VoasHqR");
+})();
+
+function enviarEmail(event){
+    event.preventDefault();
+
+    emailjs.sendForm(
+        "service_xwo7dfq",
+        "template_ww1gnr8",
+        event.target
+    )
+    .then(function(response){
+        alert("Candidatura enviada com sucesso. Aguarde análise confidencial.");
+        event.target.reset();
+    })
+    .catch(function(error){
+        alert("Erro ao enviar candidatura.");
+        console.log(error);
+    });
+}
+</script>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<img src="Imagem/Logotipo.png" alt="Cyber-Nexis Logo" class="logo">
+
+<nav class="nav-links-container">
+<div class="nav-links">
+<a href="Index (1).html">Página Inicial</a>
+<a href="recrutamento.html">Recrutamento</a>
+<a href="quiz.html">Teste Quiz</a>
+<a href="contato.html">Contatos</a>
+<a href="regras.html">Regras</a>
+</div>
+</nav>
+
+<h1>RECRUTAMENTO CONFIDENCIAL</h1>
+<h2>Cyber-Nexis</h2>
+
+<img src="Imagem/Imagem089.jpg" alt="Recrutamento Cyber-Nexis" class="gallery-image">
+
+<p>
+O ingresso na Cyber-Nexis é restrito a indivíduos com habilidades técnicas,
+estratégicas ou analíticas excepcionais. Todas as informações fornecidas
+serão tratadas com alto nível de confidencialidade.
+</p>
+
+<!-- Dica secreta -->
+<!-- Observador atento: codinomes fortes possuem referência a animais ou sombras -->
+
+<form id="form-recrutamento" onsubmit="enviarEmail(event)">
+
+<label for="codinome">Codinome</label>
+<input type="text" name="codinome" id="codinome" required>
+
+<label for="especialidade">Especialidade</label>
+<select name="especialidade" id="especialidade" required>
+
+<option value="">Selecione</option>
+<option value="inteligencia">Inteligência Cibernética</option>
+<option value="seguranca">Segurança da Informação</option>
+<option value="hacker">Hacker Avançado</option>
+<option value="engenharia">Engenharia Social</option>
+<option value="analise">Análise de Dados</option>
+
+</select>
+
+<label for="experiencia">Experiência anterior</label>
+<textarea name="experiencia" id="experiencia" rows="4" required></textarea>
+
+<label for="motivacao">Motivação</label>
+<textarea name="motivacao" id="motivacao" rows="4" required></textarea>
+
+<label for="contato">Contato seguro</label>
+<input type="text" name="contato" id="contato" required>
+
+<!-- Anti bot invisível -->
+<input type="text" name="website" style="display:none">
+
+<button type="submit">Enviar Candidatura</button>
+
+</form>
+
+<p>
+Apenas candidatos aprovados receberão retorno.
+</p>
+
+<div class="footer">
+Cyber-Nexis © 2025 — Segurança, Discrição e Inteligência
+</div>
+
+</div>
+</body>
+</html>
