@@ -1,72 +1,63 @@
-document.addEventListener("DOMContentLoaded", function() {  
-  emailjs.init("template_v2qaj2p"); // <-- Insira aqui seu Public Key do EmailJS  
-  
-  const form = document.getElementById("contact-form");  
-  const resposta = document.getElementById("resposta");  
-  
-  form.addEventListener("submit", function(event) {  
-    event.preventDefault();  
-  
-    // Anti-SPAM: verifica honeypot  
-    if (document.getElementById("hp-field").value !== "") {  
-      return;  
-    }  
-  
-    const nome = document.getElementById("nome").value.trim();  
-    const email = document.getElementById("email").value.trim();  
-    const mensagem = document.getElementById("mensagem").value.trim();  
-  
-    resposta.innerHTML = "";  
-  
-    // Validações front-end  
-    if (nome.length < 3) {  
-      showMessage("alert-erro", "Nome deve ter no mínimo 3 caracteres.");  
-      return;  
-    }  
-    if (!validateEmail(email)) {  
-      showMessage("alert-erro", "Digite um email válido.");  
-      return;  
-    }  
-    if (mensagem.length < 10) {  
-      showMessage("alert-erro", "A mensagem deve ter pelo menos 10 caracteres.");  
-      return;  
-    }  
-  
-    // Mostra carregando  
-    const loadingDiv = document.createElement("div");  
-    loadingDiv.classList.add("loading");  
-    loadingDiv.textContent = "Enviando mensagem...";  
-    resposta.appendChild(loadingDiv);  
-  
-    // Parâmetros para EmailJS  
-    const templateParams = {  
-      from_name: nome,  
-      email: email,  
-      message: mensagem  
-    };  
-  
-    emailjs.send("template_cdmbrrc", "template_cdmbrrc", templateParams)  
-      .then(() => {  
-        resposta.innerHTML = "";  
-        showMessage("alert-sucesso", "Mensagem enviada com sucesso!");  
-        form.reset();  
-      })  
-      .catch(() => {  
-        resposta.innerHTML = "";  
-        showMessage("alert-erro", "Erro ao enviar mensagem. Tente novamente.");  
-      });  
-  });  
-  
-  function showMessage(type, text) {  
-    const div = document.createElement("div");  
-    div.classList.add("alert", type);  
-    div.textContent = text;  
-    resposta.appendChild(div);  
-    setTimeout(() => div.remove(), 5000);  
-  }  
-  
-  function validateEmail(email) {  
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;  
-    return regex.test(email);  
-  }  
-});  
+// ============================================================
+// Cyber-Nexis | Contato com validação e EmailJS opcional
+// Preencha os 3 valores abaixo com dados reais do EmailJS.
+// ============================================================
+
+const EMAILJS_PUBLIC_KEY = "COLOQUE_SUA_PUBLIC_KEY";
+const EMAILJS_SERVICE_ID = "COLOQUE_SEU_SERVICE_ID";
+const EMAILJS_TEMPLATE_ID = "COLOQUE_SEU_TEMPLATE_ID";
+
+const form = document.getElementById("contact-form");
+const resposta = document.getElementById("resposta");
+
+function setMessage(text, type = "") {
+  resposta.textContent = text;
+  resposta.className = `status-message ${type}`.trim();
+}
+
+function validateEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+function emailJsConfigured() {
+  return window.emailjs
+    && !EMAILJS_PUBLIC_KEY.startsWith("COLOQUE_")
+    && !EMAILJS_SERVICE_ID.startsWith("COLOQUE_")
+    && !EMAILJS_TEMPLATE_ID.startsWith("COLOQUE_");
+}
+
+form.addEventListener("submit", async (event) => {
+  event.preventDefault();
+
+  if (document.getElementById("hp-field").value.trim()) return;
+
+  const nome = document.getElementById("nome").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const mensagem = document.getElementById("mensagem").value.trim();
+
+  if (nome.length < 3) return setMessage("Nome precisa ter pelo menos 3 caracteres.", "error");
+  if (!validateEmail(email)) return setMessage("Digite um e-mail válido.", "error");
+  if (mensagem.length < 10) return setMessage("Mensagem precisa ter pelo menos 10 caracteres.", "error");
+
+  if (!emailJsConfigured()) {
+    console.info("Mensagem validada localmente:", { nome, email, mensagem });
+    setMessage("Formulário validado. Configure o EmailJS em contato.js para enviar de verdade.", "ok");
+    return;
+  }
+
+  setMessage("Enviando mensagem...");
+
+  try {
+    emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+    await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+      from_name: nome,
+      from_email: email,
+      message: mensagem,
+    });
+    form.reset();
+    setMessage("Mensagem enviada com sucesso.", "ok");
+  } catch (error) {
+    console.error(error);
+    setMessage("Erro ao enviar mensagem. Confira as chaves do EmailJS.", "error");
+  }
+});
