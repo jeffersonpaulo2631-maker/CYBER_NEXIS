@@ -1,102 +1,68 @@
-import { auth, db } from "./firebase-config.js";
+// ============================================================
+// Cyber-Nexis | Autenticação e proteção de páginas
+// ============================================================
 
+import { auth } from "./firebase-config.js";
 import {
-  signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   onAuthStateChanged,
-  signOut
+  signInAnonymously,
+  signInWithEmailAndPassword,
+  signOut,
+  updateProfile,
 } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-auth.js";
 
-import {
-  doc,
-  setDoc,
-  getDoc
-} from "https://www.gstatic.com/firebasejs/10.12.1/firebase-firestore.js";
-
-
-// LOGIN
-export async function login(email, senha) {
-
-  if (!email || !senha) {
-    throw new Error("Email e senha são obrigatórios.");
-  }
-
-  const userCredential = await signInWithEmailAndPassword(auth, email, senha);
-
-  return userCredential;
-
+export function getCurrentUser() {
+  return auth.currentUser;
 }
 
-
-// REGISTRO
-export async function register(email, senha) {
-
-  if (!email || !senha) {
-    throw new Error("Email e senha são obrigatórios.");
-  }
-
-  const userCredential = await createUserWithEmailAndPassword(auth, email, senha);
-
-  const user = userCredential.user;
-
-  await setDoc(doc(db, "users", user.uid), {
-    email: user.email,
-    role: "user",
-    createdAt: Date.now()
-  });
-
-  return userCredential;
-
+export function onUserReady(callback) {
+  return onAuthStateChanged(auth, callback);
 }
 
-
-// PROTEGER PÁGINAS
-export function protectPage(redirect = "login.html") {
-
-  onAuthStateChanged(auth, (user) => {
-
-    if (!user) {
-      window.location.href = redirect;
-    }
-
-  });
-
+export async function login(email, password) {
+  return signInWithEmailAndPassword(auth, email, password);
 }
 
+export async function register(email, password, displayName = "Operador") {
+  const credential = await createUserWithEmailAndPassword(auth, email, password);
+  await updateProfile(credential.user, { displayName });
+  return credential;
+}
 
-// LOGOUT
+export async function loginAnonimo() {
+  return signInAnonymously(auth);
+}
+
 export async function logout() {
-
   await signOut(auth);
-
   window.location.href = "login.html";
-
 }
 
-
-// BUSCAR DADOS DO USUÁRIO
-export async function getUserData(uid) {
-
-  if (!uid) return null;
-
-  const userRef = doc(db, "users", uid);
-
-  const snapshot = await getDoc(userRef);
-
-  if (snapshot.exists()) {
-    return snapshot.data();
-  }
-
-  return null;
-
-}
-
-
-// USUÁRIO ATUAL
-export function getCurrentUser(callback) {
-
-  onAuthStateChanged(auth, (user) => {
-    callback(user);
+export function protectPage(loginPath = "login.html") {
+  return onAuthStateChanged(auth, (user) => {
+    if (!user) window.location.href = loginPath;
   });
+}
 
+export function redirectIfLoggedIn(targetPath = "index.html") {
+  return onAuthStateChanged(auth, (user) => {
+    if (user) window.location.href = targetPath;
+  });
+}
+
+export function bindLogoutButton(buttonId = "logout") {
+  const button = document.getElementById(buttonId);
+  if (!button) return;
+
+  button.addEventListener("click", async () => {
+    button.disabled = true;
+    try {
+      await logout();
+    } catch (error) {
+      console.error(error);
+      button.disabled = false;
+      alert("Não foi possível sair agora.");
+    }
+  });
 }
