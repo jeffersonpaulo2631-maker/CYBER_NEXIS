@@ -1,245 +1,334 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Manual Operacional | Cyber-Nexis</title>
+  <meta name="description" content="Manual operacional da Cyber-Nexis com orientações de acesso, uso do chat, regras técnicas, segurança, manutenção do site e organização dos arquivos.">
+  <meta name="author" content="Cyber-Nexis">
+  <meta name="robots" content="index, follow">
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
 
-<title>Manual Operacional — Cyber-Nexis</title>
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js" defer></script>
+  <script src="particles-config.js" defer></script>
+  <script src="acesso-secreto.js" defer></script>
 
-<meta name="description" content="Documento interno. Distribuição por nível de acesso.">
-<meta name="theme-color" content="#000000">
+  <script type="module">
+    import { protectPage, bindLogoutButton } from "./site.js";
 
-<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-<script src="particles-config.js" defer></script>
+    protectPage("login.html");
 
-<style>
-
-#particles-js{
-position:fixed;
-width:100%;
-height:100%;
-top:0;
-left:0;
-z-index:-1;
-}
-
-body{
-background-color:#000;
-color:#fff;
-font-family:"Courier New", Courier, monospace;
-margin:0;
-padding:40px 20px;
-overflow-x:hidden;
-}
-
-main{
-max-width:850px;
-margin:auto;
-border:2px solid red;
-padding:40px;
-background-color:#000;
-animation:fadeIn 1.5s ease-in-out;
-}
-
-h1,h2{
-color:red;
-text-transform:uppercase;
-letter-spacing:1px;
-}
-
-.logo{
-display:block;
-margin:0 auto 25px;
-width:180px;
-}
-
-.intro{
-border-left:4px solid red;
-padding-left:20px;
-margin-bottom:40px;
-font-style:italic;
-}
-
-section{
-margin-bottom:45px;
-opacity:0;
-transform:translateY(25px);
-transition:opacity .8s ease, transform .8s ease;
-}
-
-section.visible{
-opacity:1;
-transform:translateY(0);
-}
-
-ul{
-margin-top:15px;
-padding-left:20px;
-}
-
-li{
-margin-bottom:10px;
-}
-
-.divider{
-border:none;
-border-top:1px solid red;
-margin:50px 0;
-}
-
-footer{
-margin-top:60px;
-padding-top:20px;
-border-top:2px solid red;
-font-size:.9em;
-color:red;
-text-align:center;
-}
-
-@keyframes fadeIn{
-from{opacity:0; transform:translateY(40px);}
-to{opacity:1; transform:translateY(0);}
-}
-
-</style>
+    document.addEventListener("DOMContentLoaded", () => {
+      bindLogoutButton("logout");
+    });
+  </script>
 </head>
-
 <body>
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+  <div id="particles-js" aria-hidden="true"></div>
 
-<div id="particles-js"></div>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="Cyber-Nexis página inicial">
+        <span class="brand-mark">CN</span>
+        <span>
+          <span class="brand-name">Cyber-Nexis</span>
+          <span class="brand-subtitle">Manual Operacional</span>
+        </span>
+      </a>
 
-<main>
+      <nav class="nav-links" aria-label="Navegação principal">
+        <a href="index.html">Início</a>
+        <a href="chat.html">Chat</a>
+        <a href="recrutamento.html">Recrutamento</a>
+        <a href="manual.html" aria-current="page">Manual</a>
+        <a href="regras.html">Regras</a>
+        <a href="contato.html">Contato</a>
+        <button id="logout" type="button">Sair</button>
+      </nav>
+    </div>
+  </header>
 
-<img src="Imagem/Logotipo.png" alt="Logotipo Cyber-Nexis" class="logo">
+  <main id="conteudo">
+    <section class="hero" aria-labelledby="titulo-principal">
+      <div class="container hero-grid">
+        <div>
+          <span class="kicker">Cyber-Nexis // Documento de orientação</span>
+          <h1 id="titulo-principal">Manual operacional do sistema</h1>
+          <p class="hero-copy">
+            Este manual organiza o uso da Cyber-Nexis em camadas: acesso, navegação, chat, contato,
+            manutenção dos arquivos e segurança básica. A regra central é simples: menos improviso,
+            mais controle.
+          </p>
+          <div class="hero-actions">
+            <a class="btn" href="#guia-rapido">Começar pelo guia rápido</a>
+            <a class="btn secondary" href="chat.html">Abrir chat restrito</a>
+          </div>
+        </div>
 
-<h1>Manual Operacional — Cyber-Nexis</h1>
+        <div class="visual-card" aria-label="Símbolo visual do manual Cyber-Nexis">
+          <div class="orb"></div>
+        </div>
+      </div>
+    </section>
 
-<div class="intro">
-Documento restrito por nível de acesso.  
-Cada leitor visualiza apenas uma fração do sistema.
-</div>
+    <section id="guia-rapido" class="section" aria-labelledby="guia-title">
+      <div class="container panel">
+        <span class="kicker">Camada 01</span>
+        <h2 id="guia-title">Guia rápido</h2>
+        <p>
+          Use este projeto como um site estático com autenticação Firebase, chat em tempo real e páginas de apoio.
+          A estrutura foi padronizada para evitar erros comuns de GitHub Pages, principalmente 404 causado por nomes
+          diferentes como <code>Index.html</code>, <code>index.html</code>, <code>Styles.css</code> e <code>styles.css</code>.
+        </p>
 
-<hr class="divider">
+        <div class="grid-3">
+          <article class="card">
+            <h3>1. Acesso</h3>
+            <p>O usuário entra por <code>login.html</code>. Depois do login, as páginas protegidas podem chamar <code>protectPage()</code>.</p>
+          </article>
 
-<section>
-<h2>Status do Sistema</h2>
-<p>
-A Cyber-Nexis opera como uma estrutura distribuída em camadas funcionais.
-A visão total do sistema não é acessível a nenhum indivíduo isolado.
-</p>
-</section>
+          <article class="card">
+            <h3>2. Conteúdo</h3>
+            <p>O portal principal fica em <code>index.html</code>. As páginas secundárias usam a mesma navegação e o mesmo CSS.</p>
+          </article>
 
-<hr class="divider">
+          <article class="card">
+            <h3>3. Comunicação</h3>
+            <p>O chat fica em <code>chat.html</code> e usa <code>chat.js</code> para enviar mensagens com Firebase/Firestore.</p>
+          </article>
+        </div>
+      </div>
+    </section>
 
-<section>
-<h2>Estrutura Operacional</h2>
-<p>
-A organização é dividida em três níveis funcionais:
-</p>
+    <section class="section" aria-labelledby="estrutura-title">
+      <div class="container panel">
+        <span class="kicker">Arquitetura recomendada</span>
+        <h2 id="estrutura-title">Estrutura dos arquivos</h2>
+        <p>
+          Mantenha os nomes em minúsculo, sem espaços e sem acentos. O GitHub Pages diferencia letras maiúsculas
+          de minúsculas. Um link para <code>Regras.html</code> não encontra automaticamente <code>regras.html</code>.
+        </p>
 
-<ul>
-<li><b>Nível I — Coordenação Estratégica:</b> define diretrizes e valida acessos.</li>
-<li><b>Nível II — Operações Técnicas:</b> executa tarefas e análises.</li>
-<li><b>Nível III — Observação:</b> triagem e análise de comportamento externo.</li>
-</ul>
+        <pre class="code-card"><code>CYBER_NEXIS/
+├── index.html
+├── login.html
+├── login.js
+├── chat.html
+├── chat.js
+├── contato.html
+├── contato.js
+├── manual.html
+├── regras.html
+├── recrutamento.html
+├── quiz.html
+├── cyber-nexis-comando.html
+├── firebase-config.js
+├── site.js
+├── particles-config.js
+├── acesso-secreto.js
+├── styles.css
+└── Imagem/</code></pre>
 
-<p>
-Nenhum nível possui acesso completo ao sistema.
-A fragmentação é um mecanismo de segurança.
-</p>
-</section>
+        <div class="grid-2">
+          <article class="card">
+            <h3>Regra de ouro</h3>
+            <p>Se o arquivo se chama <code>styles.css</code>, todos os HTMLs devem chamar exatamente <code>styles.css</code>.</p>
+          </article>
 
-<hr class="divider">
+          <article class="card">
+            <h3>Evite duplicações</h3>
+            <p>Não mantenha duas versões do mesmo arquivo, como <code>Index.html</code> e <code>index.html</code>. Isso cria links falsos.</p>
+          </article>
+        </div>
+      </div>
+    </section>
 
-<section>
-<h2>Processo de Integração</h2>
-<ul>
-<li>Observação de comportamento em ambiente externo</li>
-<li>Simulações controladas de decisão</li>
-<li>Validação progressiva por múltiplas camadas</li>
-</ul>
+    <section class="section" aria-labelledby="firebase-title">
+      <div class="container panel">
+        <span class="kicker">Camada Firebase</span>
+        <h2 id="firebase-title">Configuração do Firebase</h2>
+        <p>
+          O Firebase deve ser centralizado em <code>firebase-config.js</code>. Login, chat e demais scripts devem importar
+          a configuração desse arquivo, em vez de repetir chaves e versões diferentes em cada página.
+        </p>
 
-<p>
-A entrada não é solicitada. Ela é determinada.
-</p>
-</section>
+        <div class="grid-2">
+          <article class="card">
+            <h3>Ative autenticação</h3>
+            <p>No Firebase Console, ative Email/Password para login tradicional e Anonymous se quiser permitir chat anônimo.</p>
+          </article>
 
-<hr class="divider">
+          <article class="card">
+            <h3>Ative Firestore</h3>
+            <p>O chat usa Firestore para salvar mensagens. Configure regras adequadas antes de publicar para outras pessoas.</p>
+          </article>
 
-<section>
-<h2>Princípios Operacionais</h2>
-<ul>
-<li>Necessidade funcional acima de intenção pessoal</li>
-<li>Informação distribuída por escopo limitado</li>
-<li>Validação cruzada obrigatória em ações críticas</li>
-<li>Isolamento de falhas por design estrutural</li>
-</ul>
-</section>
+          <article class="card">
+            <h3>Não duplique projetos</h3>
+            <p>Evite usar um projeto Firebase no login e outro no chat, a menos que isso seja uma decisão consciente.</p>
+          </article>
 
-<hr class="divider">
+          <article class="card">
+            <h3>Chaves públicas</h3>
+            <p>A chave do Firebase no front-end não é senha secreta, mas as regras do Firestore precisam estar bem configuradas.</p>
+          </article>
+        </div>
+      </div>
+    </section>
 
-<section>
-<h2>Segurança Interna</h2>
-<p>
-A estrutura opera sob compartimentação rígida.
-Nenhuma unidade possui visão completa do sistema.
-</p>
+    <section class="section" aria-labelledby="chat-title">
+      <div class="container panel">
+        <span class="kicker">Comunicação restrita</span>
+        <h2 id="chat-title">Uso do chat</h2>
+        <p>
+          O chat deve ter um único HTML e um único JS compatível. O erro antigo acontecia porque o HTML possuía IDs
+          diferentes dos IDs esperados pelo JavaScript. Agora a estrutura deve permanecer sincronizada.
+        </p>
 
-<p>
-Tentativas de acesso fora de escopo são registradas e isoladas.
-</p>
-</section>
+        <div class="grid-3">
+          <article class="card">
+            <h3>Sala pública</h3>
+            <p>Use a sala pública para mensagens gerais e testes iniciais do sistema.</p>
+          </article>
 
-<hr class="divider">
+          <article class="card">
+            <h3>Sala privada</h3>
+            <p>Use uma chave de sala para criar um ambiente separado. Não use senhas reais ou pessoais.</p>
+          </article>
 
-<section>
-<h2>Monitoramento</h2>
-<p>
-Interações podem ser analisadas para identificação de padrões.
-Nenhuma interação é considerada neutra por padrão.
-</p>
+          <article class="card">
+            <h3>Anexos</h3>
+            <p>Limite imagens antes de enviar. Arquivos muito grandes deixam o Firestore pesado e caro.</p>
+          </article>
+        </div>
+      </div>
+    </section>
 
-<ul>
-<li>irrelevante</li>
-<li>observacional</li>
-<li>crítica</li>
-</ul>
-</section>
+    <section class="section" aria-labelledby="seguranca-title">
+      <div class="container panel">
+        <span class="kicker">Segurança básica</span>
+        <h2 id="seguranca-title">Boas práticas</h2>
+        <p>
+          O site pode ter estética de sistema restrito, mas segurança real vem de regras, autenticação e código limpo.
+          Efeito visual não substitui proteção técnica.
+        </p>
 
-<hr class="divider">
+        <div class="grid-2">
+          <article class="card">
+            <h3>Evite <code>innerHTML</code> com dados do usuário</h3>
+            <p>Mensagens, nomes e textos enviados por visitantes devem ser renderizados com <code>textContent</code>.</p>
+          </article>
 
-<section>
-<h2>Integridade do Sistema</h2>
-<p>
-Qualquer tentativa de contornar o fluxo de acesso não interrompe o sistema.
-Apenas altera sua classificação interna.
-</p>
-</section>
+          <article class="card">
+            <h3>Não coloque senhas no JavaScript</h3>
+            <p>Qualquer senha escrita em arquivo JS pode ser vista por quem abrir as ferramentas do navegador.</p>
+          </article>
 
-<footer>
-Documento espelhado.  
-Versões paralelas podem existir dentro da rede.
-</footer>
+          <article class="card">
+            <h3>Proteja rotas importantes</h3>
+            <p>Páginas internas podem usar <code>protectPage("login.html")</code> para bloquear visitantes sem login.</p>
+          </article>
 
-</main>
+          <article class="card">
+            <h3>Revise regras do Firestore</h3>
+            <p>Não publique com regras abertas permanentemente. Elas são a muralha real do banco de dados.</p>
+          </article>
+        </div>
+      </div>
+    </section>
 
-<script>
+    <section class="section" aria-labelledby="contato-title">
+      <div class="container panel">
+        <span class="kicker">Canal externo</span>
+        <h2 id="contato-title">Página de contato</h2>
+        <p>
+          O formulário de contato usa <code>contato.js</code>. Para envio real com EmailJS, preencha corretamente os três valores:
+          Public Key, Service ID e Template ID. Não use o mesmo valor para todos.
+        </p>
 
-const sections=document.querySelectorAll("section");
+        <pre class="code-card"><code>emailjs.init("SUA_PUBLIC_KEY");
+emailjs.send("SEU_SERVICE_ID", "SEU_TEMPLATE_ID", templateParams);</code></pre>
 
-const observer=new IntersectionObserver(entries=>{
-entries.forEach(entry=>{
-if(entry.isIntersecting){
-entry.target.classList.add("visible");
-}
-});
-},{threshold:0.2});
+        <p>
+          Antes de publicar, teste o formulário com nome, e-mail e mensagem válidos. O honeypot contra spam deve continuar vazio
+          para usuários reais.
+        </p>
+      </div>
+    </section>
 
-sections.forEach(section=>observer.observe(section));
+    <section class="section" aria-labelledby="deploy-title">
+      <div class="container panel">
+        <span class="kicker">Publicação</span>
+        <h2 id="deploy-title">Como subir no GitHub Pages</h2>
+        <div class="grid-2">
+          <article class="card">
+            <h3>1. Suba na raiz</h3>
+            <p>Coloque <code>index.html</code> diretamente na raiz do repositório, não dentro de uma pasta escondida.</p>
+          </article>
 
-console.info("[CNX] manual loaded | access layer: partial view");
+          <article class="card">
+            <h3>2. Preserve a pasta de imagens</h3>
+            <p>A pasta deve continuar como <code>Imagem/</code>, exatamente igual aos caminhos usados no HTML.</p>
+          </article>
 
-</script>
+          <article class="card">
+            <h3>3. Ative Pages</h3>
+            <p>Em Settings → Pages, publique pela branch <code>main</code> e pasta <code>/root</code>.</p>
+          </article>
+
+          <article class="card">
+            <h3>4. Teste links</h3>
+            <p>Abra cada página: início, chat, manual, regras, recrutamento, quiz e contato. Link morto é ruído operacional.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="checklist-title">
+      <div class="container panel">
+        <span class="kicker">Checklist final</span>
+        <h2 id="checklist-title">Antes de publicar</h2>
+        <div class="grid-2">
+          <article class="card">
+            <h3>Arquivos</h3>
+            <p>Todos os nomes estão em minúsculo, exceto a pasta <code>Imagem/</code> se ela já existir assim no repositório.</p>
+          </article>
+
+          <article class="card">
+            <h3>CSS</h3>
+            <p>Todas as páginas chamam <code>styles.css</code>.</p>
+          </article>
+
+          <article class="card">
+            <h3>Firebase</h3>
+            <p>Login e chat usam a mesma configuração central em <code>firebase-config.js</code>.</p>
+          </article>
+
+          <article class="card">
+            <h3>Links</h3>
+            <p>Nenhum link aponta para <code>Index (1).html</code>, <code>Regras.html</code> ou arquivos que não existem.</p>
+          </article>
+        </div>
+
+        <div class="hero-actions">
+          <a class="btn" href="index.html">Voltar ao início</a>
+          <a class="btn secondary" href="regras.html">Ler regras</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      Cyber-Nexis © <span id="year"></span> • Manual atualizado
+    </div>
+  </footer>
+
+  <script>
+    const yearEl = document.getElementById("year");
+    if (yearEl) yearEl.textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
